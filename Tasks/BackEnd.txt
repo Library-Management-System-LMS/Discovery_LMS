@@ -1,0 +1,19 @@
+# Book Controller
+1. Get list of all Books
+2. Get list of books by category
+3. Add new Book
+4. Delete book (soft delete)
+5. 
+
+
+# User Controller
+1. Sign Up user
+2. Sign in user
+3. Edit User details
+4. 
+
+
+# Borrow Controller
+1. Borrow a book
+2. Return a book
+3. Show defaulter list
