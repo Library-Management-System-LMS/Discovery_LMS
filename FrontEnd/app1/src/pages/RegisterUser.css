@@ -1,0 +1,35 @@
+/* RegisterUser.css */
+
+.register-page {
+  background: linear-gradient(to right, #b9a0d0, #8bcaba); /* Gradient from purple to green */
+  color: #180404; /* White text color */
+  min-height: 100vh; /* Ensure the background covers the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background-color: #ffffff; /* White background for the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: #952828; /* Lighter shade on hover */
+  border-color: #650505;
+  color: #06010a; /* Purple text color on hover */
+}
+
+.terms-link {
+  margin-top: 10px;
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  color: #593333; /* Dark red link color */
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* You can add more custom styles as needed */

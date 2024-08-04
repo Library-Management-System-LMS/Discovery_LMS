@@ -1,0 +1,8 @@
+
+
+.nav {
+    border-radius: 12px;
+    background:  #ffffff1a;
+    border: 1px solid #ffffff20;
+    backdrop-filter: blur(16px) saturated(120%);
+}
