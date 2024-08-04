@@ -3,7 +3,8 @@
 2. Get list of books by category
 3. Add new Book
 4. Delete book (soft delete)
-5. 
+5. Get list of books by Author
+6.
 
 
 # User Controller
