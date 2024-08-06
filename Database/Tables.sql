@@ -2,18 +2,24 @@ Books Table:
     book_id (Primary Key)
     title
     author
-    genre
+    category
     publication_date
     ISBN
     quantity_available
     description
+    create date
+    update date
 
 Users Table:
     user_id (Primary Key)
-    username
+    first_name
+    last_name
     password (hashed)
     email
-    role (e.g., admin, librarian, patron)
+    role (e.g., admin, user)
+    isDeleted
+    create date
+    update date
 
 Borrow Table:
     borrow_id (Primary Key)
@@ -49,9 +55,9 @@ Authors Table:
     author_id (Primary Key)
     author_name
 
-Genres Table:
-    genre_id (Primary Key)
-    genre_name
+category Table:
+    category_id (Primary Key)
+    category_name
 
 Order Table:
 order_id (Primary Key)
