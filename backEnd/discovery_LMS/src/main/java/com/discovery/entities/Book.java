@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "users")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+//@Entity
+//@Table(name = "users")
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Getter
+//@Setter
 //@ToString(exclude = "password",callSuper = true) // toString excluding password
 public class Book extends BaseEntity{
 	
