@@ -1,7 +1,6 @@
 package com.discovery.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ public class BaseEntity {
 	// updation time stamp
 	@UpdateTimestamp //add last updated - date / time / time stamp for the entity
 	@Column(name="updated_on")
-	private LocalDateTime updatedOn;
+	private LocalDate updatedOn;
 	
 	public BaseEntity() {
 		// TODO Auto-generated constructor stub
@@ -53,11 +52,11 @@ public class BaseEntity {
 		this.createdOn = createdOn;
 	}
 
-	public LocalDateTime getUpdatedOn() {
+	public LocalDate getUpdatedOn() {
 		return updatedOn;
 	}
 
-	public void setUpdatedOn(LocalDateTime updatedOn) {
+	public void setUpdatedOn(LocalDate updatedOn) {
 		this.updatedOn = updatedOn;
 	}
 
