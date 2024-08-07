@@ -1,5 +1,7 @@
 package com.discovery.dto;
 
+import com.discovery.entities.UserRole;
+
 import lombok.*;
 
 @Getter
@@ -18,4 +20,5 @@ public class UserDetailsDTO {
 	private String email;
 	
 	
+	private UserRole role;
 }

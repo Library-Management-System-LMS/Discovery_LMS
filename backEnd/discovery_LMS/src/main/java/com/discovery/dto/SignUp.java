@@ -10,10 +10,12 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class SignUp {
 	
 //	@JsonProperty(access = Access.READ_ONLY) // this property only used during ser.
@@ -30,15 +32,15 @@ public class SignUp {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
-	private UserRole role;
+//	private UserRole role;
+	
 	public SignUp(String firstName, String lastName,
-			String email, String password, UserRole role) {
+			String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.role = role;
 	}
 	
 	

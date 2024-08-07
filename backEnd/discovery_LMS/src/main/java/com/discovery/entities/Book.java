@@ -26,7 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-//@ToString(exclude = "password",callSuper = true) // toString excluding password
+@ToString//(exclude = "password",callSuper = true) // toString excluding password
 public class Book extends BaseEntity{
 	
 //    title
@@ -37,7 +37,7 @@ public class Book extends BaseEntity{
 //    quantity_available
 //    description
 	
-	@Column(name = "name", length = 30, unique = true)
+	@Column(name = "title", length = 30, unique = true)
 	private String title;
 	
 //	private LocalDate publishDate;
@@ -61,6 +61,14 @@ public class Book extends BaseEntity{
     )
     private Set<Author> authors = new HashSet<>();
 	
+	private String bookImagePath;
+	
+	public String setAuthor(Author author) {
+		
+		authors.add(author);
+		
+		return "Success";
+	}
 	
 	
 	

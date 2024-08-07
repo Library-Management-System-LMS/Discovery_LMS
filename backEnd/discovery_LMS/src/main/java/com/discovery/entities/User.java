@@ -28,6 +28,8 @@ public class User extends BaseEntity{
 	@Column(length = 30)
 	private UserRole role;
 	
+	private String userImagePath;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 5)
 	private UserDeleteStatus isDeleted;

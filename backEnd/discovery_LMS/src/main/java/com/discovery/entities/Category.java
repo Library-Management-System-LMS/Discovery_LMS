@@ -25,6 +25,7 @@ public class Category extends BaseEntity{
 	@Column(name = "name", length = 30, unique = true)
 	private String categoryName;
 	
+
 	@OneToMany(mappedBy = "bookCategory", 
 			cascade = CascadeType.ALL /* ,fetch = FetchType.EAGER */ ,
 			orphanRemoval = true)
