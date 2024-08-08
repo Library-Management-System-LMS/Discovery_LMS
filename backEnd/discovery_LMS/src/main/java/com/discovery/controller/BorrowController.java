@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discovery.custom_exceptions.ApiException;
-import com.discovery.dto.AddCategoryDTO;
+import com.discovery.dto.AddBookDTO;
+import com.discovery.dto.AddBorrowDTO;
 import com.discovery.dto.ApiResponse;
-import com.discovery.dto.CategoryDetailsDTO;
-import com.discovery.entities.Category;
-import com.discovery.service.CategoryServiceImpl;
+import com.discovery.dto.BookDetailsDTO;
+import com.discovery.dto.BorrowDetailsDTO;
+import com.discovery.entities.Book;
+import com.discovery.service.BookServiceImpl;
+import com.discovery.service.BorrowServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/categories")
-public class CategoryController {
-
-	@Autowired
-	private CategoryServiceImpl categoryService;
+@RequestMapping("/borrow")
+public class BorrowController {
 	
+	@Autowired
+	private BorrowServiceImpl borrowService;
 	
 	@GetMapping
-	@Operation(description = "get list of Category")
-	public ResponseEntity<?> listAllCategories() {
-		
+	@Operation(description = "get list of Borrows")
+	public ResponseEntity<?> listAllBooks() {
 //		System.out.println("in list");
-		List<CategoryDetailsDTO> list = categoryService.getCategoryList();
-		
+		List<BorrowDetailsDTO> list = borrowService.getBorrowList();
 		
 		if(list.isEmpty())
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiException("List is empty"));
@@ -48,16 +48,17 @@ public class CategoryController {
 	
 	
 	@PostMapping
-	@Operation(description = "add New Category")
-	public ResponseEntity<?> addCategory(@RequestBody @Valid AddCategoryDTO newCategory) {
-		System.out.println("in add category " + newCategory);
+	@Operation(description = "add New Borrow")
+	public ResponseEntity<?> addBorrow(@RequestBody @Valid AddBorrowDTO borrow) {
+		System.out.println("in add book " + borrow);
 		
 		try {
 			// invoke service layer
-			return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.addCategory(newCategory));
+			return ResponseEntity.status(HttpStatus.CREATED).body(borrowService.addNewBorrow(borrow));
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
 		}
 	}
+
 }

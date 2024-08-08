@@ -1,5 +1,7 @@
 package com.discovery.entities;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 import lombok.*;
@@ -33,6 +35,10 @@ public class User extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	@Column(length = 5)
 	private UserDeleteStatus isDeleted;
+	
+
+    @OneToMany(mappedBy = "user")
+    private Set<Borrow> borrows;
 	
 
 }

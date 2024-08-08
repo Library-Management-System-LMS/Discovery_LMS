@@ -44,7 +44,7 @@ public class UserController {
 	
 	@PostMapping
 	@Operation(description = "Sign Up User")
-	public ResponseEntity<?> addBlogPost
+	public ResponseEntity<?> signUpUser
 	(@RequestBody SignUp dto) {
 		
 		System.out.println("in add post "+dto);

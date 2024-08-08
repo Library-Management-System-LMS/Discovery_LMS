@@ -25,11 +25,11 @@ public class AddBookDTO {
 	
 //	private LocalDate publishDate;
 	
-	@NotBlank(message = "Quantity required")
 	private int quantityAvailable;
 	
 	@NotBlank(message = "Description required")
 	private String description;
+	
 	
 	private Long categoryId;
 	

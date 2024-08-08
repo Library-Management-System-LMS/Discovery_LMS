@@ -51,38 +51,48 @@ public class BookServiceImpl {
 	}
 	
 	public ApiResponse addNewBook(AddBookDTO dto) {
-
-		// 1. get category from it's id
-			Category category = categoryDao.findById(dto.getCategoryId())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid category id !!!!"));
 		
-		Author author = null;
-		// 2. get author from it's id
-		if(authorDao.existsById(dto.getAuthorId())){
-			author = authorDao.findById(dto.getAuthorId())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid author id!!!"));
-		}else if(authorDao.existsByAuthorName(dto.getAuthorName())) {
-			author = authorDao.findByAuthorName(dto.getAuthorName())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid author name!!!"));;
+		Category category = null;
+		// 1. get category from it's id or name
+		if(dto.getCategoryId() == 0 && dto.getCategoryName() == null) {
+			throw new ApiException("Category id or name required");
+		}else if(categoryDao.existsById(dto.getCategoryId())) {
+			 	category = categoryDao.findById(dto.getCategoryId())
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid category id !!!!"));
 		}else {
-			AddAuthorDTO authorDTO = new AddAuthorDTO(dto.getAuthorName());
-			Author Detachedauthor = mapper.map(authorDTO, Author.class);
-			author = authorDao.save(Detachedauthor);
+				category = categoryDao.findByCategoryName(dto.getCategoryName())
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid category name !!!!"));
 		}
+
+			
+		
+		// 2. get author from it's id or name
+			Author author = null;
+			if(authorDao.existsById(dto.getAuthorId())){
+				author = authorDao.findById(dto.getAuthorId())
+						.orElseThrow(() -> new ResourceNotFoundException("Invalid author id!!!"));
+			}else if(authorDao.existsByAuthorName(dto.getAuthorName())) {
+				author = authorDao.findByAuthorName(dto.getAuthorName())
+						.orElseThrow(() -> new ResourceNotFoundException("Invalid author name!!!"));;
+			}else {
+				AddAuthorDTO authorDTO = new AddAuthorDTO(dto.getAuthorName());
+				Author Detachedauthor = mapper.map(authorDTO, Author.class);
+				author = authorDao.save(Detachedauthor);
+			}
 			
 		
 		
-		Book book = mapper.map(dto, Book.class);
+			Book book = mapper.map(dto, Book.class);
 		
 		// 3. category 1<--->* book 
-		book.setBookCategory(category);
+			book.setBookCategory(category);
 		
 		// 4. author *<--->* book
-		book.setAuthor(author);
+			book.setAuthor(author);
 		
 		// 5. save book post
-		Book persistentBook = bookDao.save(book);
+			Book persistentBook = bookDao.save(book);
 		
-		return new ApiResponse("New book added with ID=" + persistentBook.getId());
+			return new ApiResponse("New book added with ID=" + persistentBook.getId());
 	}
 }

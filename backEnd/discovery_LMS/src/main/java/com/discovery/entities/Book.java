@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -21,12 +22,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "Books")
+@Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString//(exclude = "password",callSuper = true) // toString excluding password
+@ToString
 public class Book extends BaseEntity{
 	
 //    title
@@ -57,9 +58,12 @@ public class Book extends BaseEntity{
     @JoinTable(
         name = "book_author",
         joinColumns = @JoinColumn(name = "book_id"),
-        inverseJoinColumns = @JoinColumn(name = "author_id")
-    )
+        inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
+	
+	
+	@OneToMany(mappedBy = "book")
+    private Set<Borrow> borrows;
 	
 	private String bookImagePath;
 	

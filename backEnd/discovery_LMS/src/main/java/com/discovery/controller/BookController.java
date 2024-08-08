@@ -40,13 +40,13 @@ public class BookController {
 		if(list.isEmpty())
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiException("List is empty"));
 		
-		return ResponseEntity.status(HttpStatus.FOUND).body(list);
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	
 	@PostMapping
 	@Operation(description = "add New Book")
-	public ResponseEntity<?> addCategory(@RequestBody @Valid AddBookDTO book) {
+	public ResponseEntity<?> addBook(@RequestBody @Valid AddBookDTO book) {
 		System.out.println("in add book " + book);
 		
 		try {
