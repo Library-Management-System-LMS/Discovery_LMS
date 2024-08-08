@@ -44,7 +44,9 @@ public class BookServiceImpl {
 		
 		List<BookDetailsDTO> list = new ArrayList<>();
 		for(Book b : newList) {
-			BookDetailsDTO dto = new BookDetailsDTO(b.getId(),b.getTitle(),b.getDescription(),b.getQuantityAvailable());
+			BookDetailsDTO dto = new BookDetailsDTO(b.getId(),
+					b.getTitle(),b.getDescription(),
+					b.getQuantityAvailable());
 			list.add(dto);
 		}
 		return list;

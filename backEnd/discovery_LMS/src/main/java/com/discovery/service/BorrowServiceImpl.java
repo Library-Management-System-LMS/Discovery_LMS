@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.discovery.custom_exceptions.ApiException;
 import com.discovery.custom_exceptions.ResourceNotFoundException;
 import com.discovery.dao.BookDao;
 import com.discovery.dao.BorrowDao;
@@ -23,6 +24,7 @@ import com.discovery.entities.Book;
 import com.discovery.entities.Borrow;
 import com.discovery.entities.Category;
 import com.discovery.entities.User;
+import com.discovery.entities.UserDeleteStatus;
 
 @Service
 @Transactional
@@ -67,7 +69,9 @@ public class BorrowServiceImpl {
 			User user = userDao.findById(dto.getUserId())
 					.orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
 			
-		
+//		//2.1 throw exception if user is deleted
+//			if(user.getIsDeleted() == UserDeleteStatus.YES)
+//				throw new ApiException("User is deleted");
 		
 			Borrow borrow= mapper.map(dto, Borrow.class);
 		

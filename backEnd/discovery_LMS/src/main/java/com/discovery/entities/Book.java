@@ -74,6 +74,11 @@ public class Book extends BaseEntity{
 		return "Success";
 	}
 	
+//	public Author getAuthor() {
+//		
+//		return authors.
+//	}
+	
 	
 	
 	

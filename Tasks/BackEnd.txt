@@ -1,20 +1,35 @@
 # Book Controller
 1. Get list of all Books
-2. Get list of books by category
+2. 
 3. Add new Book
-4. Delete book (soft delete)
-5. Get list of books by Author
-6.
+4. Delete book
+5. 
+
+
+# Author Controller
+1. Get list of books by Author
+2.
+
+# Category Controller
+1. Get list of books by category
+2. 
 
 
 # User Controller
 1. Sign Up user
 2. Sign in user
 3. Edit User details
-4. 
+4. Delete user (soft delete)
+5. 
 
 
 # Borrow Controller
 1. Borrow a book
 2. Return a book
 3. Show defaulter list
+4. 
+
+
+# Fine Controller
+1. Show User fine
+2. 

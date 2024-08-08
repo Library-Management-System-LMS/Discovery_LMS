@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UserDetailsDTO {
+	
+	private Long id;
 
 	private String firstName;
 	
@@ -18,7 +20,6 @@ public class UserDetailsDTO {
 	
 
 	private String email;
-	
 	
 	private UserRole role;
 }
