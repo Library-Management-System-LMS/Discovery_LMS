@@ -48,7 +48,7 @@ public class AuthorController {
 	
 	@PostMapping
 	@Operation(description = "add New Author")
-	public ResponseEntity<?> addCategory(@RequestBody @Valid AddAuthorDTO author) {
+	public ResponseEntity<?> addAuthor(@RequestBody @Valid AddAuthorDTO author) {
 		System.out.println("in add Author " + author);
 		
 		try {

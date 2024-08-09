@@ -18,6 +18,7 @@ public class SignInRequest {
 	@NotEmpty(message = "Email can't be blank")
 	@Email(message = "Invalid email format")
 	private String email;
+	
 	@NotEmpty
 	@Length(min = 3,max=20,message = "Invalid password length")
 	private String password;

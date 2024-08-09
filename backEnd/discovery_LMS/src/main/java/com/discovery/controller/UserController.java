@@ -59,7 +59,7 @@ public class UserController {
 	@PostMapping("/signup")
 	@Operation(description = "Sign Up User")
 	public ResponseEntity<?> signUpUser
-	(@RequestBody SignUp dto) {
+	(@RequestBody @Valid SignUp dto) {
 		
 		System.out.println("in add post "+dto);
 		

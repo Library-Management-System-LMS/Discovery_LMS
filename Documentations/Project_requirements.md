@@ -1,7 +1,8 @@
 # Project Name: Library Management System
 
-## Purpose: 
-    The purpose of the library management website is to provide a platform for users to efficiently manage library resources, including books. It aims to streamline the process of borrowing, returning, and managing library items for both library staff and users(Patrons).
+## Purpose:
+    The library management website is built to provide a platform for users to manage their books and resources. It allows users to easily borrow, return, and track library items. Library staff can quickly access information about resources and efficiently manage all operations.
+
 
     - Automate library tasks and processes for staff.
     - Simplify resource management (books).
@@ -21,10 +22,10 @@
     1. Manage library catalog: Add, edit, and delete resources.
     2. User accounts: user registration, login, and profile management.
     3. Circulation: Borrowing, returning, renewing of materials.
-    4. Search functionality: Find resources by title, author, genre, etc.
+    4. Search functionality: Find resources by title, author, category, etc.
     5. Overdue fines and notifications.
     6. Inventory management: Track resource availability and location.
-    7. Reporting: Generate reports on usage, fines, etc. (for staff)
+    7. Reporting: Generate reports on usage, fines, defaulters etc. (for staff)
 
 ## Workflow:
     1. User logs in to the website using their credentials.

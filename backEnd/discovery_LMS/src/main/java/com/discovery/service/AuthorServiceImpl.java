@@ -50,6 +50,6 @@ public class AuthorServiceImpl {
 		
 		Author persistentAuthor = authorDao.save(author);
 		
-		return new ApiResponse("New User added with ID=" + persistentAuthor.getId());
+		return new ApiResponse("New Author added with ID=" + persistentAuthor.getId());
 	}
 }
