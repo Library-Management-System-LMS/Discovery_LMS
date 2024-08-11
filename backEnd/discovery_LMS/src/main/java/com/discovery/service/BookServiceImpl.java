@@ -40,13 +40,14 @@ public class BookServiceImpl {
 	
 	public List<BookDetailsDTO> getBookList(){
 		
-		List<Book> newList = bookDao.findAll();
+		List<Book> newList = bookDao.getBookAndAuthors();
 		
 		List<BookDetailsDTO> list = new ArrayList<>();
 		for(Book b : newList) {
 			BookDetailsDTO dto = new BookDetailsDTO(b.getId(),
 					b.getTitle(),b.getDescription(),
-					b.getQuantityAvailable());
+					b.getQuantityAvailable(), b.getCategoryDetails(),
+					b.getAuthorDetails());
 			list.add(dto);
 		}
 		return list;

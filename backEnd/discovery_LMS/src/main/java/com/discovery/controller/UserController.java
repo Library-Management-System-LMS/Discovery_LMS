@@ -24,12 +24,13 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired //byType
 	private UserServiceImpl userService;
 	
+	//
 	@PostMapping("/signin") //@RequestMapping(method=POST)
 	@Operation(description = "Sign in User")
 	public ResponseEntity<?> signInUser(
@@ -48,7 +49,7 @@ public class UserController {
 			System.out.println(e);
 				
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(new ApiResponse(e.getMessage()));
+						.body(new ApiResponse(e.getMessage(), "failure"));
 						
 		}
 		
@@ -78,7 +79,7 @@ public class UserController {
 	
 	
 	//Add try catch block
-	@PutMapping
+	@PutMapping("/update")
 	@Operation(description = "Update user details")
 	public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUser dto) {
 		System.out.println("in update user " + dto);

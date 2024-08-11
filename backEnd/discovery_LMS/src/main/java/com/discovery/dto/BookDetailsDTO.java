@@ -27,17 +27,27 @@ public class BookDetailsDTO {
 	
 	private int quantity;
 	
-//	private Category category;
+	private CategoryDetailsDTO category;
 //	
-//	private Collection<Author> authors;
+	private List<AuthorDetailsDTO> authors;
 //
-//	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity) {
-//		super();
-//		BookId = bookId;
-//		this.bookTitle = bookTitle;
-//		this.description = description;
-//		this.quantity = quantity;
-//	}
+	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity) {
+		super();
+		BookId = bookId;
+		this.bookTitle = bookTitle;
+		this.description = description;
+		this.quantity = quantity;
+	}
+	
+	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity,
+			List<AuthorDetailsDTO>authors) {
+		super();
+		BookId = bookId;
+		this.bookTitle = bookTitle;
+		this.description = description;
+		this.quantity = quantity;
+		this.authors = authors;
+	}
 	
 	
 }

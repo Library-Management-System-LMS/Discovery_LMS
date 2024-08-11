@@ -1,7 +1,11 @@
 package com.discovery.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +18,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.discovery.dto.AuthorDetailsDTO;
+import com.discovery.dto.CategoryDetailsDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -74,10 +81,31 @@ public class Book extends BaseEntity{
 		return "Success";
 	}
 	
-//	public Author getAuthor() {
-//		
-//		return authors.
-//	}
+	public List<AuthorDetailsDTO> getAuthorDetails() {
+		
+		List<AuthorDetailsDTO> list = new ArrayList<>();
+		
+		for(Author a : authors) {
+			AuthorDetailsDTO newAuthor = new AuthorDetailsDTO();
+			newAuthor.setAuthorId(a.getId());
+			newAuthor.setAuthorName(a.getAuthorName());
+			list.add(newAuthor);
+		}
+		
+		return list;
+	}
+	
+	
+	public CategoryDetailsDTO getCategoryDetails() {
+		
+		CategoryDetailsDTO d = new CategoryDetailsDTO();
+		d.setCategoryId(bookCategory.getId());
+		d.setCategoryName(bookCategory.getCategoryName());
+		
+		return d;
+	}
+
+
 	
 	
 	

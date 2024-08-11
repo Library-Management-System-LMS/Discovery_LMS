@@ -26,10 +26,10 @@ public class Category extends BaseEntity{
 	private String categoryName;
 	
 
-	@OneToMany(mappedBy = "bookCategory", 
-			cascade = CascadeType.ALL /* ,fetch = FetchType.EAGER */ ,
-			orphanRemoval = true)
-	private List<Book>books = new ArrayList<>();
+//	@OneToMany(mappedBy = "bookCategory", 
+//			cascade = CascadeType.ALL /* ,fetch = FetchType.EAGER */ ,
+//			orphanRemoval = true)
+//	private List<Book>books = new ArrayList<>();
 	
 	
 	

@@ -15,11 +15,11 @@ public class UserDetailsDTO {
 
 	private String firstName;
 	
-
 	private String lastName;
 	
-
 	private String email;
 	
 	private UserRole role;
+	
+	private String status;
 }

@@ -1,8 +1,6 @@
-// import logo from './logo.svg';
-// import './App.css';
+import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import {Navbar, MyFooter} from './components/pageService';
-// import axios from 'axios';
 import LoginUser from './pages/login';  
 import RegisterUser from './pages/register';
 import Home from './pages/home';
@@ -14,11 +12,12 @@ import ViewRecords from './pages/viewRecords';
 import DefaulterList from './pages/defaulterList';
 import ManageUsers from './pages/manageUser';
 import ViewIssuedBook from './pages/viewIssuedBook';
-import { Link } from 'react-router-dom';  
 import Layout from './components/layout';
 import IssueBook from './pages/issueBook';
 
 function App() {
+  const user = useSelector((state) => state.user)
+
   return (
     
     <div className="App">

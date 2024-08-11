@@ -40,7 +40,9 @@ public class UserServiceImpl {
 		}
 		
 		//valid login -user : persistent -> entity -> dto
-			return mapper.map(user, UserDetailsDTO.class);
+			UserDetailsDTO userDetails = mapper.map(user, UserDetailsDTO.class);
+			userDetails.setStatus("success");
+			return userDetails;
 	}
 	
 	public ApiResponse signUpUser(SignUp dto) {

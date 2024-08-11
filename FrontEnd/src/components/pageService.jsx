@@ -11,14 +11,14 @@ function MyLogo() {
     //   <img src={logo} alt="Your Company Logo" className="logo" />
     // </div>
       // <!-- Image and text -->
-    <div classname="logo-container">
-      <nav class="navbar navbar-light bg-light">
+    <div className="logo-container">
+      <nav className="navbar navbar-light bg-light">
         {/* <a class="navbar-brand">
           <img src={logo} width="30" height="30" class="d-inline-block align-top" alt="Logo"/>
         </a> */}
         <img
         src={logo}
-        class="me-2"
+        className="me-2"
         height="40"
         alt="Logo"
         loading="lazy"
@@ -62,7 +62,7 @@ const MyNavbar = () =>{
     {/* Current page - Home (highlighted) */}
     <li className="nav-item">
       <Link className="nav-link active" to="/home">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           Home
         </button>
       </Link>
@@ -78,7 +78,7 @@ const MyNavbar = () =>{
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <button data-mdb-ripple-init type="button" class="btn">
+        <button data-mdb-ripple-init type="button" className="btn">
           More
         </button>
       </a>
@@ -96,14 +96,14 @@ const MyNavbar = () =>{
     {/* Login and Signup at right corner */}
     <li className="nav-item">
       <Link className="nav-link" to="/login">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           Login
         </button>
       </Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link" to="/register">
-      <button data-mdb-ripple-init type="button" class="btn btn-primary me-2">
+      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
           Sign up
         </button>
       </Link>
@@ -128,21 +128,21 @@ const MyNavbar1 = () => {
     {/* Current page - Home (highlighted) */}
     <li className="nav-item">
       <Link className="nav-link active" to="/home">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           Home
         </button>
       </Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link active" to="/about">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           About
         </button>
       </Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link" to="/login">
-      <button data-mdb-ripple-init type="button" class="btn btn-primary me-2">
+      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
           Login
         </button>
       </Link>
@@ -166,21 +166,21 @@ const MyNavbar2 = () => {
     {/* Current page - Home (highlighted) */}
     <li className="nav-item">
       <Link className="nav-link active" to="/home">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           Home
         </button>
       </Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link active" to="/about">
-      <button data-mdb-ripple-init type="button" class="btn">
+      <button data-mdb-ripple-init type="button" className="btn">
           About
         </button>
       </Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link" to="/register">
-      <button data-mdb-ripple-init type="button" class="btn btn-primary me-2">
+      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
           Sign Up
         </button>
       </Link>
