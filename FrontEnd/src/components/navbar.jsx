@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../images/LMS_logo.jpg';
 // import '../App.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './nav.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../features/userSlice';
 
 
 function MyLogo() {
@@ -31,6 +33,79 @@ function MyLogo() {
 }
 
 
+function LogInButton(){
+  return (
+    <li className="nav-item">
+    <Link className="nav-link" to="/login">
+      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
+          Log In
+        </button>
+      </Link>
+    </li>
+  )
+}
+
+function SignUpButton(){
+  return (
+    <li className="nav-item">
+    <Link className="nav-link" to="/register">
+    <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
+        Sign Up
+      </button>
+    </Link>
+  </li>
+  )
+}
+
+
+
+const Layout = () => {
+  const location = useLocation();
+  //  return (
+      //give pathname for different navbar and footer
+  
+      const renderNavbar = () => {
+          switch (location.pathname) {
+            case '/register':
+              return <LogInButton />;
+            case '/login':
+              return <SignUpButton />;
+          }
+        };
+      
+        return <>{renderNavbar()}</>;
+      
+      // <div>
+      //     {location.pathname === '/login' ? <MyNavbar1 /> : <MyNavbar/>}
+      //     {children}
+      //     {location.pathname=='/login' ? <MyFooter/> : <MyFooter/>}
+      // </div>
+
+  //  );
+
+};
+
+
+function User() {
+
+
+  const value = localStorage.getItem('username');
+
+
+
+  return (
+    <li className="nav-item">
+    <Link className="nav-link active" to="#">
+    <button data-mdb-ripple-init type="button" className="btn">
+        <p>Hi! {value} </p>
+      </button>
+    </Link>
+  </li>
+
+  )
+}
+
+
 
 // const Navbar = () => {
 //   const location = useLocation();
@@ -50,12 +125,35 @@ function MyLogo() {
 
 // };
 
-const MyNavbar = () =>{
+export const NavbarAfterLogIn = () =>{
+
+  const user = useSelector((state) => state.user)
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+
+  const onLogout = () => {
+    // clear the local storage
+    localStorage.removeItem('userId')
+    localStorage.removeItem('email')
+    localStorage.removeItem('role')
+    localStorage.removeItem('username')
+
+    // set the login status to false
+    dispatch(logoutAction())
+
+    // navigate to login page
+    navigate('/login')
+  }
+
+
   return (
-    <header className="d-flex flex-wrap w-100 justify-content-between align-itms-center mb-4 border-bottom">
+    <header className="d-flex flex-wrap w-100 justify-content-between align-itms-center border-bottom">
   <div className="d-flex align-items-center col-md-4">
     <MyLogo />
-    <Link className='nav-link' to="/home">Library Management System</Link>
+    <Link className='nav-link' to="/home">Discovery LMS</Link>
   </div>
 
   <ul className="nav col-md-6 justify-content-end list-unstyled">
@@ -87,27 +185,25 @@ const MyNavbar = () =>{
         <li><Link className="dropdown-item" to="/manageuser">Manage Users</Link></li>
         <li><Link className="dropdown-item" to="/managebook">Manage Books</Link></li>
         <li><Link className="dropdown-item" to="/viewbook">View Records</Link></li>
-        <li><Link className="dropdown-item" to="/issuebook">Issue Book</Link></li>
+        <li><Link className="dropdown-item" to="/borrow">Borrow Book</Link></li>
         <li><Link className="dropdown-item" to="/defaulter">Defaulters List</Link></li>
         <li><Link className="dropdown-item" to="/about">About</Link></li>
       </ul>
     </li>
 
+    {/* User Button */}
+      <User/>
+
     {/* Login and Signup at right corner */}
     <li className="nav-item">
-      <Link className="nav-link" to="/login">
-      <button data-mdb-ripple-init type="button" className="btn">
-          Login
+    <Link className="nav-link" to="/login">
+      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2"
+       onClick={onLogout}>
+          Log out
         </button>
       </Link>
     </li>
-    <li className="nav-item">
-      <Link className="nav-link" to="/register">
-      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
-          Sign up
-        </button>
-      </Link>
-    </li>
+    
 
 
   </ul>
@@ -116,12 +212,13 @@ const MyNavbar = () =>{
   );
 }
 
-const MyNavbar1 = () => {
+export const NavbarBeforeLogin = () => {
+  const location = useLocation();
   return (
-<header className="d-flex flex-wrap w-100 justify-content-between align-itms-center mb-4 border-bottom">
-  <div className="d-flex align-items-center col-md-4">
+<div className="d-flex flex-wrap w-100 justify-content-between align-itms-center border-bottom">
+  <div className="d-flex align-items-center">
     <MyLogo />
-    <Link className='nav-link' to="/home">Library Management System</Link>
+    <Link className='nav-link' to="/home">Discovery LMS</Link>
   </div>
 
   <ul className="nav col-md-6 justify-content-end list-unstyled">
@@ -133,6 +230,32 @@ const MyNavbar1 = () => {
         </button>
       </Link>
     </li>
+
+    {/* Dropdown Menu */}
+    <li className="nav-item dropdown">
+      <a
+        className="nav-link dropdown-toggle"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <button data-mdb-ripple-init type="button" className="btn">
+          More
+        </button>
+      </a>
+      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><Link className="dropdown-item" to="/return">Return Book</Link></li>
+        <li><Link className="dropdown-item" to="/manageuser">Manage Users</Link></li>
+        <li><Link className="dropdown-item" to="/managebook">Manage Books</Link></li>
+        <li><Link className="dropdown-item" to="/viewbook">View Records</Link></li>
+        <li><Link className="dropdown-item" to="/borrow">Borrow Book</Link></li>
+        <li><Link className="dropdown-item" to="/defaulter">Defaulters List</Link></li>
+        <li><Link className="dropdown-item" to="/about">About</Link></li>
+      </ul>
+    </li>
+
     <li className="nav-item">
       <Link className="nav-link active" to="/about">
       <button data-mdb-ripple-init type="button" className="btn">
@@ -140,15 +263,9 @@ const MyNavbar1 = () => {
         </button>
       </Link>
     </li>
-    <li className="nav-item">
-      <Link className="nav-link" to="/login">
-      <button data-mdb-ripple-init type="button" className="btn btn-primary me-2">
-          Login
-        </button>
-      </Link>
-    </li>
+    {location.pathname === '/login' ?  <SignUpButton/> : <LogInButton/>}
   </ul>
-</header>
+</div>
 
   );
 }
@@ -192,7 +309,7 @@ const MyNavbar2 = () => {
 }
 
 
-function MyFooter(){
+export const MyFooter = () => {
   return (
     <footer className="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
         <p className="col-md-4 mb-0 text-muted">2024 Library Managment System</p>
@@ -207,4 +324,3 @@ function MyFooter(){
   );
 }
 
-export { MyLogo, MyNavbar, MyNavbar1, MyNavbar2, MyFooter};

@@ -10,10 +10,12 @@ import com.discovery.custom_exceptions.AuthenticationException;
 import com.discovery.custom_exceptions.ResourceNotFoundException;
 import com.discovery.dao.UserDao;
 import com.discovery.dto.ApiResponse;
+import com.discovery.dto.BookDetailsDTO;
 import com.discovery.dto.SignInRequest;
 import com.discovery.dto.SignUp;
 import com.discovery.dto.UpdateUser;
 import com.discovery.dto.UserDetailsDTO;
+import com.discovery.entities.Book;
 import com.discovery.entities.User;
 import com.discovery.entities.UserDeleteStatus;
 import com.discovery.entities.UserRole;
@@ -45,6 +47,15 @@ public class UserServiceImpl {
 			return userDetails;
 	}
 	
+	public UserDetailsDTO getUserDetails(Long id) {
+		User user = userDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
+		
+		UserDetailsDTO dto = new UserDetailsDTO(user.getId(), user.getFirstName(), user.getLastName());
+		
+		return dto;
+	}
+	
 	public ApiResponse signUpUser(SignUp dto) {
 		
 		if(userDao.existsByEmail(dto.getEmail()))
@@ -59,7 +70,7 @@ public class UserServiceImpl {
 		
 		User persistentUser = userDao.save(user);
 		
-		return new ApiResponse("New User added with ID=" + persistentUser.getId());
+		return new ApiResponse("New User added with ID=" + persistentUser.getId(), "success");
 	}
 	
 	
@@ -72,7 +83,7 @@ public class UserServiceImpl {
 		mapper.map(dto, persistentUser);
 		
 		dto.setId(persistentUser.getId());
-		
+		dto.setStatus("success");
 		return dto;
 	}
 	
@@ -93,7 +104,7 @@ public class UserServiceImpl {
 		}
 
 		return new ApiResponse("Details of user " + user.getFirstName()+" "
-		+ user.getLastName()+ " deleted....");
+		+ user.getLastName()+ " deleted....", "success");
 	}
 	
 	

@@ -47,7 +47,7 @@ public class BorrowController {
 	}
 	
 	
-	@PostMapping
+	@PostMapping("/issue")
 	@Operation(description = "add New Borrow")
 	public ResponseEntity<?> addBorrow(@RequestBody @Valid AddBorrowDTO borrow) {
 		System.out.println("in add book " + borrow);

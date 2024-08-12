@@ -84,6 +84,6 @@ public class BorrowServiceImpl {
 		// 5. save book post
 			Borrow persistentBorrow = borrowDao.save(borrow);
 		
-		return new ApiResponse("New borrow added with ID=" + persistentBorrow.getId());
+		return new ApiResponse("New borrow added with ID=" + persistentBorrow.getId(), "success");
 	}
 }

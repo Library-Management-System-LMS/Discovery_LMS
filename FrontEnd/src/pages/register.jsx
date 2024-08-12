@@ -1,20 +1,22 @@
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import './RegisterUser.css';
+import { signup } from '../service/userService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterUser = () => {
     // Set title of the page
     document.title = "SIGN UP";
 
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
-        contactNo: '',
-        username: '',
         password: '',
-        role: 'admin', // Default role
+        confirmPassword: '',
     });
 
     const handleInputChange = (e) => {
@@ -24,13 +26,55 @@ const RegisterUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.post('YOUR_API_ENDPOINT', formData);
-            console.log('Registration successful:', response.data);
-            // Optionally: show a success message or redirect to another page
-        } catch (error) {
-            console.error('Registration failed:', error);
-            // Optionally: handle error state or show an error message
+        try {//firstName, lastName, email, password, passwordConfirm, phone
+
+                // client side validations
+            if(formData.firstName.length === 0){
+
+            }
+            else if(formData.lastName.length === 0){
+
+            }
+            else if(formData.email.length === 0){
+                toast.warning('Enter Email')
+            }else if(formData.password.length === 0){
+                toast.password('Enter Password')
+            }else if(formData.confirmPassword.length === 0){
+
+            }else if(formData.password !== formData.confirmPassword){
+                
+            }else{
+                // get user details from email and password
+                const result = await signup(formData)
+        
+                // sample response
+                // {
+                //     "firstName": "string",
+                //     "lastName": "string",
+                //     "email": "string",
+                //     "password": "string",
+                //     "passwordConfirm": "string"
+                //   }
+        
+                console.log(JSON.stringify(result))
+        
+                if(result['status'] === 'success'){
+        
+                    
+                    // navigate to login
+                    navigate('/login')
+        
+                }else if (result['status'] === 'failure'){
+
+                    toast.error('invalid email or password')
+                    navigate('/signup')
+                }
+                    console.log('Registration successful:', result.data);
+                    // Optionally: show a success message or redirect to another page
+            }
+                
+        }catch (error) {
+                console.error('Registration failed:', error);
         }
     };
 
@@ -83,30 +127,6 @@ const RegisterUser = () => {
                                         />
                                     </div>
                                     <div className="form-group mb-2">
-                                        <label htmlFor="contactNo">Contact No</label>
-                                        <input
-                                            type="text"
-                                            id="contactNo"
-                                            name="contactNo"
-                                            className="form-control"
-                                            value={formData.contactNo}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="username">Username</label>
-                                        <input
-                                            type="text"
-                                            id="username"
-                                            name="username"
-                                            className="form-control"
-                                            value={formData.username}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-2">
                                         <label htmlFor="password">Password</label>
                                         <input
                                             type="password"
@@ -118,6 +138,19 @@ const RegisterUser = () => {
                                             required
                                         />
                                     </div>
+                                    <div className="mb-2">
+                                        <label htmlFor="confirmPassword">
+                                            Confirm Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                        />
+                                        </div>
                                     <div className="text-center">
                                         <button type="submit" className="btn btn-primary btn-lg">Register</button>
                                     </div>

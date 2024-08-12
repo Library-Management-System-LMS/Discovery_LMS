@@ -22,4 +22,11 @@ public class UserDetailsDTO {
 	private UserRole role;
 	
 	private String status;
+	
+	public UserDetailsDTO(Long id, String firstName, String lastName) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 }

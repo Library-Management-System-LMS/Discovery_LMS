@@ -17,7 +17,12 @@ public interface BookDao extends JpaRepository<Book,Long> {
 	
 	//get books + authors details using custom query
 	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory")
-	List<Book>getBookAndAuthors();
+	List<Book>getBookAndAuthorAndCategory();
+	
+	//get books + authors details using custom query
+	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory WHERE b.id =:id")
+	Optional<Book> getBookAndAuthorDetails(Long id);
+	
 	//select b from Book b left join fetch b.authors where b.id =:id
 	@Query("select b from Book b left join fetch b.bookCategory")
 	List<Book>getBookAndCategory();

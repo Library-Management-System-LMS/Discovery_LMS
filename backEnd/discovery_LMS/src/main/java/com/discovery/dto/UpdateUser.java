@@ -36,4 +36,7 @@ public class UpdateUser {
 	private String password;
 	
 //	private UserRole role;
+	
+	
+	private String status;
 }
