@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getBorrowDetails, returnBook } from '../service/borrowService';
 import { toast } from 'react-toastify';
 
@@ -25,7 +25,7 @@ const ReturnBook = () => {
 
     const body = {
       userId,
-      bookId,
+      bookId : borrowDetails.bookId,
     }
 
     const result = await returnBook(body)
@@ -34,9 +34,10 @@ const ReturnBook = () => {
       toast.success(result['message'])
     }else if(result['status'] === 'returned'){
       toast.done(result['message'])
+    }else{
+      toast.error('fail to return book')
     }
 
-    toast.error('fail to return book')
   };
 
   return (

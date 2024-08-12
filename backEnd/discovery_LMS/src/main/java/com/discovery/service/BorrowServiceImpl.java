@@ -113,7 +113,12 @@ public class BorrowServiceImpl {
 //			if(user.getIsDeleted() == UserDeleteStatus.YES)
 //				throw new ApiException("User is deleted");
 		
-			Borrow borrow= mapper.map(dto, Borrow.class);
+			Borrow borrow= new Borrow();
+			borrow.setBook(book);
+			borrow.setUser(user);
+			borrow.setBorrowDate(dto.getBorrowDate());
+			borrow.setReturnDate(dto.getReturnDate());
+			borrow.setStatus(dto.getStatus());
 		
 		// 3. borrow 1<--->* book 
 			borrow.setBook(book);
@@ -124,6 +129,6 @@ public class BorrowServiceImpl {
 		// 5. save book post
 			Borrow persistentBorrow = borrowDao.save(borrow);
 		
-		return new ApiResponse("New borrow added with ID=" + persistentBorrow.getId(), "success");
+		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
 	}
 }

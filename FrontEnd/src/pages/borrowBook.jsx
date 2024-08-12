@@ -11,7 +11,7 @@ const BorrowBook = () => {
   const [bookId, setBookId] = useState('');
   const [userId, setUserId] = useState('');
   const [borrowDate, setBorrowDate] = useState('');
-  const [reutrnDate, setReturnDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
   const [status, setStatus] = useState('BORROWED')
 
   const onSubmit = async (e) => {
@@ -22,17 +22,15 @@ const BorrowBook = () => {
       userId,
       status,
       borrowDate,
-      reutrnDate,
+      returnDate,
     }
 
     const result = await borrowBook(details)
-    console.log(JSON.stringify(result))
+    // console.log(JSON.stringify(result))
 
     
     if(result['status'] === 'success')
-      toast.success('book issued')
-
-      alert(result['message'])
+      toast.success(result['message'])
   }
 
 
@@ -157,7 +155,7 @@ const BorrowBook = () => {
       <div className="form-group d-flex justify-content-between align-items-center">
         <label htmlFor="return-date" className="col-form-label mr-2">Due Date:</label>
         <input type="date" id="due-date" className="form-control" 
-        value={reutrnDate}
+        value={returnDate}
         onChange={(e) => setReturnDate(e.target.value)}
         required/>
       </div>
