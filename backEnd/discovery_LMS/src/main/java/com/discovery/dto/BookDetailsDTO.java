@@ -39,7 +39,7 @@ public class BookDetailsDTO {
 		this.quantity = quantity;
 	}
 	
-	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity,
+	public BookDetailsDTO(Long bookId, String bookTitle, int quantity,
 			List<AuthorDetailsDTO>authors) {
 		super();
 		BookId = bookId;

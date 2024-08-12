@@ -40,7 +40,7 @@ public class BookServiceImpl {
 	
 	public List<BookDetailsDTO> getBookList(){
 		
-		List<Book> newList = bookDao.getBookAndAuthors();
+		List<Book> newList = bookDao.getBookAndAuthorAndCategory();
 		
 		List<BookDetailsDTO> list = new ArrayList<>();
 		for(Book b : newList) {
@@ -52,6 +52,19 @@ public class BookServiceImpl {
 		}
 		return list;
 	}
+	
+	
+	public BookDetailsDTO getBookDetails(Long id) {
+		Book book = bookDao.getBookAndAuthorDetails(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
+		
+		BookDetailsDTO dto = new BookDetailsDTO(book.getId(), book.getTitle(), book.getQuantityAvailable()
+				, book.getAuthorDetails());
+		
+		return dto;
+		
+	}
+	
 	
 	public ApiResponse addNewBook(AddBookDTO dto) {
 		
@@ -96,6 +109,6 @@ public class BookServiceImpl {
 		// 5. save book post
 			Book persistentBook = bookDao.save(book);
 		
-			return new ApiResponse("New book added with ID=" + persistentBook.getId());
+			return new ApiResponse("New book added with ID=" + persistentBook.getId(), "success");
 	}
 }

@@ -7,6 +7,7 @@ import com.discovery.entities.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class SignUp {
 	
@@ -32,16 +34,17 @@ public class SignUp {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
+	
 //	private UserRole role;
 	
-	public SignUp(String firstName, String lastName,
-			String email, String password) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-	}
+//	public SignUp(String firstName, String lastName,
+//			String email, String password) {
+//		super();
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.password = password;
+//	}
 	
 	
 }

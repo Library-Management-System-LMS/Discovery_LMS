@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
-import {Navbar, MyFooter} from './components/pageService';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import LoginUser from './pages/login';  
 import RegisterUser from './pages/register';
 import Home from './pages/home';
@@ -12,8 +13,8 @@ import ViewRecords from './pages/viewRecords';
 import DefaulterList from './pages/defaulterList';
 import ManageUsers from './pages/manageUser';
 import ViewIssuedBook from './pages/viewIssuedBook';
-import Layout from './components/layout';
-import IssueBook from './pages/issueBook';
+import BorrowBook from './pages/borrowBook';
+import { MyFooter, NavbarAfterLogIn, NavbarBeforeLogin } from './components/navbar';
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -21,8 +22,7 @@ function App() {
   return (
     
     <div className="App">
-
-      <Layout />
+      { user.loginStatus ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
       
       <Routes>
         
@@ -38,11 +38,12 @@ function App() {
         <Route path='/viewrecords' element={<ViewRecords />} />
         <Route path='/defaulter' element={<DefaulterList/>}/>
         <Route path='/viewbook' element={<ViewIssuedBook/>}/>
-        <Route path='/issuebook' element={<IssueBook/>}/>
+        <Route path='/borrow' element={<BorrowBook/>}/>
       </Routes>
       
 
       <MyFooter/>
+      <ToastContainer />
     </div>
   );
 }
