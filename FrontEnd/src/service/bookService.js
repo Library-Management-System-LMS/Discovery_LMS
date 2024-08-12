@@ -22,6 +22,6 @@ export async function addBook(body){
 
 export async function getAllBooks(){
     const response = await axios.get(`${config.url}/book`)
-
+    // console.log(JSON.stringify(response))
     return response.data
 }

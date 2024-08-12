@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addBook, getAllBooks } from '../service/bookService';
 import { toast } from 'react-toastify';
+import BookList from '../components/book';
 //import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 const ManageBooks = () => {
@@ -40,9 +41,14 @@ const ManageBooks = () => {
     }
   }
 
+  const[bookDetail, setBookdetail] = useState([]);
+
   const loadBooks = async () => {
     const allBooks = await getAllBooks();
     
+    console.log(JSON.stringify(allBooks))
+
+    setBookdetail(allBooks)
   }
 
   return (
@@ -88,50 +94,37 @@ const ManageBooks = () => {
       <div className="content p-4 w-100">
         <div className="header d-flex justify-content-between align-items-center mb-4">
           <h1>Manage Books</h1>
+          <div className="d-grid gap-2">
+          <button className="btn btn-danger"
+          onClick={loadBooks}>Load Book Details</button>
+        </div>
         </div>
         <table className="table table-bordered">
           <thead>
             <tr>
               <th>Book Id</th>
               <th>Name</th>
+              <th>Category</th>
               <th>Author</th>
               <th>Quantity</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-            
-              <td>1</td>
-              <td>Introducing Java 8</td>
-              <td>Raoul-Gabriel Urma</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Java: The Legend</td>
-              <td>Benjamin Evans</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Spring MVC: A tutorial</td>
-              <td>Paul Deck</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Core Java Volume I - Fundamentals</td>
-              <td>Cay S. Horstmann</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Java: A Beginner's Guide</td>
-              <td>Herbert Schildt</td>
-              <td>3</td>
-            </tr>
+            {bookDetail.map((book) => {
+              return (
+                <BookList
+                id = {book.bookId}
+                title = {book.bookTitle}
+                category = {book.category.categoryName}
+                author = {book.authors[0].authorName}
+                quantity = {book.quantity}
+        
+                />
+              )
+            })}
           </tbody>
         </table>
+        
       </div>
     </div>
    </div>
