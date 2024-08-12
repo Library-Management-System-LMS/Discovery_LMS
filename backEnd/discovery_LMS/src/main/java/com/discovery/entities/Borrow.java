@@ -47,5 +47,11 @@ public class Borrow  extends BaseEntity {
 	@Column(length = 10)
     private BorrowStatus status;
     
-    
+    @Column(name = "due_date")
+    private LocalDate dueDate;  // New field for due date
+
+	public void setBorrowDate() {
+		// TODO Auto-generated method stub
+		
+	}
 }
