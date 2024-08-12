@@ -1,117 +1,139 @@
 import React from 'react';
-import Layout from '../components/layout';
+import './home.css'; // Import the CSS file for styling
+import Book01 from '../images/Book01.jpg';
+import Book02 from '../images/Book02.jpg';
+import Book03 from '../images/Book03.jpg';
+import Book04 from '../images/Book04.jpg';
+import userProfile from '../images/userProfile.jpg';
+import Cart from '../images/Cart.jpg';
 
 const Home = () => {
-  //to set title of the page
-  document.title = "HOME";
-
-
   return (
-    <div class="container">
-      
-      <div class="row text-center mb-4">
-      <div class="col-md-3 counter bg-white p-4 shadow-sm rounded">
-        <h3>No. of Books</h3>
-        <p>4</p>
-      </div>
-      <div class="col-md-3 counter bg-white p-4 shadow-sm rounded">
-        <h3>No. of Users</h3>
-        <p>6</p>
-      </div>
-      <div class="col-md-3 counter bg-white p-4 shadow-sm rounded">
-        <h3>Issued Books</h3>
-        <p>2</p>
-      </div>
-      <div class="col-md-3 counter bg-white p-4 shadow-sm rounded">
-        <h3>Defaulter List</h3>
-        <p>1</p>
-      </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <h3>User Details</h3>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Sunil</td>
-              <td>sunil@example.com</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Mangesh</td>
-              <td>mangesh@example.com</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Deepak</td>
-              <td>deepak@example.com</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Rahul</td>
-              <td>rahul@example.com</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Praful</td>
-              <td>praful@example.com</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-md-6 mb-4">
-        <h3>Book Details</h3>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Book ID</th>
-              <th>Name</th>
-              <th>Author</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Introducing Java 8</td>
-              <td>Raoul-Gabriel Urma</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Java: The Legend</td>
-              <td>Benjamin Evans</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Spring MVC: A tutorial</td>
-              <td>Paul Deck</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Core Java Volume I</td>
-              <td>Cay S. Horstmann</td>
-              <td>3</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <div className="home-container">
+      <aside className="sidebar">
+        {/* You can add other sidebar content here */}
+      </aside>
 
-  
+      <main className="main-content">
+        <header className="main-header">
+          <h2>My Books</h2>
+          <div className="search-bar">
+            <input type="text" placeholder="Start Searching..." />
+          </div>
+
+          <div className="user-profile">
+            <img src={userProfile} alt="User Profile" />
+          </div>
+
+          <div className="Cart">
+            <button><img src={Cart} alt="Cart" /></button>
+            
+          </div>
+        </header>
+
+        <div className="books-section">
+
+          <div className="book-category">
+            <h3>Category Name</h3> 
+            <div className="book-list">
+              <div className="book-item">
+                <img src={Book01} alt="Harry Potter book cover" />
+                <p>Harry Potter</p>
+                <span>by J.K. Rowling</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book02} alt="The Past is Rising book cover" />
+                <p>The Past is Rising</p>
+                <span>by Kathryn Bywaters</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book03} alt="The Last Four Things book cover" />
+                <p>The Last Four Things</p>
+                <span>by Paul Hoffman</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book04} alt="Other London book cover" />
+                <p>Other London</p>
+                <span>by M.V. Stott</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book04} alt="Other London book cover" />
+                <p>Other London</p>
+                <span>by M.V. Stott</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book04} alt="Other London book cover" />
+                <p>Other London</p>
+                <span>by M.V. Stott</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="book-category">
+            <h3>Comedy</h3> 
+            <div className="book-list">
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              <div className="book-item">
+                <img src={Book01} alt="Comedy Book Cover" />
+                <p>Comedy Book Title</p>
+                <span>by Author Name</span>
+                <button className="add-to-cart-button">Add to Cart</button>
+              </div>
+
+              {/* Add more comedy books as needed */}
+            </div>
+          </div>
+
+          {/* Repeat the book-category structure for other categories */}
+        </div>
+      </main>
     </div>
   );
-}
+};
 
 export default Home;
