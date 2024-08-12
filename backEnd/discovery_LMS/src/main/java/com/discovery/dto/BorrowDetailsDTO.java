@@ -26,15 +26,30 @@ public class BorrowDetailsDTO {
 	
 	 private Long id;
 	 
+	 private Long bookId;
+	 
 	 private String bookName;
 	 
-	 private String userName;
+	 private Long userId;
 	 
+	 private String userName;
+
 	 private BorrowStatus status;
 	 
 	 private LocalDate borrowDate;
 	 
 	 private LocalDate returnDate;
+	 
+	 public BorrowDetailsDTO(Long id, String bookName, String userName, BorrowStatus status, LocalDate borrowDate,
+				LocalDate returnDate) {
+			super();
+			this.id = id;
+			this.bookName = bookName;
+			this.userName = userName;
+			this.status = status;
+			this.borrowDate = borrowDate;
+			this.returnDate = returnDate;
+		}
 	 
 	 
 }

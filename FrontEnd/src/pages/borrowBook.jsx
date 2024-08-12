@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { borrowBook, getBook } from '../service/bookService';
+import { getBook } from '../service/bookService';
+import { borrowBook } from '../service/borrowService';
 import { getUser } from '../service/userService';
 
 const BorrowBook = () => {
@@ -11,6 +12,7 @@ const BorrowBook = () => {
   const [userId, setUserId] = useState('');
   const [borrowDate, setBorrowDate] = useState('');
   const [reutrnDate, setReturnDate] = useState('');
+  const [status, setStatus] = useState('BORROWED')
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const BorrowBook = () => {
     const details = {
       bookId,
       userId,
+      status,
       borrowDate,
       reutrnDate,
     }

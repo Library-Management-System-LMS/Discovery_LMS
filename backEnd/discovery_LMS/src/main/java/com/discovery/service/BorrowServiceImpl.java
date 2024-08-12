@@ -1,5 +1,6 @@
 package com.discovery.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import com.discovery.dto.BorrowDetailsDTO;
 import com.discovery.entities.Author;
 import com.discovery.entities.Book;
 import com.discovery.entities.Borrow;
+import com.discovery.entities.BorrowStatus;
 import com.discovery.entities.Category;
 import com.discovery.entities.User;
 import com.discovery.entities.UserDeleteStatus;
@@ -57,6 +59,44 @@ public class BorrowServiceImpl {
 		}
 		return list;
 	}
+	
+	
+	public BorrowDetailsDTO getBorrowDetailByUserIdAndBookId(Long userId) {
+
+		User user = userDao.findById(userId)
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
+					
+		Borrow borrow = borrowDao.findByUser(user)
+					.orElseThrow(() -> new ResourceNotFoundException("Borrow Details not found !!!!"));
+					
+		BorrowDetailsDTO dto = new BorrowDetailsDTO(borrow.getId(),borrow.getBook().getId(), borrow.getBook().getTitle()
+					,borrow.getUser().getId(), borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(),
+					borrow.getStatus(), borrow.getBorrowDate(), borrow.getReturnDate());
+					
+					return dto;
+	}
+	
+	public ApiResponse returnBook(Long uId, Long bId) {
+		
+		Book book = bookDao.findById(bId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
+		
+		User user = userDao.findById(uId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
+		
+		Borrow borrow = borrowDao.findByUserAndBook(user, book)
+				.orElseThrow(() -> new ResourceNotFoundException("Borrow Details not found !!!!"));
+		
+		if(borrow.getStatus() == BorrowStatus.RETURNED)
+			return new ApiResponse("Book is already returned!", "returned");
+		
+		borrow.setStatus(BorrowStatus.RETURNED);
+		borrow.setReturnedOn(LocalDate.now());
+		
+		return new ApiResponse(borrow.getBook().getTitle() + " Book returned Successfully by "
+								+ borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(), "success");
+	}
+	
 	
 	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {

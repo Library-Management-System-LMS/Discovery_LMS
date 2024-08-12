@@ -65,6 +65,27 @@ public class BookServiceImpl {
 		
 	}
 	
+	public List<BookDetailsDTO> getBookDetails(String category) {
+		
+//		Category c = categoryDao.findByCategoryName(category)
+//				.orElseThrow(() -> new ResourceNotFoundException("Invalid category name !!!!"));
+		
+		List<Book> bookList = bookDao.getBookAndAuthorAndCategory(category);
+		
+		List<BookDetailsDTO> list = new ArrayList<>();
+		
+		for(Book b: bookList) {
+			BookDetailsDTO dto = new BookDetailsDTO(b.getId(),
+					b.getTitle(),b.getDescription(),
+					b.getQuantityAvailable(), b.getCategoryDetails(),
+					b.getAuthorDetails());
+			list.add(dto);
+		}
+		
+		return list;
+		
+	}
+	
 	
 	public ApiResponse addNewBook(AddBookDTO dto) {
 		

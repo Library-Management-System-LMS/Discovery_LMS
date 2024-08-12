@@ -1,11 +1,6 @@
 import axios from 'axios'
 import config from '../config'
 
-export async function borrowBook(body){
-    const response = await axios.post(`${config.url}/borrow/issue/`, body)
-
-    return response.data
-}
 
 export async function getBook(body){
     const response = await axios.get(`${config.url}/book/info/${body}`)

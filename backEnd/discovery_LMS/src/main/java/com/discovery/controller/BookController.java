@@ -64,6 +64,25 @@ public class BookController {
 		}
 	}
 	
+	@GetMapping("/find/{category}")
+	@Operation(description = "get book details by category")
+	public ResponseEntity<?> getBookDetails(@PathVariable String category){
+		System.out.println("in book info by category " + category);
+				
+					
+		try {
+			return ResponseEntity.ok(
+							bookService.getBookDetails(category));
+		} catch (RuntimeException e) {
+						
+			System.out.println(e);
+						
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ApiResponse(e.getMessage(), "failure"));
+								
+		}
+	}
+	
 	
 	@PostMapping("/add")
 	@Operation(description = "add New Book")

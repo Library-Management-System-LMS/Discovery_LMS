@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.discovery.dto.BookDetailsDTO;
 import com.discovery.entities.Book;
+import com.discovery.entities.Category;
 
 public interface BookDao extends JpaRepository<Book,Long> {
 	
@@ -26,5 +27,11 @@ public interface BookDao extends JpaRepository<Book,Long> {
 	//select b from Book b left join fetch b.authors where b.id =:id
 	@Query("select b from Book b left join fetch b.bookCategory")
 	List<Book>getBookAndCategory();
+	
+	List<Book> findByBookCategory(Category category);
+	
+	//get books + authors details using custom query
+	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory c WHERE c.categoryName = :category")
+	List<Book> getBookAndAuthorAndCategory(String category);
 	
 }
