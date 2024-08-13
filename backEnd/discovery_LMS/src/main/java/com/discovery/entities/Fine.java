@@ -24,9 +24,13 @@ import lombok.ToString;
 public class Fine extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "borrow_id", nullable = false)
+    @JoinColumn(name = "borrow_id",referencedColumnName ="id")
     private Borrow borrow;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    
     @Column(name = "fine_amount", nullable = false)
     private double fineAmount;
 
@@ -35,4 +39,5 @@ public class Fine extends BaseEntity {
 
     @Column(name = "paid", nullable = false)
     private boolean paid;
+   
 }
