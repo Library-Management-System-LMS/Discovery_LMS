@@ -11,7 +11,7 @@ const BorrowBook = () => {
   const [bookId, setBookId] = useState('');
   const [userId, setUserId] = useState('');
   const [borrowDate, setBorrowDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const [status, setStatus] = useState('BORROWED')
 
   const onSubmit = async (e) => {
@@ -22,15 +22,23 @@ const BorrowBook = () => {
       userId,
       status,
       borrowDate,
-      returnDate,
+      dueDate,
     }
 
     const result = await borrowBook(details)
     // console.log(JSON.stringify(result))
-
-    
-    if(result['status'] === 'success')
+    if(bookId.length === 0)
+      toast.warn('Enter Book Id')
+    else if(userId.length === 0)
+      toast.warn('Enter User Id')
+    // else if(borrowDate != currentDate)
+    //   toast.warn('Borrow Date should be Current Date')
+    // else if(dueDate > (dueDate+2) )
+    //   toast.warn('Due date should be more than 2 days')
+    else if(result['status'] === 'success')
       toast.success(result['message'])
+    else
+      toast.error(result['message'])
   }
 
 
@@ -129,7 +137,7 @@ const BorrowBook = () => {
 
       <div className="row mt-4 justify-content-center">
   <div className="col-12 col-md-6 issue-book border rounded p-3">
-    <h2 className="text-center">Issue Book</h2>
+    <h2 className="text-center">Borrow Book</h2>
     <form>
       <div className="form-group d-flex justify-content-between align-items-center">
         <label htmlFor="book-id" className="col-form-label mr-2">Book Id:</label>
@@ -146,17 +154,17 @@ const BorrowBook = () => {
         required />
       </div>
       <div className="form-group d-flex justify-content-between align-items-center">
-        <label htmlFor="borrow-date" className="col-form-label mr-2">Issue Date:</label>
+        <label htmlFor="borrow-date" className="col-form-label mr-2">Borrow Date:</label>
         <input type="date" id="issue-date" className="form-control"
         value={borrowDate}
         onChange={(e) => setBorrowDate(e.target.value)}
         required />
       </div>
       <div className="form-group d-flex justify-content-between align-items-center">
-        <label htmlFor="return-date" className="col-form-label mr-2">Due Date:</label>
+        <label htmlFor="due-date" className="col-form-label mr-2">Due Date:</label>
         <input type="date" id="due-date" className="form-control" 
-        value={returnDate}
-        onChange={(e) => setReturnDate(e.target.value)}
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
         required/>
       </div>
       <div className="text-center">

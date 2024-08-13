@@ -71,7 +71,7 @@ public class BorrowServiceImpl {
 					
 		BorrowDetailsDTO dto = new BorrowDetailsDTO(borrow.getId(),borrow.getBook().getId(), borrow.getBook().getTitle()
 					,borrow.getUser().getId(), borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(),
-					borrow.getStatus(), borrow.getBorrowDate(), borrow.getReturnDate());
+					borrow.getStatus(), borrow.getBorrowDate(), borrow.getDueDate());
 					
 					return dto;
 	}
@@ -91,7 +91,7 @@ public class BorrowServiceImpl {
 			return new ApiResponse("Book is already returned!", "returned");
 		
 		borrow.setStatus(BorrowStatus.RETURNED);
-		borrow.setReturnedOn(LocalDate.now());
+		borrow.setReturnDate(LocalDate.now());
 		
 		return new ApiResponse(borrow.getBook().getTitle() + " Book returned Successfully by "
 								+ borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(), "success");
@@ -112,12 +112,19 @@ public class BorrowServiceImpl {
 //		//2.1 throw exception if user is deleted
 //			if(user.getIsDeleted() == UserDeleteStatus.YES)
 //				throw new ApiException("User is deleted");
-		
+		//2.2 set book quantity
+			int quantity = book.getQuantityAvailable();
+			
+			if(quantity > 0)
+				book.setQuantityAvailable(quantity-1);
+			else
+				return new ApiResponse("Book is not available to borrow","failure");
+			
 			Borrow borrow= new Borrow();
 			borrow.setBook(book);
 			borrow.setUser(user);
 			borrow.setBorrowDate(dto.getBorrowDate());
-			borrow.setReturnDate(dto.getReturnDate());
+			borrow.setDueDate(dto.getDueDate());
 			borrow.setStatus(dto.getStatus());
 		
 		// 3. borrow 1<--->* book 

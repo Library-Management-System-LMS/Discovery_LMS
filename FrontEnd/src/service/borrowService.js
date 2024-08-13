@@ -4,7 +4,7 @@ import config from "../config"
 export async function borrowBook(body){
     const response = await axios.post(`${config.url}/borrow/issue/`, body)
 
-    return response.data
+    return response.dataya
 }
 
 export async function getBorrowDetails(body){

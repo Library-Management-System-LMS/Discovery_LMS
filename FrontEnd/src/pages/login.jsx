@@ -49,27 +49,31 @@ function LoginUser() {
       if(result['status'] === 'success'){
 
           const id = result['id']
-          const username = result['firstName']
+          const firstName = result['firstName']
+          const lastName = result['lastName']
           const email = result['email']
           const role = result['role']
 
           localStorage.setItem('userId', id)
           localStorage.setItem('email', email)
           localStorage.setItem('role', role)
-          localStorage.setItem('username', username)
+          localStorage.setItem('firstName', firstName)
+          localStorage.setItem('lastName', lastName)
 
         // set the login status to true
           dispatch(loginAction())
           
         // show message
-        toast.success('You have logged in successfully!')
+        toast.success(`${firstName} ${lastName},
+        Welcome to the Discovery LMS!`)
+      
 
         // navigate to home
         navigate('/home')
 
-      }else if (result['status'] === 'failure'){
-        toast.error('invalid email or password')
-        navigate('login')
+      }else {
+        toast.error(result)
+        navigate('/login')
       }
     }
 

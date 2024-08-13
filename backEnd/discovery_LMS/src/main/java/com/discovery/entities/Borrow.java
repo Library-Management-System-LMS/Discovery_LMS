@@ -41,8 +41,6 @@ public class Borrow  extends BaseEntity {
   
     private LocalDate returnDate;
     
-    private LocalDate returnedOn;
-    
     @Enumerated(EnumType.STRING)
 	@Column(length = 10)
     private BorrowStatus status;

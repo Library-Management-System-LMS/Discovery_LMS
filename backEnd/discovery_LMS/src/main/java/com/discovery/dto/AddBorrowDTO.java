@@ -38,5 +38,5 @@ public class AddBorrowDTO {
 	 private LocalDate borrowDate;
 	 
 //	 @NotBlank(message = "ReturnDate required")
-	 private LocalDate returnDate;
+	 private LocalDate dueDate;
 }

@@ -57,7 +57,10 @@ public class FineServiceImpl {
                 fine.setFineDate(LocalDate.now());
             }
             Fine savedFine = fineDao.save(fine);
-            return mapper.map(savedFine, FineDTO.class);
+            
+            FineDTO dto =  mapper.map(savedFine, FineDTO.class);
+            dto.setBorrowId(borrowId);
+            return dto;
         } else {
             throw new RuntimeException("Borrow is not overdue, no fine applicable.");
         }

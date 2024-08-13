@@ -89,7 +89,7 @@ const Layout = () => {
 function User() {
 
 
-  const value = localStorage.getItem('username');
+  const value = localStorage.getItem('firstName');
 
 
 
@@ -187,7 +187,6 @@ export const NavbarAfterLogIn = () =>{
         <li><Link className="dropdown-item" to="/viewbook">View Records</Link></li>
         <li><Link className="dropdown-item" to="/borrow">Borrow Book</Link></li>
         <li><Link className="dropdown-item" to="/defaulter">Defaulters List</Link></li>
-        <li><Link className="dropdown-item" to="/about">About</Link></li>
       </ul>
     </li>
 
@@ -252,7 +251,6 @@ export const NavbarBeforeLogin = () => {
         <li><Link className="dropdown-item" to="/viewbook">View Records</Link></li>
         <li><Link className="dropdown-item" to="/borrow">Borrow Book</Link></li>
         <li><Link className="dropdown-item" to="/defaulter">Defaulters List</Link></li>
-        <li><Link className="dropdown-item" to="/about">About</Link></li>
       </ul>
     </li>
 
@@ -271,7 +269,7 @@ export const NavbarBeforeLogin = () => {
 }
 
 
-const MyNavbar2 = () => {
+const AdminNavBar = () => {
   return (
 <header className="d-flex flex-wrap w-100 justify-content-between align-itms-center mb-4 border-bottom">
   <div className="d-flex align-items-center col-md-4">

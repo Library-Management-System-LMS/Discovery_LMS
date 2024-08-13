@@ -22,7 +22,7 @@ function App() {
   return (
     
     <div className="App">
-      { user.loginStatus ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
+      { user.isLoggedIn ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
       
       <Routes>
         
