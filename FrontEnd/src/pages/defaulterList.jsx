@@ -28,7 +28,7 @@ const DefaulterList = () => {
         <table className="table table-bordered text-center">
           <thead className="thead-dark">
             <tr>
-              <th>Issue Id</th>
+              <th>Borrow Id</th>
               <th>Book Name</th>
               <th>User Name</th>
               <th>Issue Date</th>

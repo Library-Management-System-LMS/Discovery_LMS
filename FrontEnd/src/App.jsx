@@ -8,13 +8,15 @@ import Home from './pages/home';
 import AboutPage from './pages/about';
 import ManageBooks from './pages/manageBook';
 import ReturnBook from './pages/returnBook';
-import Test from './pages/test';
 import ViewRecords from './pages/viewRecords';
 import DefaulterList from './pages/defaulterList';
 import ManageUsers from './pages/manageUser';
 import ViewIssuedBook from './pages/viewIssuedBook';
 import BorrowBook from './pages/borrowBook';
+import UserProfile from './pages/userprofile';
+import UpdatePassword from './pages/updatepassword';
 import { MyFooter, NavbarAfterLogIn, NavbarBeforeLogin } from './components/navbar';
+
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -22,7 +24,7 @@ function App() {
   return (
     
     <div className="App">
-      { user.loginStatus ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
+      { user.isLoggedIn ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
       
       <Routes>
         
@@ -34,11 +36,13 @@ function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/manageuser' element={<ManageUsers />} />
         <Route path='/managebook' element={<ManageBooks />} />
-        <Route path='/test' element={<Test />} />
         <Route path='/viewrecords' element={<ViewRecords />} />
         <Route path='/defaulter' element={<DefaulterList/>}/>
         <Route path='/viewbook' element={<ViewIssuedBook/>}/>
         <Route path='/borrow' element={<BorrowBook/>}/>
+        <Route path='/userprofile' element={<UserProfile/>}/>
+        <Route path='/updatepassword' element={<UpdatePassword/>}/>
+
       </Routes>
       
 

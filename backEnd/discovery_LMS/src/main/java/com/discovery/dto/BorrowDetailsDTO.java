@@ -40,6 +40,8 @@ public class BorrowDetailsDTO {
 	 
 	 private LocalDate returnDate;
 	 
+	 private LocalDate DueDate;
+	 
 	 public BorrowDetailsDTO(Long id, String bookName, String userName, BorrowStatus status, LocalDate borrowDate,
 				LocalDate returnDate) {
 			super();

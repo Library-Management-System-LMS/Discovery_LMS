@@ -31,7 +31,25 @@ public class UserController {
 	@Autowired //byType
 	private UserServiceImpl userService;
 	
-	//
+	@GetMapping("/getall")
+	public ResponseEntity<?> getAllUserDetails(){
+		System.out.println("in get all users ");
+				
+					
+		try {
+			return ResponseEntity.ok(
+							userService.getAllUsers());
+		} catch (RuntimeException e) {
+						
+			System.out.println(e);
+						
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ApiResponse(e.getMessage(), "failure"));
+								
+		}
+	}
+	
+	
 	@PostMapping("/signin") //@RequestMapping(method=POST)
 	@Operation(description = "Sign in User")
 	public ResponseEntity<?> signInUser(

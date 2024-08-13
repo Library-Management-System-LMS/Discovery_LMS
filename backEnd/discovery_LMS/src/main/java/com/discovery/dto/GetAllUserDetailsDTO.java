@@ -10,8 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserDetailsDTO {
-	
+public class GetAllUserDetailsDTO {
 	
 	private Long id;
 
@@ -23,13 +22,11 @@ public class UserDetailsDTO {
 	
 	private UserRole role;
 	
-	private String status;
+	private String book;
 	
-	public UserDetailsDTO(Long id, String firstName, String lastName) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+	private BorrowStatus bStatus;
+	
+	private String status;
 	
 	
 	

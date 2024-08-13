@@ -1,18 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialValue = {
+    //initialize from local storage
+    isLoggedIn: !!localStorage.getItem('isLoggedIn'),
+
+}
+
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        loginStatus: false,
-    },
+    initialState: initialValue, 
     reducers: {
         loginAction: (state) => {
-            state.loginStatus = true
+            state.isLoggedIn = true
+
+
+            localStorage.setItem('isLoggedIn', true);
         },
 
         logoutAction: (state) => {
-            state.loginStatus = false
+            state.isLoggedIn = false
+
+            localStorage.removeItem('isLoggedIn');
         },
     },
 })

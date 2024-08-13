@@ -40,9 +40,9 @@ const RegisterUser = () => {
             }else if(formData.password.length === 0){
                 toast.password('Enter Password')
             }else if(formData.confirmPassword.length === 0){
-
+                toast.warn('Please enter confirm passoword')
             }else if(formData.password !== formData.confirmPassword){
-                
+                toast.warning('Password does not match')
             }else{
                 // get user details from email and password
                 const result = await signup(formData)
@@ -60,13 +60,13 @@ const RegisterUser = () => {
         
                 if(result['status'] === 'success'){
         
-                    
+                    toast.success('please login first')
                     // navigate to login
                     navigate('/login')
         
-                }else if (result['status'] === 'failure'){
+                }else {
 
-                    toast.error('invalid email or password')
+                    toast.error('could not sign you up, please try again')
                     navigate('/signup')
                 }
                     console.log('Registration successful:', result.data);
@@ -117,7 +117,7 @@ const RegisterUser = () => {
                                     <div className="form-group mb-2">
                                         <label htmlFor="email">Your Email</label>
                                         <input
-                                            type="email"
+                                            type="text"
                                             id="email"
                                             name="email"
                                             className="form-control"

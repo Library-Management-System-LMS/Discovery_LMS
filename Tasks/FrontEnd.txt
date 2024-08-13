@@ -1,0 +1,16 @@
+# Pages
+1. add category
+2. user profile with edit option
+3. 
+
+
+
+# Login
+1. Separate user login and admin login
+2. 
+
+
+# functionality
+1. book update option
+2. book delete option
+3.
