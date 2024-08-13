@@ -74,14 +74,25 @@ public class BorrowServiceImpl {
 		User user = userDao.findById(userId)
 					.orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
 					
-		Borrow borrow = borrowDao.findByUser(user)
-					.orElseThrow(() -> new ResourceNotFoundException("Borrow Details not found !!!!"));
+		List<Borrow> borrowList = borrowDao.findByUser(user);
+		
+		if(borrowList.isEmpty())
+			throw new ApiException("No record found");
+		
+		BorrowDetailsDTO dto = null;
+		
+		for(Borrow b: borrowList) {
+			if(b.getStatus() == BorrowStatus.RETURNED) {}
+			else {
+				dto = new BorrowDetailsDTO(b.getId(),b.getBook().getId(), b.getBook().getTitle()
+						,b.getUser().getId(), b.getUser().getFirstName()+" "+b.getUser().getLastName(),
+						b.getStatus(), b.getBorrowDate(), b.getDueDate(), null);
+			}
+		}
 					
-		BorrowDetailsDTO dto = new BorrowDetailsDTO(borrow.getId(),borrow.getBook().getId(), borrow.getBook().getTitle()
-					,borrow.getUser().getId(), borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(),
-					borrow.getStatus(), borrow.getBorrowDate(), borrow.getDueDate(), null);
+		
 					
-					return dto;
+		return dto;
 	}
 	
 	public ApiResponse returnBook(Long uId, Long bId) {
@@ -115,18 +126,27 @@ public class BorrowServiceImpl {
 		
 		// 2. get User from it's id
 			User user = userDao.findById(dto.getUserId())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
 			
 //		//2.1 throw exception if user is deleted
 //			if(user.getIsDeleted() == UserDeleteStatus.YES)
 //				throw new ApiException("User is deleted");
-		//2.2 set book quantity
+		//2.2 throw exception if user has borrowed a book
+			List<Borrow> borrowList = borrowDao.findByUser(user);
+			
+			for(Borrow b: borrowList) {
+				if(b.getStatus() == BorrowStatus.BORROWED)
+					throw new ApiException("User Already in possession of book");
+			}
+			
+
+		//2.3 set book quantity
 			int quantity = book.getQuantityAvailable();
 			
 			if(quantity > 0)
 				book.setQuantityAvailable(quantity-1);
 			else
-				return new ApiResponse("Book is not available to borrow","failure");
+				throw new ApiException("Book is not available to borrow");
 			
 			Borrow borrow= new Borrow();
 			borrow.setBook(book);
@@ -143,9 +163,9 @@ public class BorrowServiceImpl {
 		
 			 // 5. Set borrow date and due date
 			// If no borrow date is provided, set it to now
-	        LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
-	        borrow.setBorrowDate(borrowDate);
-	        borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
+//	        LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
+//	        borrow.setBorrowDate(borrowDate);
+//	        borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
 	        
 	        
 		// 6. save book post
@@ -156,7 +176,7 @@ public class BorrowServiceImpl {
 		    System.out.println("New quantity: " + book.getQuantityAvailable());
 			bookDao.save(book); 
 	        
-		return new ApiResponse("New borrow added with ID=" + persistentBorrow.getId());
+		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
 	
 		
 	}

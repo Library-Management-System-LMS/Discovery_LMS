@@ -50,6 +50,6 @@ public class CategoryServiceImpl {
 		
 		Category persistentCategory = categoryDao.save(category);
 		
-		return new ApiResponse("New User added with ID=" + persistentCategory.getId());
+		return new ApiResponse("New Category added with ID=" + persistentCategory.getId(), "success");
 	} 
 }

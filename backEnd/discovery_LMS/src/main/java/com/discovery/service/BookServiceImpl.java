@@ -43,6 +43,7 @@ public class BookServiceImpl {
 		List<Book> newList = bookDao.getBookAndAuthorAndCategory();
 		
 		List<BookDetailsDTO> list = new ArrayList<>();
+		
 		for(Book b : newList) {
 			BookDetailsDTO dto = new BookDetailsDTO(b.getId(),
 					b.getTitle(),b.getDescription(),

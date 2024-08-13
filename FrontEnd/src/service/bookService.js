@@ -11,7 +11,7 @@ export async function getBook(body){
 
 export async function addBook(body){
     const response = await axios.post(`${config.url}/book/add`, body)
-
+    console.log(response.data);
     return response.data
 }
 

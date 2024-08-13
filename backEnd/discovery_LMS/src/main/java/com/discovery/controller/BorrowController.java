@@ -82,7 +82,7 @@ public class BorrowController {
 	@PostMapping("/issue")
 	@Operation(description = "add New Borrow")
 	public ResponseEntity<?> addBorrow(@RequestBody AddBorrowDTO borrow) {
-		System.out.println("in add book " + borrow);
+		System.out.println("in add borrow " + borrow);
 		
 		try {
 			// invoke service layer

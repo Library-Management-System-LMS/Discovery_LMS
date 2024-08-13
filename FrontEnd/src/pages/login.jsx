@@ -32,27 +32,15 @@ function LoginUser() {
       toast.password('Enter Password')
     }else{
       // get user details from email and password
-      const result = await signin(email, password)
+      await signin(email, password)
+      .then(response => {
+        if(response['status'] === 'success'){
 
-      // sample response
-      // {
-      //   "id": 5,
-      //   "firstName": "raj",
-      //   "lastName": "saytode",
-      //   "email": "raj@gmail.com",
-      //   "role": "ROLE_USER",
-      //   "status": "success"
-      // }
-
-      console.log(JSON.stringify(result))
-
-      if(result['status'] === 'success'){
-
-          const id = result['id']
-          const firstName = result['firstName']
-          const lastName = result['lastName']
-          const email = result['email']
-          const role = result['role']
+          const id = response['id']
+          const firstName = response['firstName']
+          const lastName = response['lastName']
+          const email = response['email']
+          const role = response['role']
 
           localStorage.setItem('userId', id)
           localStorage.setItem('email', email)
@@ -70,11 +58,43 @@ function LoginUser() {
 
         // navigate to home
         navigate('/home')
-
-      }else {
-        toast.error(result)
-        navigate('/login')
       }
+    })
+    .catch(error => {
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Error Data:", error.response.data);
+            toast.error(error.response.data.message);
+            console.log("Error Status:", error.response.status);
+            console.log("Error Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.log("Error Request:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error Message:", error.message);
+        }
+    });
+
+      // sample response
+      // {
+      //   "id": 5,
+      //   "firstName": "raj",
+      //   "lastName": "saytode",
+      //   "email": "raj@gmail.com",
+      //   "role": "ROLE_USER",
+      //   "status": "success"
+      // }
+
+      // console.log(JSON.stringify(result))
+
+      
+
+      // }else {
+      //   toast.error(result['message'])
+      //   navigate('/login')
+      // }
     }
 
   }

@@ -34,6 +34,7 @@ const ManageBooks = () => {
     const result = await addBook(book);
 
     console.log(JSON.stringify(result))
+    
     if(result['status'] === "success"){
       toast.success(result['message'])
     }else{

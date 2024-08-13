@@ -57,7 +57,7 @@ public class CategoryController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.addCategory(newCategory));
 		} catch (RuntimeException e) {
 			System.out.println(e);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage(), "success"));
 		}
 	}
 }

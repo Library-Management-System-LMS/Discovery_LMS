@@ -25,20 +25,30 @@ const BorrowBook = () => {
       dueDate,
     }
 
-    const result = await borrowBook(details)
-    // console.log(JSON.stringify(result))
-    if(bookId.length === 0)
-      toast.warn('Enter Book Id')
-    else if(userId.length === 0)
-      toast.warn('Enter User Id')
-    // else if(borrowDate != currentDate)
-    //   toast.warn('Borrow Date should be Current Date')
-    // else if(dueDate > (dueDate+2) )
-    //   toast.warn('Due date should be more than 2 days')
-    else if(result['status'] === 'success')
-      toast.success(result['message'])
-    else
-      toast.error(result['message'])
+    await borrowBook(details)
+    .then(response => {
+      toast.success(response['message'])
+ 
+    })
+    .catch(error => {
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Error Data:", error.response.data);
+            toast.error(error.response.data.message);
+            console.log("Error Status:", error.response.status);
+            console.log("Error Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.log("Error Request:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error Message:", error.message);
+        }
+    });
+      // console.log(JSON.stringify(result))
+ 
+      
   }
 
 
@@ -49,7 +59,7 @@ const BorrowBook = () => {
   //   Quantity: '',
   // })
 
-  const [bId, setBId] = useState('');
+  // const [bId, setBId] = useState('');
   const [bookName, setBookName] = useState('');
   const [author, setAuthor] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -62,26 +72,63 @@ const BorrowBook = () => {
   const getBookDetails = async (e) => {
     e.preventDefault();
 
-    const result = await getBook(bId);
+    await getBook(bookId)
+    .then(response => {
+      setBookName(response['bookTitle'])
+      setQuantity(response['quantity'])
+      setAuthor(response['authors'][0]['authorName'])
+    })
+    .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Error Data:", error.response.data);
+            toast.error(error.response.data.message);
+            console.log("Error Status:", error.response.status);
+            console.log("Error Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.log("Error Request:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error Message:", error.message);
+        }
+    })
 
     // console.log(JSON.stringify(result))
-    setBookName(result['bookTitle'])
-    setQuantity(result['quantity'])
-    setAuthor(result['authors'][0]['authorName'])
+    
   }
 
 
-  const [uId, setUId] = useState('');
   const [userName, setUserName] = useState('');
 
   const getUserDetails = async (e) => {
     e.preventDefault();
 
-    const result = await getUser(uId);
+    await getUser(userId)
+    .then(response => {
+      console.log(JSON.stringify(response));
 
-    console.log(JSON.stringify(result));
+      setUserName(response['firstName'])
+    })
+    .catch(error =>{
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log("Error Data:", error.response.data);
+          toast.error(error.response.data.message);
+          console.log("Error Status:", error.response.status);
+          console.log("Error Headers:", error.response.headers);
+      } else if (error.request) {
+          // The request was made but no response was received
+          console.log("Error Request:", error.request);
+      } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error Message:", error.message);
+      }
+    })
 
-    setUserName(result['firstName'])
+    
   }
 
 
@@ -98,8 +145,8 @@ const BorrowBook = () => {
               id="bookId"
               name="bookId"
               className="form-control"
-              value={bId}
-              onChange={(e) => setBId(e.target.value)}
+              value={bookId}
+              onChange={(e) => setBookId(e.target.value)}
               required
             />
           </div>
@@ -121,8 +168,8 @@ const BorrowBook = () => {
               id="userId"
               name="userId"
               className="form-control"
-              value={uId}
-              onChange={(e) => setUId(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
             />
           </div>

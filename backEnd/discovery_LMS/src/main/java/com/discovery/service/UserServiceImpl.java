@@ -1,5 +1,8 @@
 package com.discovery.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -8,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.discovery.custom_exceptions.ApiException;
 import com.discovery.custom_exceptions.AuthenticationException;
 import com.discovery.custom_exceptions.ResourceNotFoundException;
+import com.discovery.dao.BookDao;
+import com.discovery.dao.BorrowDao;
 import com.discovery.dao.UserDao;
 import com.discovery.dto.ApiResponse;
 import com.discovery.dto.BookDetailsDTO;
@@ -15,7 +20,10 @@ import com.discovery.dto.SignInRequest;
 import com.discovery.dto.SignUp;
 import com.discovery.dto.UpdateUser;
 import com.discovery.dto.UserDetailsDTO;
+import com.discovery.dto.getAllUserDetailsDTO;
 import com.discovery.entities.Book;
+import com.discovery.entities.Borrow;
+import com.discovery.entities.BorrowStatus;
 import com.discovery.entities.User;
 import com.discovery.entities.UserDeleteStatus;
 import com.discovery.entities.UserRole;
@@ -26,9 +34,44 @@ public class UserServiceImpl {
 	// depcy
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private BorrowDao borrowDao;
 		
 	@Autowired
 	private ModelMapper mapper;
+	
+	
+	public List<getAllUserDetailsDTO> getAllUsers(){
+			
+		List<User> newList = userDao.findAll();
+			
+		List<getAllUserDetailsDTO> list = new ArrayList<>();
+			
+		for(User u : newList) {
+			String book;
+			BorrowStatus status;
+			if(borrowDao.existsByUser(u)) {
+				Borrow borrow = borrowDao.findUserDetails("BORROWED").orElseThrow(() -> 
+				new AuthenticationException("Invalid Email or Password !!!!!!"));
+				
+				book = borrow.getBook().getTitle();
+				status = borrow.getStatus();
+			}else {
+				book = "";
+				status = BorrowStatus.NOTHING; 
+			}	
+			
+			getAllUserDetailsDTO dto = new getAllUserDetailsDTO(
+					u.getId(), u.getFirstName(), u.getLastName(), u.getEmail()
+					, u.getRole(), book, status, "success");
+			
+			list.add(dto);
+		}
+		
+		return list;
+		
+	}
 
 	public UserDetailsDTO authenticateUser(SignInRequest dto) {
 		// 1.invoke dao 's method
