@@ -12,11 +12,30 @@ const ReturnBook = () => {
 
   const handleFindDetails = async (e) => {
     e.preventDefault();
-    const result = await getBorrowDetails(userId)
+    await getBorrowDetails(userId)
+    .then(response => {
+      setBorrowDetails(result)
+      setBookId(borrowDetails.bookId)
+      // setUserId(borrowDetails.userId)
+    })
+    .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Error Data:", error.response.data);
+            toast.error(error.response.data.message);
+            console.log("Error Status:", error.response.status);
+            console.log("Error Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.log("Error Request:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error Message:", error.message);
+        }
+    })
 
-    setBorrowDetails(result)
-    setBookId(borrowDetails.bookId)
-    // setUserId(borrowDetails.userId)
+   
 
   };
 
@@ -28,15 +47,29 @@ const ReturnBook = () => {
       bookId : borrowDetails.bookId,
     }
 
-    const result = await returnBook(body)
+    await returnBook(body)
+    .then(response => {
 
-    if(result['status'] === 'success'){
-      toast.success(result['message'])
-    }else if(result['status'] === 'returned'){
-      toast.done(result['message'])
-    }else{
-      toast.error('fail to return book')
-    }
+          toast.success(response['message'])
+    })
+    .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Error Data:", error.response.data);
+            toast.error(error.response.data.message);
+            console.log("Error Status:", error.response.status);
+            console.log("Error Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.log("Error Request:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error Message:", error.message);
+        }
+    })
+
+    
 
   };
 

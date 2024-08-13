@@ -7,7 +7,7 @@ const EditUser = ({ userId }) => {
     email: '',
     role: '',
     password: '',
-    user_image_path: '',
+    // user_image_path: '',
   });
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const EditUser = ({ userId }) => {
                 onChange={handleChange}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>User Image Path</label>
               <input
                 type="text"
@@ -97,7 +97,7 @@ const EditUser = ({ userId }) => {
                 value={user.user_image_path}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             <button type="submit" className="btn btn-primary btn-block">
               Save Changes
             </button>
