@@ -16,7 +16,7 @@ import UserProfile from './pages/userprofile';
 import UpdatePassword from './pages/updatepassword';
 import { Layout, MyFooter, NavbarBeforeLogin } from './components/navbar';
 import Dashboard from './pages/dashboard';
-
+import ListBook from './pages/bookList';
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -42,6 +42,7 @@ function App() {
         <Route path='/userprofile' element={<UserProfile/>}/>
         <Route path='/updatepassword' element={<UpdatePassword/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/booklist' element={<ListBook/>}/>
 
       </Routes>
       
