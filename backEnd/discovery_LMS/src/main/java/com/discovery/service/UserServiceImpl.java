@@ -20,7 +20,7 @@ import com.discovery.dto.SignInRequest;
 import com.discovery.dto.SignUp;
 import com.discovery.dto.UpdateUser;
 import com.discovery.dto.UserDetailsDTO;
-import com.discovery.dto.getAllUserDetailsDTO;
+import com.discovery.dto.GetAllUserDetailsDTO;
 import com.discovery.entities.Book;
 import com.discovery.entities.Borrow;
 import com.discovery.entities.BorrowStatus;
@@ -42,11 +42,11 @@ public class UserServiceImpl {
 	private ModelMapper mapper;
 	
 	
-	public List<getAllUserDetailsDTO> getAllUsers(){
+	public List<GetAllUserDetailsDTO> getAllUsers(){
 			
 		List<User> newList = userDao.findAll();
 			
-		List<getAllUserDetailsDTO> list = new ArrayList<>();
+		List<GetAllUserDetailsDTO> list = new ArrayList<>();
 			
 		for(User u : newList) {
 			String book;
@@ -62,7 +62,7 @@ public class UserServiceImpl {
 				status = BorrowStatus.NOTHING; 
 			}	
 			
-			getAllUserDetailsDTO dto = new getAllUserDetailsDTO(
+			GetAllUserDetailsDTO dto = new GetAllUserDetailsDTO(
 					u.getId(), u.getFirstName(), u.getLastName(), u.getEmail()
 					, u.getRole(), book, status, "success");
 			

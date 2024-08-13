@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class getAllUserDetailsDTO {
+public class GetAllUserDetailsDTO {
 	
 	private Long id;
 

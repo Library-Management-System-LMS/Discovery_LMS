@@ -14,7 +14,7 @@ const ReturnBook = () => {
     e.preventDefault();
     await getBorrowDetails(userId)
     .then(response => {
-      setBorrowDetails(result)
+      setBorrowDetails(response)
       setBookId(borrowDetails.bookId)
       // setUserId(borrowDetails.userId)
     })
