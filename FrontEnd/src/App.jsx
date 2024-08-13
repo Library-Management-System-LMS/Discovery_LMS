@@ -14,7 +14,10 @@ import DefaulterList from './pages/defaulterList';
 import ManageUsers from './pages/manageUser';
 import ViewIssuedBook from './pages/viewIssuedBook';
 import BorrowBook from './pages/borrowBook';
+import UserProfile from './pages/userprofile';
+import UpdatePassword from './pages/updatepassword';
 import { MyFooter, NavbarAfterLogIn, NavbarBeforeLogin } from './components/navbar';
+
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -39,6 +42,9 @@ function App() {
         <Route path='/defaulter' element={<DefaulterList/>}/>
         <Route path='/viewbook' element={<ViewIssuedBook/>}/>
         <Route path='/borrow' element={<BorrowBook/>}/>
+        <Route path='/userprofile' element={<UserProfile/>}/>
+        <Route path='/updatepassword' element={<UpdatePassword/>}/>
+
       </Routes>
       
 
