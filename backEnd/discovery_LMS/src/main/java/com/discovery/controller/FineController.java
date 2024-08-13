@@ -51,7 +51,8 @@ public class FineController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
         }
     }
-
+    
+    
     // Endpoint to mark a fine as paid
     @PatchMapping("/pay/{fineId}")
     @Operation(description = "Mark a fine as paid")

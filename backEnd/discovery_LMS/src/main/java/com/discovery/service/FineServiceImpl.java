@@ -4,6 +4,7 @@ import static com.discovery.constants.Constants.DAILY_FINE_RATE;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ import com.discovery.dao.FineDao;
 import com.discovery.dto.FineDTO;
 import com.discovery.entities.Borrow;
 import com.discovery.entities.Fine;
+import com.discovery.entities.User;
 
 
 @Service
@@ -51,7 +53,7 @@ public class FineServiceImpl {
             double fineAmount = daysOverdue * DAILY_FINE_RATE;
             Fine fine = fineDao.findByBorrow(borrow);
             if (fine == null) {
-                fine = new Fine(borrow, fineAmount, LocalDate.now(), false);
+               fine = new Fine(borrow, borrow.getUser(), fineAmount, LocalDate.now(), false);
             } else {
                 fine.setFineAmount(fineAmount);
                 fine.setFineDate(LocalDate.now());
@@ -66,6 +68,7 @@ public class FineServiceImpl {
         }
     }
 
+    
     public FineDTO markFineAsPaid(Long fineId) {
         Fine fine = fineDao.findById(fineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid fine id"));
@@ -73,4 +76,6 @@ public class FineServiceImpl {
         Fine updatedFine = fineDao.save(fine);
         return mapper.map(updatedFine, FineDTO.class);
     }
+    
+ 
 }

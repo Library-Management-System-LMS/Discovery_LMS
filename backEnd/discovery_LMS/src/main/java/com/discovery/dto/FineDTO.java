@@ -10,6 +10,7 @@ import lombok.Setter;
 public class FineDTO {
     private Long id;
     private Long borrowId;
+    private Long userId;
     private double fineAmount;
     private LocalDate fineDate;
     private boolean paid;

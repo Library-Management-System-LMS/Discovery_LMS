@@ -30,9 +30,9 @@ public class Borrow  extends BaseEntity {
     @JoinColumn(name = "book_id")
     private Book book;
     
-    
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     
    
