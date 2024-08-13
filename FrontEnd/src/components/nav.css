@@ -6,3 +6,15 @@
     border: 1px solid #ffffff20;
     backdrop-filter: blur(16px) saturated(120%);
 }
+
+/* CSS */
+footer {
+    text-align: center;
+    text-color:white; /* Centers the text horizontally */
+    padding: 0.01em; /* Adjust padding as needed */
+    background-color:rgb(202, 199, 199); /* Background color for visibility */
+    position: fixed; /* Keeps the footer at the bottom of the page */
+    bottom: 0; /* Aligns the footer at the bottom */
+    width: 100%; /* Ensures the footer spans the full width of the page */
+  }
+  

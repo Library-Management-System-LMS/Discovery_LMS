@@ -1,0 +1,69 @@
+/* BorrowBook.css */
+
+/* Container styling */
+.borrow-book-container {
+    background-color: #659d9f; /* Light Alice Blue */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Common styles for sections */
+  .book-details, .user-details, .issue-book {
+    border: 2px solid #e0e0e0;
+    background-color: #ffffff; /* White background for better contrast */
+  }
+  
+  /* Specific styles for each section */
+  .book-details {
+    background-color: #e9f5ff; /* Light blue background for book details */
+    margin-bottom: 20px; /* Add margin below book details section */
+  }
+  
+  .user-details {
+    background-color: #e9ffe9; /* Light green background for user details */
+    margin-bottom: 20px; /* Add margin below user details section */
+  }
+  
+  .issue-book {
+    background-color: #f5ffe9; /* Light yellow background for borrow form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Text color classes */
+  .text-primary {
+    color: #007bff;
+  }
+  
+  .text-success {
+    color: #28a745;
+  }
+  
+  .text-info {
+    color: #17a2b8;
+  }
+  
+  .text-warning {
+    color: #ffc107;
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    background-color: #14be3f;
+    border-color: #007bff;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
