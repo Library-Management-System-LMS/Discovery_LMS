@@ -43,14 +43,14 @@ public class BorrowDetailsDTO {
 	 private LocalDate DueDate;
 	 
 	 public BorrowDetailsDTO(Long id, String bookName, String userName, BorrowStatus status, LocalDate borrowDate,
-				LocalDate returnDate) {
+				LocalDate dueDate) {
 			super();
 			this.id = id;
 			this.bookName = bookName;
 			this.userName = userName;
 			this.status = status;
 			this.borrowDate = borrowDate;
-			this.returnDate = returnDate;
+			this.DueDate = dueDate;
 		}
 	 
 	 

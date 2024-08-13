@@ -86,7 +86,7 @@ public class BorrowServiceImpl {
 			else {
 				dto = new BorrowDetailsDTO(b.getId(),b.getBook().getId(), b.getBook().getTitle()
 						,b.getUser().getId(), b.getUser().getFirstName()+" "+b.getUser().getLastName(),
-						b.getStatus(), b.getBorrowDate(), b.getDueDate(), null);
+						b.getStatus(), b.getBorrowDate(), b.getReturnDate(), b.getDueDate());
 			}
 		}
 					

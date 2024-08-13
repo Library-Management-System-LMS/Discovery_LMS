@@ -14,8 +14,10 @@ const ReturnBook = () => {
     e.preventDefault();
     await getBorrowDetails(userId)
     .then(response => {
+
       setBorrowDetails(response)
       setBookId(borrowDetails.bookId)
+      console.log(JSON.stringify(borrowDetails))
       // setUserId(borrowDetails.userId)
     })
     .catch(error => {
@@ -74,48 +76,45 @@ const ReturnBook = () => {
   };
 
   return (
-    <div className="container vh-100 d-flex align-items-center justify-content-center">
-      <div className="row w-100">
-        <div className="col-md-6 bg-danger text-white p-4">
-          <h1>Issued Book Details</h1>
-          <p><strong>Issue Id:</strong> {borrowDetails.id}</p>
-          <p><strong>Book Name:</strong> {borrowDetails.bookName}</p>
-          <p><strong>User Name:</strong> {borrowDetails.userName}</p>
-          <p><strong>Borrow Date:</strong> {borrowDetails.borrowDate}</p>
-          <p><strong>Due Date:</strong> {borrowDetails.returnDate}</p>
-          <p><strong>Borrow Status:</strong> {borrowDetails.status}</p>
+          <div className="container d-flex flex-column justify-content-between h-100">
+            <div className="return-book col-md-6 d-flex flex-column justify-content-between align-items-center px-5 py-3 mx-auto">
+              {/* <div className="close-button">&times;</div> */}
+              <h2>Return Book</h2>
+              <input type="text" className="form-control mb-3"
+              value={bookId}
+              onChange={(e) => setBookId(e.target.value)}
+              required
+              placeholder="Enter Book Id..." />
+              <input type="text" className="form-control mb-3" 
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              required
+              placeholder="Enter User Id..." />
+              <div className="d-flex justify-content-between w-100">
+                <button className="btn btn-primary me-3"
+                onClick={handleFindDetails}>Find Details</button>
+                <button className="btn btn-danger"
+                onClick={handleReturnBook}>Return Book</button>
+              </div>
+            </div>
 
-          
-        </div>
-        <div className="col-md-6 bg-light p-4">
-          <h1>Return Book</h1>
-          <form>
-            <div className="form-group">
-              <label htmlFor="userId">User Id:</label>
-              <input
-                type="text"
-                id="userId"
-                className="form-control"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-              />
+            <div className="issued-book-details col-md-6 bg-danger text-white d-flex flex-column justify-content-center align-items-start px-5 py-3 mx-auto mt-3">
+              {/* <img src="book-icon.png" alt="Book Icon" width="50" /> */}
+              <h2>Issued Book Details</h2>
+              {borrowDetails.id > 0 ? (
+                  <div className='show-details'>
+                    <p>Borrow Id: {borrowDetails.id}</p>
+                    <p>Book Name: {borrowDetails.bookName}</p>
+                    <p>User Name: {borrowDetails.userName}</p>
+                    <p>Borrow Date: {borrowDetails.borrowDate}</p>
+                    <p>Due Date: {borrowDetails.DueDate}</p>
+                  </div>
+              ) : (
+                <p> Please search for Records</p>
+              )}
             </div>
-            &nbsp;
-            {/* <div style="padding-left: 20px;"></div> */}
-            <div class="button-container" >
-              <button type="button" className="btn btn-primary btn-block mb-2"
-               onClick={handleFindDetails}>
-                Find Details
-              </button>&nbsp;
-              <button type="button" className="btn btn-danger btn-block"
-               onClick={handleReturnBook}>
-                Return Book
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          </div>
+
   );
 }
 
