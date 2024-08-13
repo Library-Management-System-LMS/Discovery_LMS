@@ -11,11 +11,11 @@ import ReturnBook from './pages/returnBook';
 import ViewRecords from './pages/viewRecords';
 import DefaulterList from './pages/defaulterList';
 import ManageUsers from './pages/manageUser';
-import ViewIssuedBook from './pages/viewIssuedBook';
 import BorrowBook from './pages/borrowBook';
 import UserProfile from './pages/userprofile';
 import UpdatePassword from './pages/updatepassword';
-import { MyFooter, NavbarAfterLogIn, NavbarBeforeLogin } from './components/navbar';
+import { Layout, MyFooter, NavbarBeforeLogin } from './components/navbar';
+import Dashboard from './pages/dashboard';
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
   return (
     
     <div className="App">
-      { user.isLoggedIn ? <NavbarAfterLogIn/> : <NavbarBeforeLogin/>}
+      { !user.isLoggedIn ? <NavbarBeforeLogin/> : <Layout/>}
       
       <Routes>
         
@@ -38,10 +38,10 @@ function App() {
         <Route path='/managebook' element={<ManageBooks />} />
         <Route path='/viewrecords' element={<ViewRecords />} />
         <Route path='/defaulter' element={<DefaulterList/>}/>
-        <Route path='/viewbook' element={<ViewIssuedBook/>}/>
         <Route path='/borrow' element={<BorrowBook/>}/>
         <Route path='/userprofile' element={<UserProfile/>}/>
         <Route path='/updatepassword' element={<UpdatePassword/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
 
       </Routes>
       

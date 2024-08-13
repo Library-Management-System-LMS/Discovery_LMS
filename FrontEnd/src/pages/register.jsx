@@ -81,12 +81,14 @@ const RegisterUser = () => {
     return (
         <div className="register-page">
             <div className="container">
+                    <h2 className='row justify-content-center pt-5 mb-0'>
+                        Welcome to Discovery Library!</h2>
                 <div className="row justify-content-center pt-5">
                     <div className="col-md-6 col-lg-5">
                         <div className="text-center mb-3">
-                            <h2>Welcome to Our Library!</h2>
                         </div>
                         <div className="card form-container rounded shadow-sm p-3 mb-5"> {/* Increased bottom margin */}
+                            
                             <h2 className="text-center mb-3">SIGN UP</h2>
 
                                 <form onSubmit={handleSubmit}>
@@ -156,14 +158,17 @@ const RegisterUser = () => {
                                     </div>
                                 </form>
                             </div>
+                    </div>
+                    <div className='col-md-6 col-lg-5 d-flex align-items-center'>
                         <div className="text-center mt-4"> {/* Added top margin */}
-                            <p className="text-muted">
-                                With a library card, you can borrow books, audiobooks, and ebooks. You can also access a variety of online resources, including research databases and streaming services.
-                            </p>
-                            <p className="text-muted">
-                                Signing up is free and easy! Just fill out the form above to get started.
-                            </p>
-                        </div>
+                                <img src=''></img>
+                                <p className="text-muted">
+                                    Signing up is free and easy! Just fill out the form to get started.
+                                </p>
+                                <p className="text-muted">
+                                    With a library card, you can borrow books, audiobooks, and ebooks. You can also access a variety of online resources, including research databases and streaming services.
+                                </p>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import Book04 from '../images/Book04.jpg';
 import userProfile from '../images/userProfile.jpg';
 import Cart from '../images/Cart.jpg';
 
-const Home = () => {
+function Home () {
   return (
     <div className="home-container">
       <aside className="sidebar">
