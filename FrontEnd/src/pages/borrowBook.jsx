@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { getBook } from '../service/bookService';
 import { borrowBook } from '../service/borrowService';
-import { getUser } from '../service/userService';
 import './BorrowBook.css'; // Import custom CSS file
 
-const BorrowBook = () => {
+function BorrowBook () {
   document.title = "BORROW BOOK";
 
+  let currentDate = new Date().toJSON().slice(0, 10);
+
   const [bookId, setBookId] = useState('');
-  const [userId, setUserId] = useState('');
-  const [borrowDate, setBorrowDate] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [userId, setUserId] = useState(localStorage['userId']);
+  const [borrowDate, setBorrowDate] = useState(currentDate);
+  const [dueDate, setDueDate] = useState(currentDate);
   const [status, setStatus] = useState('BORROWED');
   const [bookName, setBookName] = useState('');
   const [author, setAuthor] = useState('');
@@ -24,6 +25,7 @@ const BorrowBook = () => {
       toast.error(error.response.data.message);
     } else if (error.request) {
       console.log("Error Request:", error.request);
+      toast.error("Server error please try again")
     } else {
       console.log("Error Message:", error.message);
     }
@@ -31,8 +33,9 @@ const BorrowBook = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    
     const details = { bookId, userId, status, borrowDate, dueDate };
+
 
     try {
       const response = await borrowBook(details);
@@ -55,64 +58,19 @@ const BorrowBook = () => {
     }
   };
 
-  const getUserDetails = async (e) => {
-    e.preventDefault();
+  // const getUserDetails = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const response = await getUser(userId);
-      setUserName(response['firstName']);
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  //   try {
+  //     const response = await getUser(userId);
+  //     setUserName(response['firstName']);
+  //   } catch (error) {
+  //     handleError(error);
+  //   }
+  // };
 
   return (
     <div className="container borrow-book-container mt-5">
-      <div className="row">
-        <div className="col-md-6 book-details border rounded p-4 bg-light">
-          <h2 className="text-primary">Book Details</h2>
-          <div className='form-group mb-3'>
-            <label htmlFor="bookId" className="text-dark">Book ID:</label>
-            <input
-              type="number"
-              id="bookId"
-              className="form-control"
-              value={bookId}
-              onChange={(e) => setBookId(e.target.value)}
-              required
-            />
-          </div>
-          <p className="text-success">Book Name: {bookName}</p>
-          <p className="text-info">Author: {author}</p>
-          <p className="text-warning">Quantity: {quantity}</p>
-          <div className="text-center">
-            <button type="button" className="btn btn-primary mt-3" onClick={getBookDetails}>
-              Find BOOK
-            </button>
-          </div>
-        </div>
-
-        <div className="col-md-6 user-details border rounded p-4 bg-light">
-          <h2 className="text-primary">User Details</h2>
-          <div className='form-group mb-3'>
-            <label htmlFor="userId" className="text-dark">User ID:</label>
-            <input
-              type="number"
-              id="userId"
-              className="form-control"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              required
-            />
-          </div>
-          <p className="text-success">User Name: {userName}</p>
-          <div className="text-center">
-            <button type="button" className="btn btn-primary mt-3" onClick={getUserDetails}>
-              Find User
-            </button>
-          </div>
-        </div>
-      </div>
 
       <div className="row mt-4 justify-content-center">
         <div className="col-12 col-md-6 issue-book border rounded p-4 bg-light shadow-lg">
@@ -129,7 +87,7 @@ const BorrowBook = () => {
                 required
               />
             </div>
-            <div className="form-group d-flex justify-content-between align-items-center mb-3">
+            {/* <div className="form-group d-flex justify-content-between align-items-center mb-3">
               <label htmlFor="user-id" className="col-form-label mr-2">User Id:</label>
               <input
                 type="number"
@@ -139,7 +97,7 @@ const BorrowBook = () => {
                 onChange={(e) => setUserId(e.target.value)}
                 required
               />
-            </div>
+            </div> */}
             <div className="form-group d-flex justify-content-between align-items-center mb-3">
               <label htmlFor="borrow-date" className="col-form-label mr-2">Borrow Date:</label>
               <input
@@ -168,6 +126,52 @@ const BorrowBook = () => {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+      <hr/>
+      <div className="row">
+        <div className="col-md-12 book-details border rounded p-4 bg-light">
+          <h2 className="text-primary">Find Book Details</h2>
+          <div className='form-group mb-3'>
+            <label htmlFor="bookId" className="text-dark">Book ID:</label>
+            <input
+              type="number"
+              id="bookId"
+              className="form-control"
+              value={bookId}
+              onChange={(e) => setBookId(e.target.value)}
+              required
+            />
+          </div>
+          <p className="text-success">Book Name: {bookName}</p>
+          <p className="text-info">Author: {author}</p>
+          <p className="text-warning">Quantity: {quantity}</p>
+          <div className="text-center">
+            <button type="button" className="btn btn-primary mt-3" onClick={getBookDetails}>
+              Find BOOK
+            </button>
+          </div>
+        </div>
+
+        <div className="col-md-12 user-details border rounded p-4 bg-light">
+          {/* <h2 className="text-primary">User Details</h2>
+          <div className='form-group mb-3'>
+            <label htmlFor="userId" className="text-dark">User ID:</label>
+            <input
+              type="number"
+              id="userId"
+              className="form-control"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              required
+            />
+          </div>
+          <p className="text-success">User Name: {userName}</p>
+          <div className="text-center">
+            <button type="button" className="btn btn-primary mt-3" onClick={getUserDetails}>
+              Find User
+            </button>
+          </div> */}
         </div>
       </div>
     </div>

@@ -4,46 +4,29 @@ import React, { useState } from 'react';
 const ManageUsers = () => {
     //to set title of the page
     document.title = "MANAGE USERS";
-  const [userId, setuserId] = useState('');
-  const [userName, setuserName] = useState('');
-  const [courseName, setCourseName] = useState('BSC');
-  const [branchName, setBranchName] = useState('CS');
+  // const [userId, setuserId] = useState('');
+  // const [userName, setuserName] = useState('');
+  // const [courseName, setCourseName] = useState('BSC');
+  // const [branchName, setBranchName] = useState('CS');
 
   return (
     <div>
         <div className="d-flex">
-      <div className="sidebar bg-primary text-white p-4">
-        {/* <a href="#" className="btn btn-danger mb-3">Back</a> */}
-        <div className="mb-3">
-          <label className="form-label">Enter User ID</label>
-          <input type="text" className="form-control" placeholder="Enter User ID" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Enter User Name</label>
-          <input type="text" className="form-control" placeholder="Enter User Name" />
-        </div>
-        {/* <div className="mb-3">
-          <label className="form-label">Enter Course Name</label>
-          <select className="form-select">
-            <option>BSC</option>
-            <option>MSC</option>
-            <option>B.E</option>
-          </select>
-        </div> */}
-        {/* <div className="mb-3">
-          <label className="form-label">Enter Branch Name</label>
-          <select className="form-select">
-            <option>CS</option>
-            <option>IT</option>
-            <option>PLAIN</option>
-          </select>
-        </div> */}
+          {/* <div className="sidebar bg-primary text-white p-4">
+            <div className="mb-3">
+              <label className="form-label">Enter User ID</label>
+              <input type="text" className="form-control" placeholder="Enter User ID" />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Enter User Name</label>
+              <input type="text" className="form-control" placeholder="Enter User Name" />
+            </div>
         <div className="d-grid gap-2">
           <button className="btn btn-danger">ADD</button>
           <button className="btn btn-danger">UPDATE</button>
           <button className="btn btn-danger">DELETE</button>
         </div>
-      </div>
+      </div> */}
       <div className="content p-4 w-100">
         <div className="header d-flex justify-content-between align-items-center mb-4">
           <h1>Manage Users</h1>

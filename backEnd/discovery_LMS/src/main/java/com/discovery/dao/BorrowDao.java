@@ -24,5 +24,5 @@ public interface BorrowDao extends JpaRepository<Borrow,Long> {
 	@Query("SELECT b FROM Borrow b LEFT JOIN FETCH b.user u WHERE b.status = :status")
 	Optional <Borrow> findUserDetails(String status);
 	
-	Optional<Borrow> findByUserAndBook(User user, Book book);
+	List<Borrow> findByUserAndBook(User user, Book book);
 }

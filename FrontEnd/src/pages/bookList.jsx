@@ -43,8 +43,6 @@ function ListBook () {
         } catch (error) {
             handleError(error);
         }
-        
-
   }
 
   return (

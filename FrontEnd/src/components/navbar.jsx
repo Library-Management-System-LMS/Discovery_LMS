@@ -324,7 +324,7 @@ const AdminNavBar = () => {
               </button>
             </a>
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><Link className="dropdown-item" to="/managebook">Manage Book</Link></li>
+            <li><Link className="dropdown-item" to="/booklist">Book List</Link></li>
             <li><Link className="dropdown-item" to="/manageuser">View All Users</Link></li>
             <li><Link className="dropdown-item" to="/defaulter">Defaulter List</Link></li>
             <li><Link className="dropdown-item" to="/viewrecords">View Records</Link></li>

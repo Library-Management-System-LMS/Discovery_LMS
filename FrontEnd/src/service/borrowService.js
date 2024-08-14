@@ -7,15 +7,24 @@ export async function borrowBook(body){
     return response.data
 }
 
+export async function getAllBorrowDetails(){
+
+    const response = await axios.get(`${config.url}/borrow`)
+    console.log(JSON.stringify(response))
+    return response.data
+}
+
 export async function getBorrowDetails(body){
+    console.log(JSON.stringify(body))
+    
     const response = await axios.get(`${config.url}/borrow/info/${body}`)
     // console.log(JSON.stringify(response))
     return response.data
 }
 
 export async function returnBook(body){
-
+    console.log(JSON.stringify(body))
     const response = await axios.post(`${config.url}/borrow/return`, body)
-    console.log(JSON.stringify(response))
+    // console.log(JSON.stringify(response))
     return response.data
 }

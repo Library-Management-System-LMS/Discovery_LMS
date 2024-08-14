@@ -49,12 +49,14 @@ public class BorrowController {
 	}
 	
 	@GetMapping("/info/{id}")
-	public ResponseEntity<?> getBorrowDetail(@PathVariable Long id){
+	public ResponseEntity<?> getBorrowDetail(@PathVariable String id){
 		System.out.println("in get borrow detail " + id);
+		
+		Long userId = Long.parseLong(id);
 		
 		try {
 		
-			return ResponseEntity.ok(borrowService.getBorrowDetailByUserIdAndBookId(id));
+			return ResponseEntity.ok(borrowService.getBorrowDetailByUserIdAndBookId(userId));
 			
 		}catch(RuntimeException e) {
 			System.out.println(e);
