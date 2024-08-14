@@ -39,3 +39,9 @@ export async function getUser(body){
 
     return response.data
 }
+
+export async function getUsers(){
+    const response = await axios.get(`${config.url}/user/getall`)
+
+    return response.data
+}

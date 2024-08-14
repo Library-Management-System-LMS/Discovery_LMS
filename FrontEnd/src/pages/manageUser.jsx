@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-// import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { getUsers } from '../service/userService';
+import { toast } from 'react-toastify';
 
 const ManageUsers = () => {
     //to set title of the page
@@ -8,6 +9,39 @@ const ManageUsers = () => {
   // const [userName, setuserName] = useState('');
   // const [courseName, setCourseName] = useState('BSC');
   // const [branchName, setBranchName] = useState('CS');
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    UserDetails();
+}, [])
+
+  const UserDetails = async () => {
+    try {
+      const all = await getUsers();
+      setData(all)
+      console.log(JSON.stringify(all))
+      // console.log(data)
+  } catch (error) {
+      handleError(error);
+  }
+}
+
+function handleError(error) {
+  if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error('Server responded with an error:', error.response.data);
+      toast.error('Please try again later.');
+  } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No response received:', error.request);
+      toast.error('No response from the server.');
+  } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error setting up the request:', error.message);
+      // alert('An unexpected error occurred. Please try again.');
+  }
+}
 
   return (
     <div>
@@ -29,7 +63,7 @@ const ManageUsers = () => {
       </div> */}
       <div className="content p-4 w-100">
         <div className="header d-flex justify-content-between align-items-center mb-4">
-          <h1>Manage Users</h1>
+          <h1 >Manage Users</h1>
         </div>
         <table className="table table-bordered">
           <thead>
@@ -37,46 +71,18 @@ const ManageUsers = () => {
               <th>User Id</th>
               <th>Name</th>
               <th>Email</th>
-              {/* <th>Branch</th> */}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Sunil</td>
-              <td>something@gmail.com</td>
-              {/* <td>CS</td> */}
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>mangesh</td>
-              <td>mangesh@gmail.com</td>
-              {/* <td>CS</td> */}
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Deepak</td>
-              <td>deepak@gamil.com</td>
-              {/* <td>IT</td> */}
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Rahul</td>
-              <td>rahul@gmail.com</td>
-              {/* <td>PLAIN</td> */}
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Praful</td>
-              <td>praful@gmail.com</td>
-              {/* <td>IT</td> */}
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Shivam</td>
-              <td>shivam@gmail.com</td>
-              {/* <td>CS</td> */}
-            </tr>
+          {data.map((d) => {
+                return (
+                  <tr>
+                    <th>{d.id}</th>
+                    <th>{d.firstName}</th>
+                    <th>{d.email}</th>
+                </tr>
+                )
+              })}
           </tbody>
         </table>
       </div>

@@ -22,6 +22,8 @@ import com.discovery.dto.AddBorrowDTO;
 import com.discovery.dto.ApiResponse;
 import com.discovery.dto.BookDetailsDTO;
 import com.discovery.dto.BorrowDetailsDTO;
+import com.discovery.dto.CountDTO;
+import com.discovery.dto.UserDetailsDTO;
 import com.discovery.entities.Author;
 import com.discovery.entities.Book;
 import com.discovery.entities.Borrow;
@@ -30,6 +32,7 @@ import com.discovery.entities.Category;
 import com.discovery.entities.Fine;
 import com.discovery.entities.User;
 import com.discovery.entities.UserDeleteStatus;
+import com.discovery.entities.UserRole;
 
 @Service
 @Transactional
@@ -51,6 +54,41 @@ public class BorrowServiceImpl {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	
+	public CountDTO getCountDetails() {
+		Long borrowCount = borrowDao.countByBorrowed();
+		Long userCount = userDao.count();
+		Long bookCount = bookDao.count();
+		Long fineCount = fineDao.count();
+		
+		List<User> uList = userDao.findAll();
+		
+		List<Book> bList = bookDao.findAll();
+		
+		List<UserDetailsDTO> users = new ArrayList<>();
+		for(User u: uList) {
+			if(u.getRole() == UserRole.ROLE_ADMIN) {
+				
+				}else {
+			UserDetailsDTO uDto = new UserDetailsDTO(u.getFirstName()+" "+u.getLastName(), u.getId(),
+					u.getEmail());
+			
+			users.add(uDto);}
+		}
+		
+		
+		List<BookDetailsDTO> books = new ArrayList<>();
+		for(Book b: bList) {
+			BookDetailsDTO bDto = new BookDetailsDTO(b.getId(), b.getTitle()
+					, b.getQuantityAvailable(), b.getAuthorDetails());
+			books.add(bDto);
+		}
+		
+		
+		return new CountDTO(bookCount, userCount, bookCount, fineCount, users, books);
+		
+	}
 	
 	
 	public List<BorrowDetailsDTO> getBorrowList(){

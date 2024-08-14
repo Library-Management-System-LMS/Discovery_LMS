@@ -54,6 +54,8 @@ function LoginUser() {
         // show message
         toast.success(`${firstName} ${lastName},
         Welcome to the Discovery LMS!`)
+
+        toast.success("Click on More to explore options")
       
         if(role === 'ROLE_ADMIN')
           navigate('/dashboard')

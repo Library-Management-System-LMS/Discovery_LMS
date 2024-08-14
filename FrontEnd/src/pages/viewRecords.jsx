@@ -5,7 +5,7 @@ import BorrowList from "../components/borrow";
 
 function ViewRecords() {
     //to set title of the page
-    document.title = "VIEW RECORDS";
+    document.title = "VIEW BORROW RECORDS";
 
 
     useEffect(() => {
@@ -33,6 +33,13 @@ function ViewRecords() {
 
   const [borrowDetails, setBorrowDetails] = useState('')
 
+  const [visibleDate, setVisibleDate] = useState(5); // Tracks how many books to show
+
+  const handleShowMore = () => {
+    setVisibleDate((prevVisibleData) => prevVisibleData + 5); // Show the next 4 books
+  };
+
+
     const getDetails = async () =>{
 
       try {
@@ -43,15 +50,14 @@ function ViewRecords() {
         handleError(error);
       }
 
-
-
     }
 
 
   return (
     <div>
-      <div className="header">
-        <h1>View Records</h1>
+      <div className="header ">
+      <h2 className='row justify-content-center pt-5 mb-0'>
+                        View Borrow Records </h2>
       </div>
       <div className="container mt-4 p-4 bg-white shadow">
         {/* <div className="row mb-4">
@@ -69,16 +75,16 @@ function ViewRecords() {
           <table className="table table-bordered">
               <thead className="thead-light">
                 <tr>
-                  <th>Issue Id</th>
+                  <th>Borrow Id</th>
                   <th>Book Name</th>
                   <th>User Name</th>
-                  <th>Issue Date</th>
+                  <th>Borrow Date</th>
                   <th>Due Date</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-              {borrowDetails.map((b) =>{
+              {borrowDetails.slice(0, visibleDate).map((b) =>{
                 return (
                   <BorrowList
                   id = {b.id}
@@ -95,6 +101,9 @@ function ViewRecords() {
             <p>No Records Found!</p>
     
       } 
+       {visibleDate < borrowDetails.length && (
+        <button className="btn btn-primary mt-3" onClick={handleShowMore}>Show More</button>
+      )}
       </div>
     </div>
   );

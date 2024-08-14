@@ -7,6 +7,12 @@ export async function borrowBook(body){
     return response.data
 }
 
+export async function DashboadDetails(){
+    const response = await axios.get(`${config.url}/borrow/list`)
+    // console.log(JSON.stringify(response))
+    return response.data
+}
+
 export async function getAllBorrowDetails(){
 
     const response = await axios.get(`${config.url}/borrow`)

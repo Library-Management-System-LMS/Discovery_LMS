@@ -49,24 +49,27 @@ public class UserServiceImpl {
 		List<GetAllUserDetailsDTO> list = new ArrayList<>();
 			
 		for(User u : newList) {
-			String book;
-			BorrowStatus status;
-			if(borrowDao.existsByUser(u)) {
-				Borrow borrow = borrowDao.findUserDetails("BORROWED").orElseThrow(() -> 
-				new AuthenticationException("Invalid Email or Password !!!!!!"));
+//			String book;
+//			BorrowStatus status;
+//			if(borrowDao.existsByUser(u)) {
+//				Borrow borrow = borrowDao.findUserDetails("BORROWED").orElseThrow(() -> 
+//					new AuthenticationException("Invalid Email or Password !!!!!!"));
+//				
+//				book = borrow.getBook().getTitle();
+//				status = borrow.getStatus();
+//			}else {
+//				book = "";
+//				status = BorrowStatus.NOTHING; 
+//			}	
+			if(u.getRole() == UserRole.ROLE_ADMIN) {
 				
-				book = borrow.getBook().getTitle();
-				status = borrow.getStatus();
 			}else {
-				book = "";
-				status = BorrowStatus.NOTHING; 
-			}	
-			
 			GetAllUserDetailsDTO dto = new GetAllUserDetailsDTO(
-					u.getId(), u.getFirstName(), u.getLastName(), u.getEmail()
-					, u.getRole(), book, status, "success");
+					u.getId(), u.getFirstName()+" "+ u.getLastName(), u.getEmail()
+					, "success");
 			
-			list.add(dto);
+			list.add(dto);}
+			
 		}
 		
 		return list;

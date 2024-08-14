@@ -44,10 +44,21 @@ public class BookDetailsDTO {
 		super();
 		BookId = bookId;
 		this.bookTitle = bookTitle;
+		this.quantity = quantity;
+		this.authors = authors;
+	}
+	
+	
+	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity,
+			List<AuthorDetailsDTO>authors) {
+		super();
+		BookId = bookId;
+		this.bookTitle = bookTitle;
 		this.description = description;
 		this.quantity = quantity;
 		this.authors = authors;
 	}
+	
 	
 	
 }

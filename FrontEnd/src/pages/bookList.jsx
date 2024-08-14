@@ -53,7 +53,7 @@ function ListBook () {
         </div>
             </div>
                     {Object.keys(bookDetail).length !== emptyArr.length ?
-                 <table className="table table-bordered">
+                 <table className="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>Book Id</th>
