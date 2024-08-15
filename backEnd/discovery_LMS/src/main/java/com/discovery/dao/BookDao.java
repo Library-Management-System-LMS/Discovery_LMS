@@ -2,6 +2,7 @@ package com.discovery.dao;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,7 @@ public interface BookDao extends JpaRepository<Book,Long> {
 	
 	//get books + authors details using custom query
 	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory")
-	List<Book>getBookAndAuthorAndCategory();
+	Set<Book>getBookAndAuthorAndCategory();
 	
 	//get books + authors details using custom query
 	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory WHERE b.id =:id")
@@ -33,5 +34,9 @@ public interface BookDao extends JpaRepository<Book,Long> {
 	//get books + authors details using custom query
 	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory c WHERE c.categoryName = :category")
 	List<Book> getBookAndAuthorAndCategory(String category);
+	
+	//get books + authors details using custom query
+	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.authors LEFT JOIN FETCH b.bookCategory c WHERE b.id = :id")
+	Optional<Book> getBookAndAuthorAndCategoryById(Long id);
 	
 }

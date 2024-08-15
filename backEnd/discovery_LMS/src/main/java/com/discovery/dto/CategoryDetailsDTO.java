@@ -16,4 +16,11 @@ public class CategoryDetailsDTO {
 	private Long categoryId;
 	
 	private String categoryName;
+
+	public CategoryDetailsDTO(String categoryName) {
+		super();
+		this.categoryName = categoryName;
+	}
+	
+	
 }
