@@ -75,7 +75,9 @@ public class Book extends BaseEntity{
 	private String bookImagePath;
 	
 	public String setAuthor(Author author) {
-		
+		if(authors.contains(author))
+			return "author exists";
+			
 		authors.add(author);
 		
 		return "Success";

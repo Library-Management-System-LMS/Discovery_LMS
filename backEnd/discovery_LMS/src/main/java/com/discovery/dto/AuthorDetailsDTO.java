@@ -16,4 +16,11 @@ public class AuthorDetailsDTO {
 	private Long authorId;
 	
 	private String authorName;
+
+	public AuthorDetailsDTO(String authorName) {
+		super();
+		this.authorName = authorName;
+	}
+	
+	
 }

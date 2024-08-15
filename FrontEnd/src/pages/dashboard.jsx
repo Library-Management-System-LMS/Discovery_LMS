@@ -26,8 +26,8 @@ function Dashboard() {
       try {
         const all = await DashboadDetails();
         setDash(all)
-        console.log(JSON.stringify(all))
-        console.log(Dash)
+        // console.log(JSON.stringify(all))
+        // console.log(Dash)
     } catch (error) {
         handleError(error);
     }
