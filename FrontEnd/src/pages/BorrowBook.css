@@ -1,69 +1,60 @@
 /* BorrowBook.css */
 
-/* Container styling */
+.borrow-book-page {
+  background: linear-gradient(to right, #b9a0d0, #8bcaba); /* Adjust colors as needed */
+  min-height: 100vh; /* Full viewport height */
+  padding: 1rem; /* Padding for some spacing */
+  box-sizing: border-box; /* Include padding in height */
+}
+
 .borrow-book-container {
-    background-color: #659d9f; /* Light Alice Blue */
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  /* Common styles for sections */
-  .book-details, .user-details, .issue-book {
-    border: 2px solid #e0e0e0;
-    background-color: #ffffff; /* White background for better contrast */
-  }
-  
-  /* Specific styles for each section */
-  .book-details {
-    background-color: #e9f5ff; /* Light blue background for book details */
-    margin-bottom: 20px; /* Add margin below book details section */
-  }
-  
-  .user-details {
-    background-color: #e9ffe9; /* Light green background for user details */
-    margin-bottom: 20px; /* Add margin below user details section */
-  }
-  
-  .issue-book {
-    background-color: #f5ffe9; /* Light yellow background for borrow form */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Text color classes */
-  .text-primary {
-    color: #007bff;
-  }
-  
-  .text-success {
-    color: #28a745;
-  }
-  
-  .text-info {
-    color: #17a2b8;
-  }
-  
-  .text-warning {
-    color: #ffc107;
-  }
-  
-  /* Button styles */
-  .btn-primary {
-    background-color: #ffc107;
-    border-color: #007bff;
-  }
-  
-  .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-  }
-  
-  .btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.d-flex {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem; /* Space between items */
+}
+
+.flex-item {
+  flex: 1;
+}
+
+.border {
+  border: 1px solid #ddd;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.bg-light {
+  background-color: #f8f9fa;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ml-4 {
+  margin-left: 1.5rem; /* Space between flex items */
+}
+
+.text-primary {
+  color: #040405;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-info {
+  color: #17a2b8;
+}
+
+.text-warning {
+  color: #ffc107;
+}
