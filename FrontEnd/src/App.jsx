@@ -17,7 +17,7 @@ import UpdatePassword from './pages/updatepassword';
 import { Layout, MyFooter, NavbarBeforeLogin } from './components/navbar';
 import Dashboard from './pages/dashboard';
 import ListBook from './pages/bookList';
-import AdminRoute from './components/AdminRoute';
+
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -37,11 +37,11 @@ function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/manageuser' element={<ManageUsers />} />
         <Route
-                    path="/manageBook"
+                    path='/manageBook'
                     element={
-                        <AdminRoute>
-                            <manageBook />
-                        </AdminRoute>
+                        
+                            <ManageBooks />
+                        
                     }
                 />
         <Route path='/viewrecords' element={<ViewRecords />} />
