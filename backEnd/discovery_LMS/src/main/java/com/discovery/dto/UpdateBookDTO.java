@@ -17,7 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BookDetailsDTO {
+public class UpdateBookDTO {
 
 	private Long BookId;
 	
@@ -30,10 +30,8 @@ public class BookDetailsDTO {
 	private CategoryDetailsDTO category;
 //	
 	private List<AuthorDetailsDTO> authors;
-	
-	private List<String> authorString;
 //
-	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity) {
+	public UpdateBookDTO(Long bookId, String bookTitle, String description, int quantity) {
 		super();
 		BookId = bookId;
 		this.bookTitle = bookTitle;
@@ -41,7 +39,7 @@ public class BookDetailsDTO {
 		this.quantity = quantity;
 	}
 	
-	public BookDetailsDTO(Long bookId, String bookTitle, int quantity,
+	public UpdateBookDTO(Long bookId, String bookTitle, int quantity,
 			List<AuthorDetailsDTO>authors) {
 		super();
 		BookId = bookId;
@@ -51,7 +49,7 @@ public class BookDetailsDTO {
 	}
 	
 	
-	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity,
+	public UpdateBookDTO(Long bookId, String bookTitle, String description, int quantity,
 			List<AuthorDetailsDTO>authors) {
 		super();
 		BookId = bookId;
@@ -60,17 +58,7 @@ public class BookDetailsDTO {
 		this.quantity = quantity;
 		this.authors = authors;
 	}
-
-	public BookDetailsDTO(Long bookId, String bookTitle, String description, int quantity, CategoryDetailsDTO category,
-			List<AuthorDetailsDTO> authors) {
-		super();
-		BookId = bookId;
-		this.bookTitle = bookTitle;
-		this.description = description;
-		this.quantity = quantity;
-		this.category = category;
-		this.authors = authors;
-	}
+	
 	
 	
 	

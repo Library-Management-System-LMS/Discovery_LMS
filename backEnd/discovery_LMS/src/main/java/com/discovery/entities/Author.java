@@ -23,11 +23,16 @@ import lombok.Setter;
 @Setter
 public class Author extends BaseEntity{
 	
+
 	@Column(length = 50, nullable = false, unique = true)
 	private String authorName;
 	
 	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Book> books = new HashSet<>();
 	
+	public Author(String authorName) {
+		super();
+		this.authorName = authorName;
+	}
 	
 }

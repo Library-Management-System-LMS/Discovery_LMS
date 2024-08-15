@@ -1,7 +1,9 @@
 package com.discovery.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,9 @@ import com.discovery.dao.CategoryDao;
 import com.discovery.dto.AddAuthorDTO;
 import com.discovery.dto.AddBookDTO;
 import com.discovery.dto.ApiResponse;
+import com.discovery.dto.AuthorDetailsDTO;
 import com.discovery.dto.BookDetailsDTO;
+import com.discovery.dto.UpdateBookDTO;
 import com.discovery.entities.Author;
 import com.discovery.entities.Book;
 import com.discovery.entities.Category;
@@ -40,7 +44,7 @@ public class BookServiceImpl {
 	
 	public List<BookDetailsDTO> getBookList(){
 		
-		List<Book> newList = bookDao.getBookAndAuthorAndCategory();
+		Set<Book> newList = bookDao.getBookAndAuthorAndCategory();
 		
 		List<BookDetailsDTO> list = new ArrayList<>();
 		
@@ -51,16 +55,17 @@ public class BookServiceImpl {
 					b.getAuthorDetails());
 			list.add(dto);
 		}
+		
 		return list;
 	}
 	
 	
 	public BookDetailsDTO getBookDetails(Long id) {
-		Book book = bookDao.getBookAndAuthorDetails(id)
+		Book book = bookDao.getBookAndAuthorAndCategoryById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
 		
-		BookDetailsDTO dto = new BookDetailsDTO(book.getId(), book.getTitle(), book.getQuantityAvailable()
-				, book.getAuthorDetails());
+		BookDetailsDTO dto = new BookDetailsDTO(book.getId(), book.getTitle(), book.getDescription()
+				, book.getQuantityAvailable(), book.getCategoryDetails(), book.getAuthorDetails());
 		
 		return dto;
 		
@@ -132,5 +137,54 @@ public class BookServiceImpl {
 			Book persistentBook = bookDao.save(book);
 		
 			return new ApiResponse("New book added with ID=" + persistentBook.getId(), "success");
+	}
+	
+	public ApiResponse deleteBookRecord(Long id) {
+		Book book = bookDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid book id!!!!"));
+		
+		bookDao.delete(book);
+		
+		return new ApiResponse(book.getId()+ " "+book.getTitle()+ " is  Book Deleted");
+		
+	}
+	
+	public ApiResponse updateExistingBook(UpdateBookDTO dto) {
+		
+		Book book = null;
+		
+		if(dto.getBookId() == null) {
+			book = bookDao.findByTitle(dto.getBookTitle())
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid book title!!!!"));
+		}else {
+			book = bookDao.findById(dto.getBookId())
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid book id!!!!"));
+		}
+		
+		book.setTitle(dto.getBookTitle());
+		book.setDescription(dto.getDescription());
+		book.setQuantityAvailable(dto.getQuantity());
+		Category cat = categoryDao.findByCategoryName(dto.getCategory().getCategoryName())
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Category!!!!"));
+		book.setBookCategory(cat);
+		
+		for(AuthorDetailsDTO d: dto.getAuthors()) {
+			Author a = null;
+			if(authorDao.existsByAuthorName(d.getAuthorName())) {
+				book.setAuthor(authorDao.findByAuthorName(d.getAuthorName())
+					.orElseThrow(() -> new ResourceNotFoundException("Invalid book id!!!!")));;
+			}else {
+				a = new Author(d.getAuthorName());	
+				book.setAuthor(a);
+			}
+			
+		}
+		
+		bookDao.save(book);
+		
+		
+		
+		
+		return new ApiResponse("Updated Book on id "+ book.getId()+" as "+book.getTitle());
 	}
 }

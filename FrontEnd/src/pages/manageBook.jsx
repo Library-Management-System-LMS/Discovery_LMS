@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addBook, getAllBooks, getAllCategories } from '../service/bookService';
+import { addBook, deleteBookDetails, getAllBooks, getAllCategories, getBook, updateBookDetails } from '../service/bookService';
 import { toast } from 'react-toastify';
 import BookList from '../components/book';
 //import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
@@ -8,10 +8,22 @@ const ManageBooks = () => {
     //to set title of the page
     document.title = "MANAGE BOOKS";
 
-  // const [bookId, setBookId] = useState('');
+    const [book, setBook] = useState({
+      bookId: '',
+      bookTitle: '',
+      description: '',
+      quantity: '',
+      category: '',
+      authors: {
+        aId: '',
+        authorName: '',
+      },
+    })
+
+  const [bookId, setBookId] = useState('');
   const [bookName, setBookName] = useState('');
-  const [authorName, setAuthorName] = useState('');
-  // const [categoryName, setCategoryName] = useState([]);
+  const [authorName, setAuthorName] = useState([]);
+  const [categoryName, setCategoryName] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('string');
   const[categoryId, setCategoryId] = useState(0);
@@ -25,7 +37,7 @@ const ManageBooks = () => {
 
   useEffect(() => {
     getCategoryDetails();
-
+    loadBooks();
   }, [])
 
   // Handler function when a category is selected
@@ -38,14 +50,15 @@ const ManageBooks = () => {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         console.error('Server responded with an error:', error.response.data);
-        toast.error('Please try again later.');
+        toast.error(`Please try again later. ${error.response.data.message}`);
     } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
-        toast.error('No response from the server.');
+        toast.error(error.request);
     } else {
         // Something happened in setting up the request that triggered an Error
         console.error('Error setting up the request:', error.message);
+        toast.error(error.message);
         // alert('An unexpected error occurred. Please try again.');
     }
   }
@@ -54,7 +67,7 @@ const ManageBooks = () => {
     // e.preventDefault();
     try{
       const data = await getAllCategories();
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       setCategories(data || []);
     }catch(error){
       handleError(error);
@@ -64,24 +77,24 @@ const ManageBooks = () => {
 
   const addBookDetails = async (e) => {
     e.preventDefault();
-    console.log(selectedCategory)
+    // console.log(selectedCategory)
     
     const book = {
       title : bookName,
       categoryId,
       categoryName : selectedCategory,
       authorId,
-      authorName,
+      authorName: authorName,
       quantityAvailable : quantity,
       description,
     }
 
-    console.log(book)
+    // console.log(book)
     
     try{
       const result = await addBook(book);
   
-      console.log(JSON.stringify(result))
+      // console.log(JSON.stringify(result))
 
       toast.success(result.message);
 
@@ -93,19 +106,91 @@ const ManageBooks = () => {
 
   const[bookDetail, setBookdetail] = useState([]);
 
-    const loadBooks = async () => {
+  const loadBooks = async () => {
+
 
       try{
         const allBooks = await getAllBooks();
         
-        console.log(JSON.stringify(allBooks))
+        // console.log(JSON.stringify(allBooks))
   
-        setBookdetail(allBooks)
+        setBookdetail(allBooks||[]);
 
       }catch(error){
         handleError(error);
       }
   }
+
+  const findBookDetails = async (e) => {
+    e.preventDefault();
+    try{
+        const data = await getBook(bookId);
+        // console.log(JSON.stringify(data))
+
+        // setBook(data);
+        authorReturn(data);
+    }catch(error){
+      handleError(error);
+    }
+
+    setBookdetail([]);
+  }
+
+  const handleUpdateBook = async (e) => {
+    e.preventDefault();
+
+    const data1 = {
+      bookId: bookId, 
+      bookTitle : bookName,
+      categoryId,
+      category : selectedCategory,
+      authors: [{
+        authorId,
+        authorName: authorName}],
+      quantity : quantity,
+      description,
+    }
+
+    console.log(data1);
+
+
+    try{
+        const response = await updateBookDetails(data1);
+        // console.log(JSON.stringify(data))
+        toast.success(response.message);
+
+
+    }catch(error){
+      handleError(error);
+    }
+
+    setBookdetail([]);
+
+  };
+
+  // const [authors, setAuthors] = useState('');
+
+  function authorReturn(data){
+    setBookName(data.bookTitle);
+    setAuthorName(data.authors.map(authors =>
+      authors.authorName).join(', '));
+    setSelectedCategory(data.category.categoryName);
+    setQuantity(data.quantity);
+  }
+
+  const handleDeleteBook= async (e) => {
+    e.preventDefault();
+    try{
+        const data = await deleteBookDetails(bookId);
+        console.log(JSON.stringify(data));
+        toast.success(data.message);
+
+    }catch(error){
+      handleError(error);
+    }
+  }
+
+  const emptyArr = [];
 
   return (
 <div className="container">
@@ -114,7 +199,16 @@ const ManageBooks = () => {
       <div className="content p-4 w-100">
         {/* <a href="#" className="btn btn-danger mb-3">Back</a> */}
         <div className="mb-3">
-          <label className="form-label">Enter Book Name</label>
+          <label className="form-label">Enter Book Id</label>
+          <input type="text" className="form-control" 
+            value={bookId}
+            onChange={(e) => setBookId(e.target.value)}
+            required />
+            <button className="btn btn-primary"
+            onClick={findBookDetails}>Find Book Details</button>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Enter Book Title</label>
           <input type="text" className="form-control" 
             value={bookName}
             onChange={(e) => setBookName(e.target.value)}
@@ -136,11 +230,13 @@ const ManageBooks = () => {
                 onChange={handleCategoryChange}
               >
                 <option value="">--Select a Category--</option>
+                {/* {Object.keys(categories).length !== emptyArr.length ? */}
                 {categories.map((category) => (
                   <option key={category.categoryId} value={category.categoryName}>
                     {category.categoryName}
                   </option>
                 ))}
+                {/* : categoryName} */}
               </select>
 
               {/* {selectedCategory && (
@@ -159,8 +255,10 @@ const ManageBooks = () => {
         <div className="d-grid gap-2">
           <button className="btn btn-danger"
           onClick={addBookDetails}>ADD</button>
-          <button className="btn btn-danger">UPDATE</button>
-          <button className="btn btn-danger">DELETE</button>
+          <button className="btn btn-danger"
+          onClick={handleUpdateBook}>UPDATE</button>
+          <button className="btn btn-danger"
+          onClick={handleDeleteBook}>DELETE</button>
         </div>
       </div>
     </div>
@@ -191,7 +289,7 @@ const ManageBooks = () => {
                 id = {book.bookId}
                 title = {book.bookTitle}
                 category = {book.category.categoryName}
-                author = {book.authors[0].authorName}
+                author = {book.authors.map(authors => authors.authorName).join(', ')}
                 quantity = {book.quantity}
                 />
               )
