@@ -27,7 +27,7 @@ public class AddBookDTO {
 	
 	private int quantityAvailable;
 	
-	@NotBlank(message = "Description required")
+//	@NotBlank(message = "Description required")
 	private String description;
 	
 	
