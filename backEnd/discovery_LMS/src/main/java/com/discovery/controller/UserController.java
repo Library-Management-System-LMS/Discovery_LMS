@@ -118,6 +118,7 @@ public class UserController {
 	
 	
 	//Add try catch block
+<<<<<<< HEAD
 	@PutMapping("/update")
 	@Operation(description = "Update user details")
 	public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUser dto) {
@@ -134,6 +135,24 @@ public class UserController {
 //		}
 //	}
 //				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+=======
+		@PutMapping("/update")
+		@Operation(description = "Update user details")
+		public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUser dto) {
+			System.out.println("in update user " + dto);
+			
+			try {
+				return ResponseEntity.ok(userService.updateUser(dto));
+			} catch (RuntimeException e) {
+					
+				System.out.println(e);
+					
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+							.body(new ApiResponse(e.getMessage()));
+							
+			}
+		}
+>>>>>>> 1af9bbf19740792086ffac488a488e899b84f9e7
 
 						   try {
 						        return ResponseEntity.ok(userService.updateUser(dto));

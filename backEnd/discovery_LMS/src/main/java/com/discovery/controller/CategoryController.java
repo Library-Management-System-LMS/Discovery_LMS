@@ -32,7 +32,7 @@ public class CategoryController {
 	private CategoryServiceImpl categoryService;
 	
 	
-	@GetMapping
+	@GetMapping("/getAll")
 	@Operation(description = "get list of Category")
 	public ResponseEntity<?> listAllCategories() {
 		
