@@ -27,7 +27,7 @@ function ViewRecords() {
           console.error('Error setting up the request:', error.message);
           // alert('An unexpected error occurred. Please try again.');
       }
-  }
+    }
 
   const emptyArr = []
 

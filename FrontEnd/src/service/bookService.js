@@ -20,3 +20,10 @@ export async function getAllBooks(){
     // console.log(JSON.stringify(response))
     return response.data
 }
+
+export async function getAllCategories(){
+    const response = await axios.get(`${config.url}/categories/getAll`)
+    // console.log(JSON.stringify(response.data))
+    return response.data
+}
+
