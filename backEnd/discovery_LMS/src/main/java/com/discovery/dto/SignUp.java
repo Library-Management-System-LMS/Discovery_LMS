@@ -22,7 +22,7 @@ public class SignUp {
 	
 //	@JsonProperty(access = Access.READ_ONLY) // this property only used during ser.
 //	private Long id;
-	@NotBlank(message = "First Name required")
+    @NotBlank(message = "First Name required")
 	private String firstName;
 	
 	@NotBlank(message = "Last Name required")

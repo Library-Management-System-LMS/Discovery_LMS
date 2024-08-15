@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,31 +50,28 @@ public class UserController {
 		}
 	}
 	
-	
-	@PostMapping("/signin") //@RequestMapping(method=POST)
+	@PostMapping("/signin")
 	@Operation(description = "Sign in User")
-	public ResponseEntity<?> signInUser(
-			@RequestBody @Valid SignInRequest request) {
-		
-		//@RequestBody => Json -> Java (un marshalling | de ser)
-		System.out.println("in signin " + request);
-		
-//		System.out.println("service "+userService);
-			
-		try {
-			return ResponseEntity.ok(
-					userService.authenticateUser(request));
-		} catch (RuntimeException e) {
-				
-			System.out.println(e);
-				
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(new ApiResponse(e.getMessage(), "failure"));
-						
-		}
-		
-		
+	public ResponseEntity<?> signInUser(@RequestBody @Valid SignInRequest request, BindingResult bindingResult) {
+	    // Check for validation errors
+	    if (bindingResult.hasErrors()) {
+	        String errorMessage = bindingResult.getFieldError().getDefaultMessage();
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                             .body(new ApiResponse(errorMessage, "failure"));
+	    }
+
+	    try {
+	        return ResponseEntity.ok(userService.authenticateUser(request));
+	    } catch (RuntimeException e) {
+	        // Log the exception and send a user-friendly message
+	        System.out.println(e);
+	        String userFriendlyMessage = "Invalid email or password. Please try again.";
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                             .body(new ApiResponse(userFriendlyMessage, "failure"));
+	    }
 	}
+		
+	
 	
 	
 	@GetMapping("/info/{id}")

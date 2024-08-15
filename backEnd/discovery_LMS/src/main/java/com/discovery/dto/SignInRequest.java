@@ -16,10 +16,10 @@ public class SignInRequest {
 	
 	
 	@NotEmpty(message = "Email can't be blank")
-	@Email(message = "Invalid email format")
+	 @Email(message = "Email ID is incorrect")
 	private String email;
 	
 	@NotEmpty
-	@Length(min = 3,max=20,message = "Invalid password length")
+	@Length(min = 6,max=20,message = "Invalid password length")
 	private String password;
 }
