@@ -348,16 +348,11 @@ const AdminNavBar = () => {
 
 export const MyFooter = () => {
   return (
-    <footer className="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
-        <p className="col-md-4 mb-0 text-muted">2024 Library Managment System</p>
-
-        {/* <a href="#" className="col-md-3 d-flex align-items-center justify-content-md-end mb-md-0 text-muted link-dark text-decoration-none">
-          <svg className="bi me-2" width="24" height="24"><use href="#bootstrap-facebook"/></svg>
-        </a>
-        <a href="#" className="col-md-3 d-flex align-items-center justify-content-md-end mb-md-0 text-muted link-dark text-decoration-none">
-          <svg className="bi me-2" width="24" height="24"><use href="#bootstrap-twitter"/></svg>
-        </a> */}
-      </footer>
+    <footer>
+      <p className="mb-0 text-muted text-center">2024 Library Management System</p>
+    </footer>
   );
+
+
 }
 

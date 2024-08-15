@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import './RegisterUser.css';
 import { signup } from '../service/userService';
@@ -26,149 +25,118 @@ const RegisterUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {//firstName, lastName, email, password, passwordConfirm, phone
-
-                // client side validations
-            if(formData.firstName.length === 0){
-
-            }
-            else if(formData.lastName.length === 0){
-
-            }
-            else if(formData.email.length === 0){
-                toast.warning('Enter Email')
-            }else if(formData.password.length === 0){
-                toast.password('Enter Password')
-            }else if(formData.confirmPassword.length === 0){
-                toast.warn('Please enter confirm passoword')
-            }else if(formData.password !== formData.confirmPassword){
-                toast.warning('Password does not match')
-            }else{
-                // get user details from email and password
-                const result = await signup(formData)
-        
-                // sample response
-                // {
-                //     "firstName": "string",
-                //     "lastName": "string",
-                //     "email": "string",
-                //     "password": "string",
-                //     "passwordConfirm": "string"
-                //   }
-        
-                console.log(JSON.stringify(result))
-        
-                if(result['status'] === 'success'){
-        
-                    toast.success('please login first')
-                    // navigate to login
-                    navigate('/login')
-        
-                }else {
-
-                    toast.error('could not sign you up, please try again')
-                    navigate('/signup')
+        try {
+            // Client-side validations
+            if (formData.firstName.length === 0) {
+                toast.warning('Enter First Name');
+            } else if (formData.lastName.length === 0) {
+                toast.warning('Enter Last Name');
+            } else if (formData.email.length === 0) {
+                toast.warning('Enter Email');
+            } else if (formData.password.length === 0) {
+                toast.warning('Enter Password');
+            } else if (formData.confirmPassword.length === 0) {
+                toast.warning('Please enter confirm password');
+            } else if (formData.password !== formData.confirmPassword) {
+                toast.warning('Password does not match');
+            } else {
+                const result = await signup(formData);
+                if (result['status'] === 'success') {
+                    toast.success('Please login first');
+                    navigate('/login');
+                } else {
+                    toast.error('Could not sign you up, please try again');
                 }
-                    console.log('Registration successful:', result.data);
-                    // Optionally: show a success message or redirect to another page
             }
-                
-        }catch (error) {
-                console.error('Registration failed:', error);
+        } catch (error) {
+            console.error('Registration failed:', error);
         }
     };
 
     return (
         <div className="register-page">
             <div className="container">
-                    <h2 className='row justify-content-center pt-5 mb-0'>
-                        Welcome to Discovery Library!</h2>
                 <div className="row justify-content-center pt-5">
                     <div className="col-md-6 col-lg-5">
-                        <div className="text-center mb-3">
-                        </div>
-                        <div className="card form-container rounded shadow-sm p-3 mb-5"> {/* Increased bottom margin */}
-                            
+                        <div className="card form-container rounded shadow-sm p-3 mb-5">
                             <h2 className="text-center mb-3">SIGN UP</h2>
 
-                                <form onSubmit={handleSubmit}>
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="firstName">First Name</label>
-                                        <input
-                                            type="text"
-                                            id="firstName"
-                                            name="firstName"
-                                            className="form-control"
-                                            value={formData.firstName}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="lastName">Last Name</label>
-                                        <input
-                                            type="text"
-                                            id="lastName"
-                                            name="lastName"
-                                            className="form-control"
-                                            value={formData.lastName}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="email">Your Email</label>
-                                        <input
-                                            type="text"
-                                            id="email"
-                                            name="email"
-                                            className="form-control"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="password">Password</label>
-                                        <input
-                                            type="password"
-                                            id="password"
-                                            name="password"
-                                            className="form-control"
-                                            value={formData.password}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="mb-2">
-                                        <label htmlFor="confirmPassword">
-                                            Confirm Password
-                                        </label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="confirmPassword"
-                                            name="confirmPassword"
-                                            value={formData.confirmPassword}
-                                            onChange={handleInputChange}
-                                        />
-                                        </div>
-                                    <div className="text-center">
-                                        <button type="submit" className="btn btn-primary btn-lg">Register</button>
-                                    </div>
-                                </form>
-                            </div>
-                    </div>
-                    <div className='col-md-6 col-lg-5 d-flex align-items-center'>
-                        <div className="text-center mt-4"> {/* Added top margin */}
-                                <img src=''></img>
-                                <p className="text-muted">
-                                    Signing up is free and easy! Just fill out the form to get started.
-                                </p>
-                                <p className="text-muted">
-                                    With a library card, you can borrow books, audiobooks, and ebooks. You can also access a variety of online resources, including research databases and streaming services.
-                                </p>
-                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="form-group mb-2">
+                                    <label htmlFor="firstName">First Name</label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        name="firstName"
+                                        className="form-control"
+                                        value={formData.firstName}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        name="lastName"
+                                        className="form-control"
+                                        value={formData.lastName}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <label htmlFor="email">Your Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        className="form-control"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <label htmlFor="password">Password</label>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        className="form-control"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-2">
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        value={formData.confirmPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-primary btn-lg">Register</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {/* Info below the registration block */}
+                        <div className="info-text mt-4 text-muted text-center">
+                            <p>
+                                Signing up is free and easy! Just fill out the form to get started.
+                            </p>
+                            <p>
+                                With a library card, you can borrow books, audiobooks, and ebooks. You can also access a variety of online resources, including research databases and streaming services.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

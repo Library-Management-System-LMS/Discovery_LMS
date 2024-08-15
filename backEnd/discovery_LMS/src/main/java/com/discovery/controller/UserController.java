@@ -129,12 +129,12 @@ public class UserController {
 				
 			System.out.println(e);
 				
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(new ApiResponse(e.getMessage()));
 						
 		}
 	}
-	
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+
 	@DeleteMapping("/{userId}")
 	@Operation(description = "Delete user details")
 	public ResponseEntity<?> deleteUser(@PathVariable Long userId) {

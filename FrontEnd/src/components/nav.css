@@ -1,20 +1,26 @@
-
-
-.nav {
-    border-radius: 12px;
-    background:  #ffffff1a;
-    border: 1px solid #ffffff20;
-    backdrop-filter: blur(16px) saturated(120%);
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-/* CSS */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures that the page content takes up the full height */
+}
+
+main {
+    flex: 1;
+}
+
 footer {
     text-align: center;
-    text-color:white; /* Centers the text horizontally */
-    padding: 0.01em; /* Adjust padding as needed */
-    background-color:rgb(202, 199, 199); /* Background color for visibility */
-    /* position: fixed; Keeps the footer at the bottom of the page */
-    bottom: 0; /* Aligns the footer at the bottom */
-    width: 100%; /* Ensures the footer spans the full width of the page */
-  }
-  
+    color: rgb(86, 86, 86);
+    padding: 0.5rem;
+    background-color: rgb(202, 199, 199);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    margin: 0; /* Ensure there is no margin on the footer */
+}
