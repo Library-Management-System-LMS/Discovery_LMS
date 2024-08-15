@@ -18,6 +18,7 @@ public class GetAllUserDetailsDTO {
 	
 	private String lastName;
 	
+
 	private String email;
 	
 	private UserRole role;
@@ -28,6 +29,13 @@ public class GetAllUserDetailsDTO {
 	
 	private String status;
 	
+	public GetAllUserDetailsDTO(Long id, String firstName, String email, String status) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.email = email;
+		this.status = status;
+	}
 	
 	
 }

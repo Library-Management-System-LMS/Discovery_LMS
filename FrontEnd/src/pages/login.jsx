@@ -54,10 +54,14 @@ function LoginUser() {
         // show message
         toast.success(`${firstName} ${lastName},
         Welcome to the Discovery LMS!`)
-      
 
-        // navigate to home
-        navigate('/home')
+        toast.success("Click on More to explore options")
+      
+        if(role === 'ROLE_ADMIN')
+          navigate('/dashboard')
+        else// navigate to home
+          navigate('/home')
+        
       }
     })
     .catch(error => {

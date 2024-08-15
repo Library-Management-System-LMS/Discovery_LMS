@@ -30,6 +30,13 @@ public class UserDetailsDTO {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+
+	public UserDetailsDTO(String firstName, Long id, String email) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.email = email;
+	}
 	
 	
 	

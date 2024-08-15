@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,7 @@ import com.discovery.dto.AddBorrowDTO;
 import com.discovery.dto.ApiResponse;
 import com.discovery.dto.BookDetailsDTO;
 import com.discovery.dto.BorrowDetailsDTO;
+import com.discovery.dto.CountDTO;
 import com.discovery.dto.GetBorrowDetailsDTO;
 import com.discovery.entities.Book;
 import com.discovery.service.BookServiceImpl;
@@ -39,7 +41,7 @@ public class BorrowController {
 	@GetMapping
 	@Operation(description = "get list of Borrows")
 	public ResponseEntity<?> listBorrowList() {
-//		System.out.println("in list");
+		System.out.println("in list");
 		List<BorrowDetailsDTO> list = borrowService.getBorrowList();
 		
 		if(list.isEmpty())
@@ -48,13 +50,37 @@ public class BorrowController {
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
+	@GetMapping("/list")
+	@Operation(description = "get count of book, user, borrow and defaulter")
+	public ResponseEntity<?> getAllCount(){
+		System.out.println("in count");
+		
+		try {
+			
+			return ResponseEntity.ok(borrowService.getCountDetails());
+			
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ApiResponse(e.getMessage(), "failure"));
+		}		
+		
+		
+	}
+	
+	
+	
+	
+	
 	@GetMapping("/info/{id}")
-	public ResponseEntity<?> getBorrowDetail(@PathVariable Long id){
+	public ResponseEntity<?> getBorrowDetail(@PathVariable String id){
 		System.out.println("in get borrow detail " + id);
+		
+		Long userId = Long.parseLong(id);
 		
 		try {
 		
-			return ResponseEntity.ok(borrowService.getBorrowDetailByUserIdAndBookId(id));
+			return ResponseEntity.ok(borrowService.getBorrowDetailByUserIdAndBookId(userId));
 			
 		}catch(RuntimeException e) {
 			System.out.println(e);

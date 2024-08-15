@@ -22,6 +22,8 @@ import com.discovery.dto.AddBorrowDTO;
 import com.discovery.dto.ApiResponse;
 import com.discovery.dto.BookDetailsDTO;
 import com.discovery.dto.BorrowDetailsDTO;
+import com.discovery.dto.CountDTO;
+import com.discovery.dto.UserDetailsDTO;
 import com.discovery.entities.Author;
 import com.discovery.entities.Book;
 import com.discovery.entities.Borrow;
@@ -30,6 +32,7 @@ import com.discovery.entities.Category;
 import com.discovery.entities.Fine;
 import com.discovery.entities.User;
 import com.discovery.entities.UserDeleteStatus;
+import com.discovery.entities.UserRole;
 
 @Service
 @Transactional
@@ -51,6 +54,41 @@ public class BorrowServiceImpl {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	
+	public CountDTO getCountDetails() {
+		Long borrowCount = borrowDao.countByBorrowed();
+		Long userCount = userDao.count();
+		Long bookCount = bookDao.count();
+		Long fineCount = fineDao.count();
+		
+		List<User> uList = userDao.findAll();
+		
+		List<Book> bList = bookDao.findAll();
+		
+		List<UserDetailsDTO> users = new ArrayList<>();
+		for(User u: uList) {
+			if(u.getRole() == UserRole.ROLE_ADMIN) {
+				
+				}else {
+			UserDetailsDTO uDto = new UserDetailsDTO(u.getFirstName()+" "+u.getLastName(), u.getId(),
+					u.getEmail());
+			
+			users.add(uDto);}
+		}
+		
+		
+		List<BookDetailsDTO> books = new ArrayList<>();
+		for(Book b: bList) {
+			BookDetailsDTO bDto = new BookDetailsDTO(b.getId(), b.getTitle()
+					, b.getQuantityAvailable(), b.getAuthorDetails());
+			books.add(bDto);
+		}
+		
+		
+		return new CountDTO(bookCount, userCount, bookCount, fineCount, users, books);
+		
+	}
 	
 	
 	public List<BorrowDetailsDTO> getBorrowList(){
@@ -77,7 +115,7 @@ public class BorrowServiceImpl {
 		List<Borrow> borrowList = borrowDao.findByUser(user);
 		
 		if(borrowList.isEmpty())
-			throw new ApiException("No record found");
+			throw new ApiException("You have not borrowed any book yet");
 		
 		BorrowDetailsDTO dto = null;
 		
@@ -86,9 +124,12 @@ public class BorrowServiceImpl {
 			else {
 				dto = new BorrowDetailsDTO(b.getId(),b.getBook().getId(), b.getBook().getTitle()
 						,b.getUser().getId(), b.getUser().getFirstName()+" "+b.getUser().getLastName(),
-						b.getStatus(), b.getBorrowDate(), b.getDueDate(), null);
+						b.getStatus(), b.getBorrowDate(), b.getReturnDate(), b.getDueDate());
 			}
 		}
+		
+		if(dto == null)
+			throw new ApiException("You have a clean slate");
 					
 		
 					
@@ -96,29 +137,44 @@ public class BorrowServiceImpl {
 	}
 	
 	public ApiResponse returnBook(Long uId, Long bId) {
-		
+			
 		Book book = bookDao.findById(bId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
 		
 		User user = userDao.findById(uId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
 		
-		Borrow borrow = borrowDao.findByUserAndBook(user, book)
-				.orElseThrow(() -> new ResourceNotFoundException("Borrow Details not found !!!!"));
+		List<Borrow> newList = borrowDao.findByUserAndBook(user, book);
 		
-		if(borrow.getStatus() == BorrowStatus.RETURNED)
-			return new ApiResponse("Book is already returned!", "returned");
 		
-		borrow.setStatus(BorrowStatus.RETURNED);
-		borrow.setReturnDate(LocalDate.now());
+		ApiResponse api = new ApiResponse("Could not found any Record");
 		
-		return new ApiResponse(borrow.getBook().getTitle() + " Book returned Successfully by "
-								+ borrow.getUser().getFirstName()+" "+borrow.getUser().getLastName(), "success");
+		for(Borrow b: newList) {
+			if(b.getStatus() == BorrowStatus.BORROWED) {
+				b.setStatus(BorrowStatus.RETURNED);
+				b.setReturnDate(LocalDate.now());
+				int q = book.getQuantityAvailable() + 1;
+				book.setQuantityAvailable(q);
+				api = new ApiResponse(b.getBook().getTitle() + " Book returned Successfully by "
+						+ b.getUser().getFirstName()+" "+b.getUser().getLastName(), "success");				
+			}	
+				
+		}
+		
+		return api;
+		
+		
 	}
 	
 	
 	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {
+		
+		if(!dto.getBorrowDate().equals(LocalDate.now()))
+			throw new ApiException("Borrow date should be Current date");
+		else if(dto.getBorrowDate().isAfter(dto.getDueDate()))
+			throw new ApiException("Due date should be more than Borrow date");
+		
 
 		// 1. get book from it's id
 			Book book = bookDao.findById(dto.getBookId())
@@ -136,7 +192,7 @@ public class BorrowServiceImpl {
 			
 			for(Borrow b: borrowList) {
 				if(b.getStatus() == BorrowStatus.BORROWED)
-					throw new ApiException("User Already in possession of book");
+					throw new ApiException("You are Already in possession of book");
 			}
 			
 
