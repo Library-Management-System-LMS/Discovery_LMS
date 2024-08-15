@@ -35,7 +35,7 @@ public class UpdateUser {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
-//	private UserRole role;
+	private UserRole role;
 	
 	
 	private String status;

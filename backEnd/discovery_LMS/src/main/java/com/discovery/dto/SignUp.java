@@ -20,8 +20,8 @@ import lombok.ToString;
 @ToString
 public class SignUp {
 	
-//	@JsonProperty(access = Access.READ_ONLY) // this property only used during ser.
-//	private Long id;
+	@JsonProperty(access = Access.READ_ONLY) // this property only used during ser.
+	private Long id;
     @NotBlank(message = "First Name required")
 	private String firstName;
 	
@@ -35,16 +35,15 @@ public class SignUp {
 	private String password;
 	
 	
-//	private UserRole role;
+	private UserRole role;
 	
-//	public SignUp(String firstName, String lastName,
-//			String email, String password) {
-//		super();
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.email = email;
-//		this.password = password;
-//	}
+public SignUp(String firstName, String lastName,
+		String email, String password) {
+	super();
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.password = password;	}
 	
 	
 }

@@ -15,4 +15,9 @@ public class ApiException extends RuntimeException {
 
 
 
+@ExceptionHandler(ConstraintViolationException.class)
+public ResponseEntity<ApiResponse> handleConstraintViolation(ConstraintViolationException ex) {
+    String message = "Constraint violation: " + ex.getMessage();
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(message, "error"));
+}
 }

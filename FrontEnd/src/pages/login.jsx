@@ -13,6 +13,8 @@ function LoginUser() {
     // create state members
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    // Add a state for role
+const [role, setRole] = useState(''); // Default to user role
 
     // get the navigate object
     const navigate = useNavigate()
@@ -133,6 +135,21 @@ function LoginUser() {
                 required
               />
             </div>
+           
+<div className="form-group mb-3">
+  <label htmlFor="role" className="form-label">Role</label>
+  <select
+    className="form-control"
+    id="role"
+    name="role"
+    value={role}
+    onChange={(e) => setRole(e.target.value)}
+    required
+  >
+    <option value="ROLE_USER">User</option>
+    <option value="ROLE_ADMIN">Admin</option>
+  </select>
+</div>
             <div className="form-check mb-3">
               <input type="checkbox" className="form-check-input" id="rememberMe" />
               <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>

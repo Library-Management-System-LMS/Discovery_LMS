@@ -140,9 +140,13 @@ public class BorrowServiceImpl {
 	}
 	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {
-
+		 LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.of(2023, 7, 31); // Example past date
+		 Borrow borrow = new Borrow();
+		 borrow.setBorrowDate(borrowDate);
 	    if (!dto.getBorrowDate().equals(LocalDate.now()))
-	        throw new ApiException("Borrow date should be the current date");
+//	        throw new ApiException("Borrow date should be the current date");
+	    	 // Test fine or perform actions for a borrow date that is not today
+	        borrowDate = dto.getBorrowDate();
 	    else if (dto.getBorrowDate().isAfter(dto.getDueDate()))
 	        throw new ApiException("Due date should be later than Borrow date");
 
@@ -177,11 +181,20 @@ public class BorrowServiceImpl {
 	    bookDao.save(book);
 
 	    // Create and save the borrow record
-	    Borrow borrow = new Borrow();
+//	    Borrow borrow = new Borrow();
 	    borrow.setBook(book);  // 3. Set the book for the borrow
 	    borrow.setUser(user);  // 4. Set the user for the borrow
-	    LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
-	    borrow.setBorrowDate(borrowDate);
+//	    LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
+//	    borrow.setBorrowDate(borrowDate);
+	    
+//	    LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.of(2023, 7, 31); // Example past date
+//	    borrow.setBorrowDate(borrowDate);
+
+	       
+
+	        // Proceed with other operations, such as saving the borrow record and calculating fines
+	    
+
 	    borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
 	    borrow.setStatus(dto.getStatus());  // Set the borrow status if provided
 	    borrowDao.save(borrow);  // Save the borrow record
