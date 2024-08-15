@@ -125,7 +125,7 @@ const Home = () => {
                 <button className="add-to-cart-button">Add to Cart</button>
               </div>
 
-              {/* Add more comedy books as needed */}
+              
             </div>
           </div>
 
