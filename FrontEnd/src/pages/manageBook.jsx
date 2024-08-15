@@ -133,7 +133,6 @@ const ManageBooks = () => {
       handleError(error);
     }
 
-    setBookdetail([]);
   }
 
   const handleUpdateBook = async (e) => {
@@ -164,7 +163,6 @@ const ManageBooks = () => {
       handleError(error);
     }
 
-    setBookdetail([]);
 
   };
 
