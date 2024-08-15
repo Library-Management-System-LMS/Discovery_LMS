@@ -220,11 +220,11 @@ public class BorrowServiceImpl {
 		// 4. borrow 1<--->* user
 			borrow.setUser(user);;
 		
-			 // 5. Set borrow date and due date
+			 //5. Set borrow date and due date
 			// If no borrow date is provided, set it to now
-//	        LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
-//	        borrow.setBorrowDate(borrowDate);
-//	        borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
+	        LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
+	        borrow.setBorrowDate(borrowDate);
+	        borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
 	        
 	        
 		// 6. save book post

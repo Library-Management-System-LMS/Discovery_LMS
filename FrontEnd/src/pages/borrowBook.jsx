@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getBook } from '../service/bookService';
 import { borrowBook } from '../service/borrowService';
@@ -7,17 +7,27 @@ import './BorrowBook.css'; // Import custom CSS file
 function BorrowBook() {
   document.title = "BORROW BOOK";
 
-  let currentDate = new Date().toJSON().slice(0, 10);
-
   const [bookId, setBookId] = useState('');
   const [userId, setUserId] = useState(localStorage['userId']);
-  const [borrowDate, setBorrowDate] = useState(currentDate);
-  const [dueDate, setDueDate] = useState(currentDate);
+  const [borrowDate, setBorrowDate] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const [status, setStatus] = useState('BORROWED');
   const [bookName, setBookName] = useState('');
   const [author, setAuthor] = useState('');
   const [quantity, setQuantity] = useState('');
   const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    // Set initial borrow date to today
+    const currentDate = new Date().toJSON().slice(0, 10);
+    setBorrowDate(currentDate);
+  }, []);
+
+  useEffect(() => {
+    if (borrowDate) {
+      calculateAndSetDueDate(borrowDate);
+    }
+  }, [borrowDate]);
 
   const handleError = (error) => {
     if (error.response) {
@@ -29,6 +39,18 @@ function BorrowBook() {
     } else {
       console.log("Error Message:", error.message);
     }
+  };
+
+  const calculateAndSetDueDate = (borrowDate) => {
+    // Calculate due date (example: 14 days from the borrow date)
+    const borrowDateObj = new Date(borrowDate);
+    borrowDateObj.setDate(borrowDateObj.getDate() + 14); // Replace 14 with your `BORROW_PERIOD_DAYS`
+    setDueDate(borrowDateObj.toJSON().slice(0, 10)); // Format date as yyyy-mm-dd
+  };
+
+  const handleBorrowDateChange = (e) => {
+    const selectedBorrowDate = e.target.value;
+    setBorrowDate(selectedBorrowDate);
   };
 
   const onSubmit = async (e) => {
@@ -106,7 +128,7 @@ function BorrowBook() {
                     id="borrow-date"
                     className="form-control"
                     value={borrowDate}
-                    onChange={(e) => setBorrowDate(e.target.value)}
+                    onChange={handleBorrowDateChange}
                     required
                   />
                 </div>
@@ -117,7 +139,7 @@ function BorrowBook() {
                     id="due-date"
                     className="form-control"
                     value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
+                    onChange={(e) => setDueDate(e.target.value)} // Allow manual override if needed
                     required
                   />
                 </div>
