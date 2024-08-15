@@ -103,84 +103,6 @@ function LoginUser() {
 
   }
 
-  // const onLogin = async () => {
-    
-  //     try {
-  //       const result = await signin(email, password)
-  //         if (result['status'] === 'success') {
-
-  //         // sample response
-  //         // {
-  //         //   "id": 5,
-  //         //   "firstName": "raj",
-  //         //   "lastName": "saytode",
-  //         //   "email": "raj@gmail.com",
-  //         //   "role": "ROLE_USER",
-  //         //   "status": "success"
-  //         // }
-
-  //           console.log(JSON.stringify(result))
-
-  //           const id = result['id']
-  //           const email = result['email']
-  //           const role = result['role']
-
-  //           localStorage.setItem('userId', id)
-  //           localStorage.setItem('email', email)
-  //           localStorage.setItem('role', role)
-
-  //           // set the login status to true
-  //           dispatch(loginAction())
-
-  //           // toast.success('welcome to the application')
-  //           navigate('/home')
-  //         } else {
-  //           toast.error('invalid email or password')
-  //         }
-  //     }catch(error){
-  //       toast.error('an error occured')
-  //       console.error(error)
-  //     }
-    
-  // }  
-
-  // const onLogin = async (e) => {
-  //   e.preventDefault()
-  //   // client side validation
-  //   if (email.length === 0) {
-  //     // toast.warning('enter email')
-  //   } else if (password.length === 0) {
-  //     // toast.warning('enter password')
-  //   } else {
-  //     const result = await signin(email, password)
-  //     // if (result['status'] === 'success') {
-  //       // read the token
-  //       // const token = result['data']['token']
-  //       // const name = result['data']['name']
-  //       const id = result['id']
-
-  //       // set the data in session storage
-  //       // sessionStorage.token = token
-  //       // sessionStorage.name = name
-
-  //       // sessionStorage['token'] = token
-  //       // sessionStorage['name'] = name
-
-  //       // sessionStorage.setItem('token', token)
-  //       localStorage.setItem('id', id)
-
-  //       // set the login status to true
-  //       dispatch(loginAction())
-
-  //       toast.success('welcome to the application')
-  //       // navigate('/home')
-  //       navigate('/home')
-  //     // } else {
-  //       // toast.error('invalid email or password')
-  //     // }
-  //   }
-  // }
-
   return (
     <div className="container-fluid d-flex flex-column h-100 login-page">
       <main className="d-flex justify-content-center align-items-center flex-grow-1">
@@ -216,7 +138,7 @@ function LoginUser() {
               <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
             </div>
             <button type="submit" className="btn btn-primary w-100">Login</button>
-            <Link to="#" className="forgot-password-link">Forgot Password?</Link>
+            {/* <Link to="#" className="forgot-password-link">Forgot Password?</Link> */}
             <p className="text-center mt-4">Don't have an account? <Link to="/register">Register Here</Link></p>
           </form>
         </div>

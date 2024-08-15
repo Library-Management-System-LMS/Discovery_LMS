@@ -129,7 +129,7 @@ public class BorrowServiceImpl {
 		}
 		
 		if(dto == null)
-			throw new ApiException("You have a clean slate");
+			throw new ApiException("You have not borrowed any book yet");
 					
 		
 					
@@ -137,6 +137,9 @@ public class BorrowServiceImpl {
 	}
 	
 	public ApiResponse returnBook(Long uId, Long bId) {
+		
+		if(bId == null)
+			throw new ApiException("Cannot find any borrowed book");
 			
 		Book book = bookDao.findById(bId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));

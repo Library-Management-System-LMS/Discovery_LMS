@@ -26,11 +26,11 @@
 }
 
 /* Ensure that the container is aligned centrally */
-.container {
+/* .container {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /* Additional responsive adjustments */
 @media (max-width: 768px) {
