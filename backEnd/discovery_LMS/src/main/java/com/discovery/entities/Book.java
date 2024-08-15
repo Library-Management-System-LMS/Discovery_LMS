@@ -50,8 +50,18 @@ public class Book extends BaseEntity{
 	
 //	private LocalDate publishDate;
 	
-	private int quantityAvailable;
-	
+
+	 private int quantityAvailable;
+
+	    // Getter for quantityAvailable
+	    public int getQuantityAvailable() {
+	        return quantityAvailable;
+	    }
+
+	    // Setter for quantityAvailable
+	    public void setQuantityAvailable(int quantityAvailable) {
+	        this.quantityAvailable = quantityAvailable;
+	    }
 	@Column(length = 300)
 	private String description;
 	

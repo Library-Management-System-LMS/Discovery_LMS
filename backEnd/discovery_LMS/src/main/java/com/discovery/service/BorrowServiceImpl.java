@@ -56,6 +56,9 @@ public class BorrowServiceImpl {
 	private ModelMapper mapper;
 	
 	
+
+	
+	
 	public CountDTO getCountDetails() {
 		Long borrowCount = borrowDao.countByBorrowed();
 		Long userCount = userDao.count();
@@ -136,109 +139,93 @@ public class BorrowServiceImpl {
 		return dto;
 	}
 	
-	public ApiResponse returnBook(Long uId, Long bId) {
-		
-		if(bId == null)
-			throw new ApiException("Cannot find any borrowed book");
-			
-		Book book = bookDao.findById(bId)
-				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
-		
-		User user = userDao.findById(uId)
-				.orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
-		
-		List<Borrow> newList = borrowDao.findByUserAndBook(user, book);
-		
-		
-		ApiResponse api = new ApiResponse("Could not found any Record");
-		
-		for(Borrow b: newList) {
-			if(b.getStatus() == BorrowStatus.BORROWED) {
-				b.setStatus(BorrowStatus.RETURNED);
-				b.setReturnDate(LocalDate.now());
-				int q = book.getQuantityAvailable() + 1;
-				book.setQuantityAvailable(q);
-				api = new ApiResponse(b.getBook().getTitle() + " Book returned Successfully by "
-						+ b.getUser().getFirstName()+" "+b.getUser().getLastName(), "success");				
-			}	
-				
-		}
-		
-		return api;
-		
-		
-	}
-	
-	
-	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {
-		
-		if(!dto.getBorrowDate().equals(LocalDate.now()))
-			throw new ApiException("Borrow date should be Current date");
-		else if(dto.getBorrowDate().isAfter(dto.getDueDate()))
-			throw new ApiException("Due date should be more than Borrow date");
-		
 
-		// 1. get book from it's id
-			Book book = bookDao.findById(dto.getBookId())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
-		
-		// 2. get User from it's id
-			User user = userDao.findById(dto.getUserId())
-					.orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
-			
-//		//2.1 throw exception if user is deleted
-//			if(user.getIsDeleted() == UserDeleteStatus.YES)
-//				throw new ApiException("User is deleted");
-		//2.2 throw exception if user has borrowed a book
-			List<Borrow> borrowList = borrowDao.findByUser(user);
-			
-			for(Borrow b: borrowList) {
-				if(b.getStatus() == BorrowStatus.BORROWED)
-					throw new ApiException("You are Already in possession of book");
-			}
-			
+	    if (!dto.getBorrowDate().equals(LocalDate.now()))
+	        throw new ApiException("Borrow date should be the current date");
+	    else if (dto.getBorrowDate().isAfter(dto.getDueDate()))
+	        throw new ApiException("Due date should be later than Borrow date");
 
-		//2.3 set book quantity
-			int quantity = book.getQuantityAvailable();
-			
-			if(quantity > 0)
-				book.setQuantityAvailable(quantity-1);
-			else
-				throw new ApiException("Book is not available to borrow");
-			
-			Borrow borrow= new Borrow();
-			borrow.setBook(book);
-			borrow.setUser(user);
-			borrow.setBorrowDate(dto.getBorrowDate());
-			borrow.setDueDate(dto.getDueDate());
-			borrow.setStatus(dto.getStatus());
-		
-		// 3. borrow 1<--->* book 
-			borrow.setBook(book);
-		
-		// 4. borrow 1<--->* user
-			borrow.setUser(user);;
-		
-			 //5. Set borrow date and due date
-			// If no borrow date is provided, set it to now
-	        LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
-	        borrow.setBorrowDate(borrowDate);
-	        borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
-	        
-	        
-		// 6. save book post
-			Borrow persistentBorrow = borrowDao.save(borrow);
-			 // Debugging: Log before and after decrementing the quantity
-		    System.out.println("Current quantity: " + book.getQuantityAvailable());
-		    book.setQuantityAvailable(book.getQuantityAvailable() - 1);
-		    System.out.println("New quantity: " + book.getQuantityAvailable());
-			bookDao.save(book); 
-	        
-		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
-	
-		
+	    // 1. Get book from its id
+	    Book book = bookDao.findById(dto.getBookId())
+	            .orElseThrow(() -> new ResourceNotFoundException("Invalid book id !!!!"));
+
+	    // 2. Get User from its id
+	    User user = userDao.findById(dto.getUserId())
+	            .orElseThrow(() -> new ResourceNotFoundException("Invalid user id !!!!"));
+
+	    // 2.2 Throw exception if the user has already borrowed a book
+	    List<Borrow> borrowList = borrowDao.findByUser(user);
+
+	    for (Borrow b : borrowList) {
+	        if (b.getStatus() == BorrowStatus.BORROWED)
+	            throw new ApiException("You are already in possession of a book");
+	    }
+
+	    // 2.3 Set book quantity
+	    int quantity = book.getQuantityAvailable();
+
+	    if (quantity > 0)
+	        book.setQuantityAvailable(quantity - 1);
+	    else
+	        throw new ApiException("Book is not available to borrow");
+
+	    // Debugging: Log the current quantity after the decrement
+	    System.out.println("New quantity after borrowing: " + book.getQuantityAvailable());
+
+	    // Save the updated book quantity
+	    bookDao.save(book);
+
+	    // Create and save the borrow record
+	    Borrow borrow = new Borrow();
+	    borrow.setBook(book);  // 3. Set the book for the borrow
+	    borrow.setUser(user);  // 4. Set the user for the borrow
+	    LocalDate borrowDate = dto.getBorrowDate() != null ? dto.getBorrowDate() : LocalDate.now();
+	    borrow.setBorrowDate(borrowDate);
+	    borrow.setDueDate(borrowDate.plusDays(BORROW_PERIOD_DAYS));
+	    borrow.setStatus(dto.getStatus());  // Set the borrow status if provided
+	    borrowDao.save(borrow);  // Save the borrow record
+
+	    return new ApiResponse("Book '" + book.getTitle() + "' borrowed successfully", "success");
 	}
+
+	public ApiResponse returnBook(Long uId, Long bId) {
+	    if (bId == null)
+	        throw new ApiException("Cannot find any borrowed book");
+
+	    // Retrieve the book and user
+	    Book book = bookDao.findById(bId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
+	    User user = userDao.findById(uId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
+
+	    // Find the borrow records for the given user and book
+	    List<Borrow> newList = borrowDao.findByUserAndBook(user, book);
+	    
+	    // Initialize the ApiResponse
+	    ApiResponse api = new ApiResponse("Could not find any Record");
+
+	    for (Borrow b : newList) {
+	        if (b.getStatus() == BorrowStatus.BORROWED) {
+	            // Mark the borrow record as returned and set the return date
+	            b.setStatus(BorrowStatus.RETURNED);
+	            b.setReturnDate(LocalDate.now());
+	            
+	            // Increment the book quantity and save it
+	            book.setQuantityAvailable(book.getQuantityAvailable() + 1);
+	            bookDao.save(book);
+	            
+	            // Set a successful response message with the book title
+	            api = new ApiResponse(b.getBook().getTitle() + " Book returned successfully by " 
+	                    + b.getUser().getFirstName() + " " + b.getUser().getLastName(), "success");
+	        }    
+	    }
+	    
+	    return api;
+	}
+
+	
+
 	
 	public ApiResponse returnBorrowedBook(Long borrowId) {
 	    // 1. Retrieve the borrow record
@@ -253,20 +240,16 @@ public class BorrowServiceImpl {
 	    // 3. Set the return date to now
 	    borrow.setReturnDate(LocalDate.now());
 
-	    // 4. Check if a fine should be applied
-	    if (borrow.getDueDate() == null && borrow.getReturnDate() == null) {
-	        // Fine should be applied because both dates are null
-	        double fineAmount = DAILY_FINE_RATE; // Example fine calculation
-	        Fine fine = new Fine();
-	        fine.setBorrow(borrow);
-	        fine.setFineAmount(fineAmount);
-	        fine.setFineDate(LocalDate.now());
-	        fine.setPaid(false);
-	        fineDao.save(fine);
-	    } else if (borrow.getDueDate() != null && borrow.getReturnDate().isAfter(borrow.getDueDate())) {
-	        // Fine should be applied if return date is after due date
+	    // 4. Increment the book quantity and save it
+	    Book book = borrow.getBook();
+	    book.setQuantityAvailable(book.getQuantityAvailable() + 1);
+	    bookDao.save(book);
+
+	    // 5. Check if a fine should be applied
+	    if (borrow.getDueDate() != null && borrow.getReturnDate().isAfter(borrow.getDueDate())) {
 	        long daysLate = java.time.temporal.ChronoUnit.DAYS.between(borrow.getDueDate(), borrow.getReturnDate());
 	        double fineAmount = daysLate * DAILY_FINE_RATE;
+	        
 	        Fine fine = new Fine();
 	        fine.setBorrow(borrow);
 	        fine.setFineAmount(fineAmount);
@@ -275,18 +258,11 @@ public class BorrowServiceImpl {
 	        fineDao.save(fine);
 	    }
 
-	    // 5. Increment the book quantity
-	    Book book = borrow.getBook(); // Use the existing book instance
-	    book.setQuantityAvailable(book.getQuantityAvailable() + 1);
-	    bookDao.save(book); // Save the updated book instance
-
-	    // 6. Update borrow status
+	    // 6. Update borrow status and save the borrow record
 	    borrow.setStatus(BorrowStatus.RETURNED);
 	    borrowDao.save(borrow);
 
-	    return new ApiResponse("Book returned successfully. Fine (if any) has been applied.");
-		
-//		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
+	    return new ApiResponse("Book '" + book.getTitle() + "' returned successfully. Fine (if any) has been applied.", "success");
 	}
 
 
