@@ -136,7 +136,7 @@ const [role, setRole] = useState(''); // Default to user role
               />
             </div>
            
-<div className="form-group mb-3">
+{/* <div className="form-group mb-3">
   <label htmlFor="role" className="form-label">Role</label>
   <select
     className="form-control"
@@ -149,7 +149,7 @@ const [role, setRole] = useState(''); // Default to user role
     <option value="ROLE_USER">User</option>
     <option value="ROLE_ADMIN">Admin</option>
   </select>
-</div>
+</div> */}
             <div className="form-check mb-3">
               <input type="checkbox" className="form-check-input" id="rememberMe" />
               <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>

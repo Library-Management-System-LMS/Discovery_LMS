@@ -230,6 +230,40 @@ public class BorrowServiceImpl {
 		return list;
 	}
 	
+public ApiResponse returnBook(Long uId, Long bId) {
+		
+		if(bId == null)
+			throw new ApiException("Cannot find any borrowed book");
+			
+		Book book = bookDao.findById(bId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
+		
+		User user = userDao.findById(uId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
+		
+		List<Borrow> newList = borrowDao.findByUserAndBook(user, book);
+		
+		
+		ApiResponse api = new ApiResponse("Could not found any Record");
+		
+		for(Borrow b: newList) {
+			if(b.getStatus() == BorrowStatus.BORROWED) {
+				b.setStatus(BorrowStatus.RETURNED);
+				b.setReturnDate(LocalDate.now());
+				int q = book.getQuantityAvailable() + 1;
+				book.setQuantityAvailable(q);
+				api = new ApiResponse(b.getBook().getTitle() + " Book returned Successfully by "
+						+ b.getUser().getFirstName()+" "+b.getUser().getLastName(), "success");				
+			}	
+				
+		}
+		
+		return api;
+		
+		
+	}
+
+
 	public ApiResponse returnBorrowedBook(Long borrowId) {
 	    // 1. Retrieve the borrow record
 	    Borrow borrow = borrowDao.findById(borrowId)

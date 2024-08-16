@@ -16,7 +16,7 @@ const RegisterUser = () => {
         email: '',
         password: '',
         confirmPassword: '',
-        role: '', // 
+        // role: '', // 
     });
 
     const handleInputChange = (e) => {
@@ -87,7 +87,7 @@ const RegisterUser = () => {
                                         required
                                     />
                                 </div>
-                                <div className="form-group mb-2">
+{/* <div className="form-group mb-2">
     <label htmlFor="role">Role</label>
     <select
         id="role"
@@ -100,7 +100,7 @@ const RegisterUser = () => {
         <option value="ROLE_USER">User</option>
         <option value="ROLE_ADMIN">Admin</option>
     </select>
-</div>
+</div> */}
                                 <div className="form-group mb-2">
                                     <label htmlFor="email">Your Email</label>
                                     <input
