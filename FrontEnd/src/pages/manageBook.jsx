@@ -95,7 +95,7 @@ const ManageBooks = () => {
       const result = await addBook(book);
   
       // console.log(JSON.stringify(result))
-
+      await loadBooks();
       toast.success(result.message);
 
     }catch(error){
@@ -156,6 +156,7 @@ const ManageBooks = () => {
     try{
         const response = await updateBookDetails(data1);
         // console.log(JSON.stringify(data))
+        await loadBooks();
         toast.success(response.message);
 
 
@@ -181,6 +182,7 @@ const ManageBooks = () => {
     try{
         const data = await deleteBookDetails(bookId);
         console.log(JSON.stringify(data));
+        await loadBooks();
         toast.success(data.message);
 
     }catch(error){
@@ -265,10 +267,7 @@ const ManageBooks = () => {
       <div className="content p-4 w-100">
         <div className="header d-flex justify-content-between align-items-center mb-4">
           <h4>Manage Books</h4>
-          <div className="d-grid gap-2">
-            <button className="btn btn-danger"
-            onClick={loadBooks}>Load Book Details</button>
-          </div>
+          
         </div>
         <table className="table table-bordered">
           <thead>

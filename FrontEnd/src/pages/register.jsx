@@ -16,6 +16,7 @@ const RegisterUser = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        role: '', // 
     });
 
     const handleInputChange = (e) => {
@@ -35,7 +36,7 @@ const RegisterUser = () => {
                 toast.warning('Enter Email');
             } else if (formData.password.length < 2) {
                 toast.warning('Password must be at least 6 characters');
-            } else if (formData.confirmPassword.length ==0) {
+            } else if (formData.confirmPassword.length ===0) {
                 toast.warning('Please enter confirm password');
             } else if (formData.password !== formData.confirmPassword) {
                 toast.warning('Password does not match');
@@ -86,6 +87,20 @@ const RegisterUser = () => {
                                         required
                                     />
                                 </div>
+                                <div className="form-group mb-2">
+    <label htmlFor="role">Role</label>
+    <select
+        id="role"
+        name="role"
+        className="form-control"
+        value={formData.role}
+        onChange={handleInputChange}
+        required
+    >
+        <option value="ROLE_USER">User</option>
+        <option value="ROLE_ADMIN">Admin</option>
+    </select>
+</div>
                                 <div className="form-group mb-2">
                                     <label htmlFor="email">Your Email</label>
                                     <input

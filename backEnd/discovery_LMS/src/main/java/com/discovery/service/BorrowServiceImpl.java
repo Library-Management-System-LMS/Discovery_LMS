@@ -57,6 +57,9 @@ public class BorrowServiceImpl {
 	private ModelMapper mapper;
 	
 	
+
+	
+	
 	public CountDTO getCountDetails() {
 		Long borrowCount = borrowDao.countByBorrowed();
 		Long userCount = userDao.count();
@@ -136,41 +139,6 @@ public class BorrowServiceImpl {
 					
 		return dto;
 	}
-	
-	public ApiResponse returnBook(Long uId, Long bId) {
-		
-		if(bId == null)
-			throw new ApiException("Cannot find any borrowed book");
-			
-		Book book = bookDao.findById(bId)
-				.orElseThrow(() -> new ResourceNotFoundException("Invalid Book id !!!!"));
-		
-		User user = userDao.findById(uId)
-				.orElseThrow(() -> new ResourceNotFoundException("Invalid User id !!!!"));
-		
-		List<Borrow> newList = borrowDao.findByUserAndBook(user, book);
-		
-		
-		ApiResponse api = new ApiResponse("Could not found any Record");
-		
-		for(Borrow b: newList) {
-			if(b.getStatus() == BorrowStatus.BORROWED) {
-				b.setStatus(BorrowStatus.RETURNED);
-				b.setReturnDate(LocalDate.now());
-				int q = book.getQuantityAvailable() + 1;
-				book.setQuantityAvailable(q);
-				api = new ApiResponse(b.getBook().getTitle() + " Book returned Successfully by "
-						+ b.getUser().getFirstName()+" "+b.getUser().getLastName(), "success");				
-			}	
-				
-		}
-		
-		return api;
-		
-		
-	}
-	
-	
 	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {
 		
@@ -275,20 +243,16 @@ public class BorrowServiceImpl {
 	    // 3. Set the return date to now
 	    borrow.setReturnDate(LocalDate.now());
 
-	    // 4. Check if a fine should be applied
-	    if (borrow.getDueDate() == null && borrow.getReturnDate() == null) {
-	        // Fine should be applied because both dates are null
-	        double fineAmount = DAILY_FINE_RATE; // Example fine calculation
-	        Fine fine = new Fine();
-	        fine.setBorrow(borrow);
-	        fine.setFineAmount(fineAmount);
-	        fine.setFineDate(LocalDate.now());
-	        fine.setPaid(false);
-	        fineDao.save(fine);
-	    } else if (borrow.getDueDate() != null && borrow.getReturnDate().isAfter(borrow.getDueDate())) {
-	        // Fine should be applied if return date is after due date
+	    // 4. Increment the book quantity and save it
+	    Book book = borrow.getBook();
+	    book.setQuantityAvailable(book.getQuantityAvailable() + 1);
+	    bookDao.save(book);
+
+	    // 5. Check if a fine should be applied
+	    if (borrow.getDueDate() != null && borrow.getReturnDate().isAfter(borrow.getDueDate())) {
 	        long daysLate = java.time.temporal.ChronoUnit.DAYS.between(borrow.getDueDate(), borrow.getReturnDate());
 	        double fineAmount = daysLate * DAILY_FINE_RATE;
+	        
 	        Fine fine = new Fine();
 	        fine.setBorrow(borrow);
 	        fine.setFineAmount(fineAmount);
@@ -297,18 +261,11 @@ public class BorrowServiceImpl {
 	        fineDao.save(fine);
 	    }
 
-	    // 5. Increment the book quantity
-	    Book book = borrow.getBook(); // Use the existing book instance
-	    book.setQuantityAvailable(book.getQuantityAvailable() + 1);
-	    bookDao.save(book); // Save the updated book instance
-
-	    // 6. Update borrow status
+	    // 6. Update borrow status and save the borrow record
 	    borrow.setStatus(BorrowStatus.RETURNED);
 	    borrowDao.save(borrow);
 
-	    return new ApiResponse("Book returned successfully. Fine (if any) has been applied.");
-		
-//		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
+	    return new ApiResponse("Book '" + book.getTitle() + "' returned successfully. Fine (if any) has been applied.", "success");
 	}
 
 	

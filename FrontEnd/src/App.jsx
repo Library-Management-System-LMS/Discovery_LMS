@@ -18,6 +18,7 @@ import { Layout, MyFooter, NavbarBeforeLogin } from './components/navbar';
 import Dashboard from './pages/dashboard';
 import ListBook from './pages/bookList';
 
+
 function App() {
   const user = useSelector((state) => state.user)
 
@@ -35,7 +36,14 @@ function App() {
         <Route path='/return' element={<ReturnBook/>}/>
         <Route path='/about' element={<AboutPage />} />
         <Route path='/manageuser' element={<ManageUsers />} />
-        <Route path='/managebook' element={<ManageBooks />} />
+        <Route
+                    path='/manageBook'
+                    element={
+                        
+                            <ManageBooks />
+                        
+                    }
+                />
         <Route path='/viewrecords' element={<ViewRecords />} />
         <Route path='/defaulter' element={<DefaulterList/>}/>
         <Route path='/borrow' element={<BorrowBook/>}/>

@@ -14,3 +14,17 @@
 1. book update option
 2. book delete option
 3.
+
+borrow on ebook at a time functionality
+
+book id 3- quantity 4
+
+
+number of borrowed increment and return 
+
+1- exception handling when quantity is <0 and already existing book need to added
+
+2-auto updating of bbok numbers
+
+INSERT INTO users (email, first_name, last_name, password, role)
+VALUES ('OI@GMAIL.COM', 'SHIKHA', 'PRIY', 'joshijr', 'ROLE_ADMIN');
