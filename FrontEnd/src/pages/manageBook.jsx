@@ -297,6 +297,7 @@ const ManageBooks = () => {
       </div>
     </div>
   </div>
+  <div className='row'><hr></hr><hr></hr></div>
 </div>
 
          

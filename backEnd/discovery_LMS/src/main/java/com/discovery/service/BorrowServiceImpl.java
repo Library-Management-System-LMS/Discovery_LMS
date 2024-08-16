@@ -23,6 +23,7 @@ import com.discovery.dto.ApiResponse;
 import com.discovery.dto.BookDetailsDTO;
 import com.discovery.dto.BorrowDetailsDTO;
 import com.discovery.dto.CountDTO;
+import com.discovery.dto.DefaulterDTO;
 import com.discovery.dto.UserDetailsDTO;
 import com.discovery.entities.Author;
 import com.discovery.entities.Book;
@@ -86,7 +87,7 @@ public class BorrowServiceImpl {
 		}
 		
 		
-		return new CountDTO(bookCount, userCount, bookCount, fineCount, users, books);
+		return new CountDTO(bookCount, userCount, borrowCount, fineCount, users, books);
 		
 	}
 	
@@ -173,11 +174,11 @@ public class BorrowServiceImpl {
 	
 	public ApiResponse addNewBorrow(AddBorrowDTO dto) {
 		
-		if(!dto.getBorrowDate().equals(LocalDate.now()))
-			throw new ApiException("Borrow date should be Current date");
-		else if(dto.getBorrowDate().isAfter(dto.getDueDate()))
-			throw new ApiException("Due date should be more than Borrow date");
-		
+//		if(!dto.getBorrowDate().equals(LocalDate.now()))
+//			throw new ApiException("Borrow date should be Current date");
+//		else if(dto.getBorrowDate().isAfter(dto.getDueDate()))
+//			throw new ApiException("Due date should be more than Borrow date");
+//		
 
 		// 1. get book from it's id
 			Book book = bookDao.findById(dto.getBookId())
@@ -240,6 +241,27 @@ public class BorrowServiceImpl {
 		
 	}
 	
+	public List<DefaulterDTO> getDefaulterList(){
+		List<Borrow> borrowList = borrowDao.findDefaultersList();
+		
+//		if(borrowList.isEmpty())
+//			throw new ApiException("Defaulter list is empty!");
+		
+		List<DefaulterDTO> list = new ArrayList<>();
+		
+		for(Borrow b: borrowList) {
+//			if(b.getStatus() == BorrowStatus.BORROWED) {
+			DefaulterDTO dto = new DefaulterDTO(b.getId(), b.getBook().getTitle(),
+					b.getUser().getFirstName()+" "+b.getUser().getLastName(),
+					b.getStatus(), b.getBorrowDate(), b.getDueDate());
+			
+			list.add(dto);
+//			}else {}
+		}
+		
+		return list;
+	}
+	
 	public ApiResponse returnBorrowedBook(Long borrowId) {
 	    // 1. Retrieve the borrow record
 	    Borrow borrow = borrowDao.findById(borrowId)
@@ -289,5 +311,6 @@ public class BorrowServiceImpl {
 //		return new ApiResponse("New borrow added with ID= " + persistentBorrow.getId(), "success");
 	}
 
+	
 
 }

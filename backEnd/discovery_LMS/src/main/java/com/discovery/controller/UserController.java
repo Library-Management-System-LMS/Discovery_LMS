@@ -52,7 +52,7 @@ public class UserController {
 	
 	@PostMapping("/signin")
 	@Operation(description = "Sign in User")
-	public ResponseEntity<?> signInUser(@RequestBody @Valid SignInRequest request, BindingResult bindingResult) {
+	public ResponseEntity<?> signInUser(@RequestBody SignInRequest request, BindingResult bindingResult) {
 	    // Check for validation errors
 	    if (bindingResult.hasErrors()) {
 	        String errorMessage = bindingResult.getFieldError().getDefaultMessage();

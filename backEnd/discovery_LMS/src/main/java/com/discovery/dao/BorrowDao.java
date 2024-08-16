@@ -31,4 +31,7 @@ public interface BorrowDao extends JpaRepository<Borrow,Long> {
 	
 	@Query("SELECT b FROM Borrow b WHERE b.status = 'BORROWED'" )
 	List<Borrow> getByBorrowed();
-}
+	
+	@Query("SELECT b from Borrow b LEFT JOIN FETCH b.user LEFT JOIN FETCH b.book t WHERE b.returnDate is NULL")
+	List<Borrow> findDefaultersList();
+ }

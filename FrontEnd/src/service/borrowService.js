@@ -34,3 +34,10 @@ export async function returnBook(body){
     // console.log(JSON.stringify(response))
     return response.data
 }
+
+export async function getDefaultersList(){
+    const response = await axios.get(`${config.url}/borrow/defaulters`)
+    // console.log(JSON.stringify(response))
+
+    return response.data
+}

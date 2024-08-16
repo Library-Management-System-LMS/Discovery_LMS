@@ -107,7 +107,7 @@ public class UserServiceImpl {
 		
 		user.setRole(UserRole.ROLE_USER);
 		
-//		user.setRole(UserRole.ROLE_ADMIN);
+		user.setRole(UserRole.ROLE_ADMIN);
 		
 		User persistentUser = userDao.save(user);
 		

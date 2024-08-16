@@ -118,5 +118,18 @@ public class BorrowController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
 		}
 	}
+	
+	@GetMapping("/defaulters")
+	@Operation(description = "get defaulters list")
+	public ResponseEntity<?> getDefaultersList(){
+		System.out.println("in Defaulter list");
+		
+		try {
+			return ResponseEntity.ok(borrowService.getDefaulterList());
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
+		}
+	}
 
 }

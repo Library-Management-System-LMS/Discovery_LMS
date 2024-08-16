@@ -33,7 +33,7 @@ const RegisterUser = () => {
                 toast.warning('Enter Last Name');
             } else if (formData.email.length === 0) {
                 toast.warning('Enter Email');
-            } else if (formData.password.length < 6) {
+            } else if (formData.password.length < 2) {
                 toast.warning('Password must be at least 6 characters');
             } else if (formData.confirmPassword.length ==0) {
                 toast.warning('Please enter confirm password');

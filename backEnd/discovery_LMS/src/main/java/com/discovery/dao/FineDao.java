@@ -15,9 +15,10 @@ public interface FineDao extends JpaRepository<Fine, Long> {
     @Query("SELECT f FROM Fine f WHERE f.paid = false") // Custom query to find defaulters
     List<Fine> findDefaulters();
     
-@Query("SELECT f.user, f.fineAmount FROM Fine f WHERE f.paid = false")
-List<Long> findBorrowIdsWithUnpaidFines();
-Fine findByBorrow(Borrow borrow);
+	@Query("SELECT f.user, f.fineAmount FROM Fine f WHERE f.paid = false")
+	List<Long> findBorrowIdsWithUnpaidFines();
+	
+	Fine findByBorrow(Borrow borrow);
 
 	
 }

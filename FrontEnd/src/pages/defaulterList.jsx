@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { getDefaultersList } from '../service/borrowService';
 
 const DefaulterList = () => {
   //to set title of the page
@@ -8,15 +9,43 @@ const DefaulterList = () => {
   const [defaulters, setDefaulters] = useState([]);
 
   useEffect(() => {
-    // Replace with your backend API endpoint
-    axios.get('')
-      .then(response => {
-        setDefaulters(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the defaulter list!', error);
-      });
+    defaulterDetails();
   }, []);
+
+  function handleError(error) {
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Server responded with an error:', error.response.data);
+        toast.error(`Please try again later. ${error.response.data.message}`);
+    } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        toast.error(error.request);
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', error.message);
+        toast.error(error.message);
+        // alert('An unexpected error occurred. Please try again.');
+    }
+  }
+
+
+  const defaulterDetails = async () =>{
+    // e.preventDefault();
+
+    try{
+      const data = await getDefaultersList();
+
+      // console.log(JSON.stringify(data))
+
+      setDefaulters(data);
+
+    }catch(error){
+      handleError(error);
+    }
+    
+  }
 
   return (
     <div className="container my-5">
@@ -31,7 +60,7 @@ const DefaulterList = () => {
               <th>Borrow Id</th>
               <th>Book Name</th>
               <th>User Name</th>
-              <th>Issue Date</th>
+              <th>Borrow Date</th>
               <th>Due Date</th>
               <th>Status</th>
             </tr>
@@ -39,13 +68,13 @@ const DefaulterList = () => {
           <tbody>
             {defaulters.length > 0 ? (
               defaulters.map(defaulter => (
-                <tr key={defaulter.issueId} className="table-primary">
-                  <td>{defaulter.issueId}</td>
+                <tr key={defaulter.id} className="table-primary">
+                  <td>{defaulter.id}</td>
                   <td>{defaulter.bookName}</td>
                   <td>{defaulter.userName}</td>
-                  <td>{defaulter.issueDate}</td>
+                  <td>{defaulter.borrowDate}</td>
                   <td>{defaulter.dueDate}</td>
-                  <td className={defaulter.status.toLowerCase() === 'pending' ? 'text-danger' : ''}>
+                  <td className={defaulter.status.toLowerCase() === 'borrowed' ? 'text-danger' : ''}>
                     {defaulter.status}
                   </td>
                 </tr>
